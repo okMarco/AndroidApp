@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="tag_tracker_view" type="id"/>
+    <item name="view_play_video" type="id"/>
+    <item name="view_tracker" type="id"/>
+
+    <item name="iv_comment_avatar" type="id"/>
+
+    <item name="fragment_container" type="id"/>
+
+    <item name="toolbar" type="id"/>
+</resources>

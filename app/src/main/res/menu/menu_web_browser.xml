@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_web_refresh"
+        android:title="@string/web_refresh">
+    </item>
+    <item
+        android:id="@+id/menu_video_history"
+        android:title="@string/web_browser_video_record">
+    </item>
+    <item
+        android:id="@+id/menu_open_in_system"
+        android:title="@string/open_in_system_browser">
+    </item>
+</menu>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/follow"
+        android:title="@string/blog_follow"
+        app:showAsAction="always">
+    </item>
+    <item
+        android:id="@+id/unfollow"
+        android:title="@string/blog_unfollow"
+        app:showAsAction="always">
+    </item>
+</menu>

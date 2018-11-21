@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--<color name="colorPrimary">#36465D</color>-->
+    <!--<color name="colorPrimaryDark">#2b384c</color>-->
+    <!--<color name="colorAccent">#36465D</color>-->
+    <!--<color name="colorackground">#36465D</color>-->
+    <!--<color name="colorText">#ffffff</color>-->
+
+    <color name="colorPrimary">@color/colorPrimaryWhite</color>
+    <color name="colorPrimaryDark">@color/colorPrimaryDarkWhite</color>
+    <color name="colorAccent">@color/colorWhite</color>
+    <color name="colorBackground">@color/colorBackgroundWhite</color>
+    <color name="colorText">@color/colorTextWhite</color>
+
+    <color name="colorLightStatusBarColor">#969696</color>
+    <color name="colorDarkStatusBarColor">#17181A</color>
+
+    <color name="colorBlack">#000000</color>
+
+    <color name="colorPrimaryBlue">#17181A</color>
+    <color name="colorPrimaryBlueDark">#111214</color>
+    <color name="colorBackgroundBlue">#0d0d0d</color>
+    <color name="colorTextBlue">@color/colorWhite</color>
+    <color name="colorTipTextColorBlue">#ffffff</color>
+
+    <color name="colorPrimaryWhite">#ffffff</color>
+    <color name="colorPrimaryDarkWhite">#f0f0f0</color>
+    <color name="colorAccentWhite">#797979</color>
+    <color name="colorBackgroundWhite">#f2f2f4</color>
+    <color name="colorTextWhite">#262626</color>
+    <color name="colorTipTextColorWhite">#bebebe</color>
+
+    <integer-array name="progress_colors">
+        <item>@color/colorOrange</item>
+        <item>@color/colorGreen</item>
+        <item>@color/colorBlue</item>
+        <item>@color/colorRed</item>
+        <item>@color/colorPuple</item>
+    </integer-array>
+
+    <integer-array name="full_image_progress_colors">
+        <item>@color/colorOrange</item>
+    </integer-array>
+
+    <integer-array name="instagram_parse_colors">
+        <item>@color/colorPink</item>
+    </integer-array>
+
+    <color name="colorOrange">#F29A2F</color>
+    <color name="colorGreen">#56BB89</color>
+    <color name="colorGreenDark">#52A374</color>
+    <color name="colorGreenTran">#C057BC8B</color>
+    <color name="colorBlue">#4BA8D8</color>
+    <color name="colorPuple">#A87EC2</color>
+    <color name="colorRed">#D95F41</color>
+    <color name="colorRedDark">#B55037</color>
+    <color name="colorYellow">#FEC866</color>
+    <color name="colorPink">#D5378D</color>
+
+    <color name="colorDivide">@color/colorPrimary</color>
+    <color name="colorDivideWhite">#f4f4f4</color>
+
+    <color name="colorTranBlack">#20000000</color>
+    <color name="colorWhiteHolder">#dfdfdf</color>
+    <color name="colorBlueHolder">#111214</color>
+
+    <color name="colorTextLight">#262626</color>
+    <color name="colorTextDark">#bebebe</color>
+    <color name="colorSubTextLight">#bebebe</color>
+    <color name="colorSubTextDark">#a9a9a9</color>
+
+    <color name="transparent">@color/colorTransparent</color>
+
+    <color name="colorWhite">#ffffff</color>
+    <color name="colorTransparent">#00000000</color>
+
+    <color name="colorWhitePress">#eaeaea</color>
+
+    <color name="colorBlurMask">#70000000</color>
+
+    <color name="colorTumblr">#36465D</color>
+</resources>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/rl_video_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <io.vov.vitamio.widget.CenterLayout
+        android:id="@+id/cl_video_view_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </io.vov.vitamio.widget.CenterLayout>
+
+
+    <com.hochan.tumlodr.ui.component.DragToFinishPhotoView
+        android:id="@+id/iv_video_cover"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#000000"
+        android:scaleType="fitCenter"
+        android:layout_centerInParent="true"/>
+
+    <ImageButton
+        android:id="@+id/ivbtn_play"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:background="@null"
+        android:src="@drawable/ic_play_arrow"
+        android:layout_centerInParent="true"/>
+</RelativeLayout>

@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "976623912300",
+    "firebase_url": "https://coudsoup.firebaseio.com",
+    "project_id": "coudsoup",
+    "storage_bucket": "coudsoup.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:976623912300:android:0fd599de56e02b49",
+        "android_client_info": {
+          "package_name": "com.hochan.coldsoup"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "976623912300-dla2aj4nm2tirlv8uns0u7jvp7mmdtjp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDWDtGzi_E2UBgVsYeP3WEAgcCUQBf_dhw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

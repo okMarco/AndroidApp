@@ -1,0 +1,168 @@
+<resources>
+    <string name="app_name">ColdSoup</string>
+    <string name="title_activity_splash" translatable="false">SplashActivity</string>
+    <string name="title_activity_like">Like</string>
+
+    <string name="open">open</string>
+    <string name="close">close</string>
+    <string name="title_activity_following" translatable="false">FollowingActivity</string>
+    <string name="title_activity_download_manager">Download Manager</string>
+    <string name="title_activity_setting" translatable="false">SettingActivity</string>
+    <string name="title_activity_blog" translatable="false">BlogActivity</string>
+    <string name="title_activity_post_detail" translatable="false">PostDetailActivity</string>
+    <string name="download_loding">Loading</string>
+    <string name="download_success">Download Complete</string>
+    <string name="download_fail">Download Failed</string>
+    <string name="download_cancle">Cancled</string>
+    <string name="error_check_internet">Please check the network connection...</string>
+    <string name="title_activity_post_single_detail" translatable="false">PostSingleDetailActivity</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="start" translatable="false">Click to start</string>
+    <string name="pause" translatable="false">Click to pause</string>
+    <string name="play" translatable="false">play</string>
+
+    <string name="del_cache_files" translatable="false">Delete all downloaded files</string>
+    <string name="del_file_error_empty" translatable="false">Empty folder already</string>
+
+    <string name="single_task_test_title" translatable="false">Single task test</string>
+    <string name="performance_test_title" translatable="false">Performance test</string>
+    <string name="performance_test_parcel" translatable="false">100000(times) Basic performance test</string>
+    <string name="performance_test_output" translatable="false">Output performance test</string>
+
+
+    <string name="tasks_manager_demo_title" translatable="false">Tasks Manager Demo</string>
+    <string name="tasks_manager_demo_name" formatted="false" translatable="false">task: %d</string>
+    <string name="tasks_manager_demo_status_loading" translatable="false"> </string>
+    <string name="tasks_manager_demo_status_pending" translatable="false">Pending</string>
+    <string name="tasks_manager_demo_status_started" translatable="false">Download Start</string>
+    <string name="tasks_manager_demo_status_connected" translatable="false">Connected</string>
+    <string name="tasks_manager_demo_status_progress" translatable="false">Loading...</string>
+    <string name="tasks_manager_demo_status_downloading" formatted="false" translatable="false">Status: downloading %d</string>
+    <string name="tasks_manager_demo_status_error" translatable="false">Error</string>
+    <string name="tasks_manager_demo_status_paused" translatable="false">Paused</string>
+    <string name="tasks_manager_demo_status_completed" translatable="false">Completed</string>
+    <string name="tasks_manager_demo_status_not_downloaded" translatable="false">Incomplete Download</string>
+
+    <!-- hybrid test -->
+    <string name="hybrid_test_title" translatable="false">Hybrid test</string>
+    <string name="hybrid_test_deleted_file" formatted="false" translatable="false">Deleted: %s</string>
+    <string name="hybrid_test_start_single_task" formatted="false" translatable="false">Start single task: %s</string>
+    <string name="hybrid_test_start_multiple_tasks_parallel" formatted="false" translatable="false">Start %d tasks to download in parallel</string>
+    <string name="hybrid_test_start_multiple_tasks_serial" formatted="false" translatable="false">Start %d tasks to download linearly</string>
+    <string name="hybrid_test_multiple_tasks_parallel_title" translatable="false">Execute multiple tasks in parallel</string>
+    <string name="hybrid_test_multiple_tasks_serial_title" translatable="false">Execute multiple tasks linearly</string>
+    <string name="hybrid_test_single_task_title" translatable="false">Execute single task</string>
+    <string name="avoid_missing_screen_frames" translatable="false">Avoid Missing Screen Frames</string>
+
+    <!-- notification demo -->
+    <string name="notification_demo_title" translatable="false">Notification Demo</string>
+
+    <string name="notification_sample_title" translatable="false">Notification Sample Demo</string>
+    <string name="notification_sample_desc" translatable="false">This is notification sample demo, in this demo, we show the downloading information in the notification panel, we also need to get the downloading information to show in Activity, and we still hold the notification item in the notification panel when downloading is finished.</string>
+    <string name="notification_sample_show" translatable="false">Show the Notification</string>
+
+    <string name="notification_min_set_title" translatable="false">Notification MinSet Demo</string>
+    <string name="notification_min_set_desc" translatable="false">This is notification min set demo, it means that we use as little as possible code to bind notification with downloading tasks.</string>
+
+    <!-- multitask test -->
+    <string name="multitask_test_title" translatable="false">Multiple tasks test</string>
+    <string name="left_menu_home">Home</string>
+    <string name="left_menu_like">Like</string>
+    <string name="left_menu_follow">Following</string>
+    <string name="left_menu_download">Download</string>
+    <string name="left_menu_setting">Setting</string>
+    <string name="left_menu_follow_format">Following(%d)</string>
+    <string name="left_menu_like_format">Likes(%d)</string>
+    <string name="activity_title_like">Like</string>
+    <string name="activity_title_download_manager">Download Manager</string>
+    <string name="activity_title_follow">Following</string>
+    <string name="activity_title_setting">Settings</string>
+    <string name="setting_picture_span">Column Count</string>
+    <string name="setting_plat_gif">Play Gif</string>
+    <string name="storage_path">File storage path</string>
+
+    <string name="setting_feedback">Feedback</string>
+    <string name="setting_logout">Logout</string>
+    <string name="setting_picture_resolution">Image Browsing setting</string>
+    <string name="popup_window_download_picture">Save</string>
+    <string name="popup_window_download_video">Downlaod</string>
+    <string name="popup_window_cancle">Cancle</string>
+    <string name="popup_window_like">Like</string>
+    <string name="popup_window_post">Post</string>
+    <string name="popup_window_reblog">Reblog</string>
+    <string name="snackbar_video_cannot_download">The video cannot be downloaded!</string>
+    <string name="snackbar_add_to_download">Added to download</string>
+    <string name="snackbar_save_finish">Save:</string>
+    <string name="post_detail_source">Source：</string>
+    <string name="post_detail_notes">" Notes"</string>
+    <string name="post_detail_time_just_now">Just Now</string>
+    <string name="retry">Retry</string>
+    <string name="snackbar_save_pic_fail">Picture download failed：</string>
+    <string name="snackbar_forwarded">Reblog Success</string>
+    <string name="snackbar_forward_fail">Reblog Fail</string>
+    <string name="snackbar_save_pic_failed">Picture download failed</string>
+    <string name="snackbar_download_video_failed">Video download failed：</string>
+    <string name="snackbar_video_download_complete">Video download complete：</string>
+    <string name="save">Save</string>
+    <string name="delete_download_task_fragment_title">Delete</string>
+    <string name="delete_download_task_fragment_file">Delete File</string>
+    <string name="delete_download_file_fragment_delete">Delete</string>
+    <string name="delete_download_task_grament_cancel">Cancel</string>
+    <string name="blog_post_likes">Likes</string>
+    <string name="blog_post_list">Posts</string>
+    <string name="blog_unfollow">UnFollow</string>
+    <string name="blog_follow">Follow</string>
+    <string name="menu_dowmload_manager_all">All</string>
+    <string name="menu_download_manager_cancel">Cancel</string>
+    <string name="menu_download_manager_show_all">All</string>
+    <string name="menu_download_manager_only_image">Image</string>
+    <string name="menu_download_manager_only_video">Video</string>
+    <string name="menu_download_manager_unfinish">Unfinished</string>
+    <string name="setting_change_theme_color">Change theme color</string>
+    <string name="setting_save_file_path">File storage path</string>
+    <string name="splash_login">Login</string>
+    <string name="string_copy">Copy:</string>
+    <string name="file_usable_size">Free</string>
+    <string name="invalid_storage_path">Invalid storage path</string>
+    <string name="storage_path_custom">Custom</string>
+
+    <string name="video_list_more_videos">More Videos</string>
+    <string name="unsupported_video">Unsupported</string>
+    <string name="follow_success">Following</string>
+    <string name="title_activity_saver_tools">SaverToolsActivity</string>
+    <string name="left_menu_saver_tools">Saver Tools</string>
+    <string name="saver_tools_have_a_try">Try</string>
+    <string name="saver_tools_ok">OK</string>
+    <string name="saver_tools_for_ins">Save instagram photo</string>
+    <string name="video_list_activity_overlay">Need MANAGE_OVERLAY_PERMISSION</string>
+    <string name="copy_profile_url">1、Copy profile url</string>
+    <string name="save_ins_batch">Save instagram photos in bulk</string>
+    <string name="copy_link">1、Copy link</string>
+    <string name="parse_fail">Parse failed</string>
+    <string name="open_this_app">2、Open this app</string>
+    <string name="ins_parse_count">Parse: </string>
+    <string name="exit">Exit</string>
+    <string name="parsing">Parsing</string>
+    <string name="select_all">Select all</string>
+    <string name="cancle_select_all">Cancel select all</string>
+    <string name="title_activity_group_download_task_manager">GroupDownloadTaskManagerActivity
+    </string>
+    <string name="post_detail">Post</string>
+    <string name="setting_layout">Layout</string>
+    <string name="layout_water_fall">Waterfall</string>
+    <string name="layout_detail">Detail</string>
+    <string name="allow_draw_overlay">NO OVERLAY PERMISSION.</string>
+    <string name="left_menu_search">Search</string>
+    <string name="menu_show_only_text">Text</string>
+    <string name="set_custom_api_key">Set Custom API Key</string>
+    <string name="setting_change_video_player">Change Video Player</string>
+    <string name="tip_to_change_video_player">Failed to playVideo. Please change the video player in Settings page and try again later.</string>
+    <string name="open_in_system_browser">Open in system browser</string>
+    <string name="web_browser_video_record">Video Record</string>
+    <string name="web_refresh">Refresh</string>
+    <string name="post_link">Post Link</string>
+    <string name="blog_link">Blog Link</string>
+    <string name="play_video_auto">Play video automatically in detail mode</string>
+    <string name="force_changing_video_url">Force stitching video address</string>
+    <string name="force_change_url_tip">Check this if it fail to play video</string>
+</resources>

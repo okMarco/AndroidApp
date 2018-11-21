@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.design.widget.CoordinatorLayout
+            android:id="@+id/coordinator_layout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            tools:context=".ui.activity.baseactivity.BaseActivity">
+
+            <android.support.design.widget.AppBarLayout
+                android:id="@+id/abl_blog"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorTransparent"
+                android:theme="@style/AppTheme.PopupOverlay">
+
+                <FrameLayout
+                    android:id="@+id/fl_top_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+                    <ImageView
+                        android:id="@+id/iv_big_avatar"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        tools:ignore="ContentDescription"/>
+
+                    <com.hochan.tumlodr.ui.component.FitsSystemWindowLinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:paddingTop="10dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:orientation="horizontal"
+                            tools:ignore="DisableBaselineAlignment">
+
+                            <LinearLayout
+                                android:id="@+id/ll_blog_info"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical"
+                                android:paddingRight="15dp"
+                                tools:ignore="NestedWeights,RtlHardcoded,RtlSymmetry">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    tools:ignore="TooDeepLayout">
+
+                                    <ImageButton
+                                        android:id="@+id/btn_arrow_back"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:background="@color/colorTransparent"
+                                        android:padding="5dp"
+                                        android:src="@drawable/ic_arrow_back"/>
+
+                                    <TextView
+                                        android:id="@+id/tv_blog_title"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="1"
+                                        android:gravity="right"
+                                        android:paddingBottom="5dp"
+                                        android:paddingLeft="15dp"
+                                        android:paddingStart="15dp"
+                                        android:textColor="@color/colorText"
+                                        android:textSize="25sp"
+                                        android:textStyle="bold"
+                                        tools:ignore="RtlHardcoded,RtlSymmetry"
+                                        tools:text="BLOG_TITLE"/>
+                                </LinearLayout>
+
+                                <TextView
+                                    android:id="@+id/tv_blog_description"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="right"
+                                    android:maxLines="5"
+                                    android:paddingBottom="15dp"
+                                    android:paddingLeft="15dp"
+                                    android:textColor="@color/colorText"
+                                    android:textSize="14sp"
+                                    tools:text="CAPTION"/>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:id="@+id/riv_blog_avatar"
+                                    android:layout_width="60dp"
+                                    android:layout_height="60dp"
+                                    android:layout_marginRight="10dp"
+                                    android:background="@drawable/bg_unfollow"
+                                    tools:ignore="RtlHardcoded"/>
+
+                                <Button
+                                    android:id="@+id/btn_follow"
+                                    style="@style/Base.Widget.AppCompat.Button.Borderless"
+                                    android:layout_width="60dp"
+                                    android:layout_height="30dp"
+                                    android:layout_marginTop="5dp"
+                                    android:background="@drawable/bg_following"
+                                    android:text="@string/blog_follow"
+                                    android:textColor="@color/colorWhite"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold"
+                                    tools:background="@drawable/bg_unfollow"
+                                    />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <com.hochan.tumlodr.ui.component.FitsSystemWindowTabLayout
+                            android:id="@+id/tl_blog_item"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:tabIndicatorColor="@color/colorText"/>
+                    </com.hochan.tumlodr.ui.component.FitsSystemWindowLinearLayout>
+                </FrameLayout>
+            </android.support.design.widget.AppBarLayout>
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/vp_content_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        </android.support.design.widget.CoordinatorLayout>
+    </LinearLayout>
+</layout>
+
+

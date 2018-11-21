@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:background="@color/colorOrange">
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:id="@+id/rb_path_default"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/bg_white_checkbox"
+                android:textColor="@color/colorWhite"
+                android:textSize="14sp"
+                tools:text="@string/storage_path"/>
+
+            <RadioButton
+                android:id="@+id/rb_sdcard_0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/bg_white_checkbox"
+                android:textColor="@color/colorWhite"
+                android:textSize="14sp"
+                tools:text="@string/storage_path"/>
+
+            <RadioButton
+                android:id="@+id/rb_sdcard_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/bg_white_checkbox"
+                android:textColor="@color/colorWhite"
+                android:textSize="14sp"
+                tools:text="@string/storage_path"/>
+
+            <RadioButton
+                android:id="@+id/rb_custom_path"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/bg_white_checkbox"
+                android:text="@string/storage_path_custom"
+                android:textColor="@color/colorWhite"
+                android:textSize="14sp"
+                tools:text="@string/storage_path"/>
+        </RadioGroup>
+
+        <EditText
+            android:id="@+id/ed_custom_path"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorWhite"
+            android:textColor="@color/colorWhite"
+            android:textSize="14sp"
+            tools:text="@string/storage_path"/>
+
+        <TextView
+            android:id="@+id/tv_wrong_director"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="20dp"
+            android:paddingLeft="5dp"
+            android:text="@string/invalid_storage_path"
+            android:textColor="@color/colorWhite"
+            android:textSize="12sp"
+            android:visibility="gone"/>
+    </LinearLayout>
+
+</layout>

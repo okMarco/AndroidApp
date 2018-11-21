@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btn_saver_for_instagram"
+            style="@style/PicDownloadUtilsActivityButton"
+            android:background="@drawable/bg_saver_for_ins"
+            android:text="Saver for instagram"
+            tools:ignore="HardcodedText"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <EditText
+                android:id="@+id/edtv_saver"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@null"
+                android:hint="@string/post_link"
+                android:textSize="16sp"/>
+
+            <Button
+                android:id="@+id/btn_get_post_of_link"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Get"
+                tools:ignore="HardcodedText"/>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_saver_for_instagram_batch"
+            style="@style/PicDownloadUtilsActivityButton"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/bg_saver_for_ins"
+            android:text="@string/save_ins_batch"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <EditText
+                android:id="@+id/edtv_saver_in_batch"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@null"
+                android:hint="@string/blog_link"
+                android:textSize="16sp"/>
+
+            <Button
+                android:id="@+id/btn_get_blog_of_link"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Get"
+                tools:ignore="HardcodedText"/>
+        </LinearLayout>
+    </LinearLayout>
+</layout>

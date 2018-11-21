@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_all"
+        android:title="@string/menu_download_manager_show_all">
+    </item>
+    <item
+        android:id="@+id/menu_only_picture"
+        android:title="@string/menu_download_manager_only_image">
+    </item>
+    <item
+        android:id="@+id/menu_only_video"
+        android:title="@string/menu_download_manager_only_video">
+    </item>
+    <item
+        android:id="@+id/menu_only_text"
+        android:title="@string/menu_show_only_text">
+    </item>
+</menu>

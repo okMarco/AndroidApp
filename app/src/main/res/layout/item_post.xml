@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools">
+    <com.hochan.tumlodr.ui.component.RecordTouchCardView
+        android:id="@+id/cv_post"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/ll_post_top"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/riv_post_avatar"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="8dp"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/tv_blog_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:singleLine="true"
+                        android:textColor="@color/colorTextWhite"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        tool:text="Tumlodr"/>
+                    <TextView
+                        android:id="@+id/tv_post_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        android:textColor="#bcbcbc"
+                        tool:text="Time"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_post_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:textColor="@color/colorTextWhite"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                tool:text="Title"
+                android:paddingBottom="10dp"/>
+
+            <FrameLayout
+                android:id="@+id/fl_photos_and_video"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.hochan.tumlodr.ui.component.PostPhotoLayout
+                    android:id="@+id/ll_photos"
+                    android:transitionName="photo_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <ImageView
+                    android:id="@+id/iv_video_play"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_videoplayer_play"/>
+
+                <TextView
+                    android:id="@+id/tv_text_title_simple"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:textColor="@color/colorTextWhite"
+                    android:textSize="14sp"
+                    android:textStyle="bold"/>
+
+                <LinearLayout
+                    android:id="@+id/ll_like_download_show"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|right">
+
+                    <ImageView
+                        android:id="@+id/iv_download"
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:layout_margin="5dp"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/action_done"
+                        android:visibility="gone"/>
+
+                    <ImageView
+                        android:id="@+id/iv_like"
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:layout_margin="5dp"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/action_like"
+                        android:visibility="gone"/>
+                </LinearLayout>
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/tv_post_body"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="15dp"
+                android:textSize="15sp"
+                tool:text="Txt"/>
+
+            <com.hochan.tumlodr.ui.component.CommentBodyLayout
+                android:id="@+id/cl_comment_bodies"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"/>
+
+            <LinearLayout
+                android:id="@+id/ll_post_bottom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:gravity="right|center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingRight="5dp">
+
+                    <TextView
+                        android:id="@+id/tv_source"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="left"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:padding="10dp"
+                        android:singleLine="true"
+                        android:textColor="#bebebe"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        tool:text="来源：Tumlodr"/>
+
+                    <ImageView
+                        android:id="@+id/iv_detail_dowanload"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@null"
+                        android:padding="10dp"
+                        android:src="@drawable/ic_detail_download"/>
+
+                    <ImageView
+                        android:id="@+id/iv_detail_reblog"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@null"
+                        android:padding="10dp"
+                        android:src="@drawable/ic_detail_reply"/>
+
+                    <ImageView
+                        android:id="@+id/iv_detail_like"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@null"
+                        android:padding="10dp"
+                        android:src="@drawable/ic_detail_like"/>
+
+                    <ImageView
+                        android:id="@+id/iv_detail_more"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@null"
+                        android:padding="10dp"
+                        android:src="@drawable/ic_detail_more"/>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_note_count"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tool:text="1000热度"
+                    android:textSize="14sp"
+                    android:textColor="@color/colorTextWhite"
+                    android:gravity="right"
+                    android:paddingRight="15dp"
+                    android:paddingBottom="15dp"
+                    android:textStyle="bold"
+                    android:paddingTop="5dp"/>
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </com.hochan.tumlodr.ui.component.RecordTouchCardView>
+</layout>
+
+

@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <com.hochan.tumlodr.ui.component.BubbleLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/ll_setting_container_top"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorWhite"
+                    android:orientation="vertical">
+
+                    <include
+                        layout="@layout/view_divider"/>
+
+                    <LinearLayout
+                        style="@style/SettingLinearLayoutStyle"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:visibility="visible">
+
+                        <TextView
+                            android:id="@+id/tv_chosse_theme"
+                            style="@style/SettingTextViewStyle"
+                            android:layout_weight="1"
+                            android:text="@string/setting_change_theme_color"/>
+
+                        <android.support.v7.widget.CardView
+                            android:id="@+id/cv_theme_blue"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:foreground="@null"
+                            app:cardBackgroundColor="@color/colorPrimaryBlue"
+                            app:cardCornerRadius="@dimen/cardview_corner_radius"
+                            app:cardElevation="2dp"/>
+
+                        <android.support.v7.widget.CardView
+                            android:id="@+id/cv_theme_white"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_margin="15dp"
+                            android:foreground="@null"
+                            app:cardBackgroundColor="@color/colorPrimaryWhite"
+                            app:cardCornerRadius="@dimen/cardview_corner_radius"
+                            app:cardElevation="2dp"/>
+                    </LinearLayout>
+
+                    <include
+                        layout="@layout/view_divider"/>
+
+                    <LinearLayout
+                        android:id="@+id/ll_set_layout"
+                        style="@style/SettingLinearLayoutStyle"
+                        android:visibility="visible">
+
+                        <TextView
+                            android:id="@+id/tv_set_layout"
+                            style="@style/SettingTextViewStyle"
+                            android:layout_weight="1"
+                            android:text="@string/setting_layout"/>
+
+                        <RadioGroup
+                            android:id="@+id/rg_layout"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingRight="15dp"
+                            tools:ignore="RtlHardcoded,RtlSymmetry">
+
+                            <RadioButton
+                                android:id="@+id/rb_layout_waterfall"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:checked="true"
+                                android:text="@string/layout_water_fall"/>
+
+                            <RadioButton
+                                android:id="@+id/rb_layout_detail"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:text="@string/layout_detail"/>
+                        </RadioGroup>
+                    </LinearLayout>
+
+                    <include
+                        layout="@layout/view_divider"/>
+
+                    <LinearLayout
+                        android:id="@+id/ll_set_column"
+                        style="@style/SettingLinearLayoutStyle"
+                        android:visibility="visible">
+
+                        <TextView
+                            android:id="@+id/tv_set_column"
+                            style="@style/SettingTextViewStyle"
+                            android:layout_weight="1"
+                            android:text="@string/setting_picture_span"/>
+
+                        <Spinner
+                            android:id="@+id/sp_set_column"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            />
+                    </LinearLayout>
+
+                    <include
+                        layout="@layout/view_divider"/>
+
+                    <LinearLayout
+                        android:id="@+id/ll_set_resolution"
+                        style="@style/SettingLinearLayoutStyle">
+
+                        <TextView
+                            android:id="@+id/tv_set_resolution"
+                            style="@style/SettingTextViewStyle"
+                            android:text="@string/setting_picture_resolution"/>
+
+                        <Spinner
+                            android:id="@+id/sp_set_resolution"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            />
+                    </LinearLayout>
+
+                    <include
+                        layout="@layout/view_divider"
+                        android:visibility="visible"/>
+
+                    <LinearLayout
+                        android:id="@+id/ll_set_video_paly"
+                        style="@style/SettingLinearLayoutStyle"
+                        android:visibility="visible">
+
+                        <TextView
+                            android:id="@+id/tv_set_video_paly"
+                            style="@style/SettingTextViewStyle"
+                            android:layout_weight="1"
+                            android:text="@string/play_video_auto"/>
+
+                        <Switch
+                            android:id="@+id/sw_set_video_play"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingRight="15dp"
+                            tools:ignore="RtlHardcoded,RtlSymmetry"/>
+                    </LinearLayout>
+
+                    <include
+                        layout="@layout/view_divider"
+                        android:visibility="visible"/>
+
+                    <LinearLayout
+                        android:id="@+id/ll_force_to_change_url"
+                        style="@style/SettingLinearLayoutStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="8dp"
+                        android:paddingTop="8dp"
+                        android:visibility="visible">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:paddingLeft="15dp"
+                            android:paddingRight="15dp"
+                            tools:ignore="RtlHardcoded">
+
+                            <TextView
+                                android:id="@+id/tv_force_to_change_url"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/force_changing_video_url"
+                                android:textColor="@color/colorText"
+                                android:textSize="15sp"
+                                android:textStyle="bold"/>
+
+                            <TextView
+                                android:id="@+id/tv_force_to_change_url_tip"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/force_change_url_tip"
+                                android:textSize="12sp"
+                                tools:ignore="SmallSp"/>
+                        </LinearLayout>
+
+                        <Switch
+                            android:id="@+id/sw_force_to_change_url"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingRight="15dp"
+                            tools:ignore="RtlHardcoded,RtlSymmetry"/>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="5dp"
+                        android:background="@color/colorTranBlack"/>
+
+                    <include
+                        layout="@layout/view_divider"/>
+
+                    <LinearLayout
+                        android:id="@+id/ll_storage_path"
+                        style="@style/SettingLinearLayoutStyle">
+
+                        <TextView
+                            android:id="@+id/tv_storage_path"
+                            style="@style/SettingTextViewStyle"
+                            android:text="@string/storage_path"/>
+
+                        <TextView
+                            android:id="@+id/tv_selected_storage_path"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:ellipsize="start"
+                            android:gravity="center"
+                            android:minWidth="100dp"
+                            android:paddingLeft="15dp"
+                            android:paddingRight="15dp"
+                            android:singleLine="true"
+                            android:text="@string/storage_path"
+                            tools:text="SD Card 0"/>
+                    </LinearLayout>
+
+                    <include
+                        layout="@layout/view_divider"/>
+
+                    <LinearLayout
+                        android:id="@+id/ll_change_api"
+                        style="@style/SettingLinearLayoutStyle">
+
+                        <TextView
+                            android:id="@+id/tv_change_api"
+                            style="@style/SettingTextViewStyle"
+                            android:text="@string/set_custom_api_key"/>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:background="@color/colorTranBlack"/>
+
+                <include
+                    layout="@layout/view_divider"/>
+
+                <LinearLayout
+                    android:id="@+id/ll_setting_container_bottom"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/ll_feedback"
+                        style="@style/SettingLinearLayoutStyle"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/tv_feedback"
+                            style="@style/SettingTextViewStyle"
+                            android:layout_weight="1"
+                            android:text="@string/setting_feedback"/>
+                    </LinearLayout>
+
+                    <include
+                        layout="@layout/view_divider"/>
+
+                    <LinearLayout
+                        android:id="@+id/ll_set_logout"
+                        style="@style/SettingLinearLayoutStyle">
+
+                        <TextView
+                            android:id="@+id/tv_set_logout"
+                            style="@style/SettingTextViewStyle"
+                            android:layout_weight="1"
+                            android:text="@string/setting_logout"/>
+                    </LinearLayout>
+
+                    <include
+                        layout="@layout/view_divider"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="5dp"
+                        android:background="@color/colorPrimaryDark"
+                        android:visibility="gone"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
+
+                        <TextView
+                            style="@style/SettingTextViewStyle"
+                            android:layout_weight="1"
+                            android:text="意见反馈"/>
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
+
+                        <TextView
+                            style="@style/SettingTextViewStyle"
+                            android:layout_weight="1"
+                            android:text="赞助支持"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
+    </com.hochan.tumlodr.ui.component.BubbleLayout>
+
+
+</layout>
