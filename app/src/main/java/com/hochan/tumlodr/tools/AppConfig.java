@@ -155,8 +155,10 @@ public class AppConfig {
 		mDownloadFinishListener = new BaseDownloadTask.FinishListener() {
 			@Override
 			public void over(BaseDownloadTask task) {
-				RxBus.getInstance().send(new Events<>(Events.EVENT_CODE_DOWNLOAD_FINISH, task));
-				DownloadRecordDatabase.updateDownloadFinish(task.getId());
+				if (new File(task.getPath()).exists()) {
+					RxBus.getInstance().send(new Events<>(Events.EVENT_CODE_DOWNLOAD_FINISH, task));
+					DownloadRecordDatabase.updateDownloadFinish(task.getId());
+				}
 			}
 		};
 

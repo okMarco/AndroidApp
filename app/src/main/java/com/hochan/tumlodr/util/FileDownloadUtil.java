@@ -9,6 +9,7 @@ import android.util.LruCache;
 import com.hochan.tumlodr.TumlodrApp;
 import com.hochan.tumlodr.model.BaseObserver;
 import com.hochan.tumlodr.model.data.TasksManagerModel;
+import com.hochan.tumlodr.model.data.TextPostBody;
 import com.hochan.tumlodr.model.data.download.DownloadRecordDatabase;
 import com.hochan.tumlodr.module.video.videolayout.VideoPlayLayout;
 import com.hochan.tumlodr.tools.AppConfig;
@@ -17,6 +18,7 @@ import com.liulishuo.filedownloader.FileDownloader;
 import com.tumblr.jumblr.types.Photo;
 import com.tumblr.jumblr.types.PhotoPost;
 import com.tumblr.jumblr.types.Post;
+import com.tumblr.jumblr.types.TextPost;
 import com.tumblr.jumblr.types.Video;
 import com.tumblr.jumblr.types.VideoPost;
 
@@ -29,6 +31,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.List;
 
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
@@ -38,6 +41,7 @@ import io.reactivex.schedulers.Schedulers;
 import static com.hochan.tumlodr.model.data.TasksManagerModel.TYPE_VIDEO;
 import static com.hochan.tumlodr.tools.Tools.getPicNameByUrl;
 import static com.hochan.tumlodr.ui.adapter.PostAdapter.TYPE_PHOTO;
+import static com.hochan.tumlodr.ui.adapter.PostAdapter.TYPE_TEXT;
 
 /**
  * .
@@ -106,9 +110,14 @@ public class FileDownloadUtil {
 
 	public static boolean download(Post post) {
 		if (post.getType().equals(TYPE_PHOTO) || post instanceof PhotoPost) {
-			return downloadTumblrPics((PhotoPost) post);
+			return downloadTumblrPics(((PhotoPost) post).getPhotos());
 		} else if (post.getType().equals(TYPE_VIDEO) || post instanceof VideoPost) {
 			return downloadTumblrVideo((VideoPost) post);
+		} else if (post.getType().equals(TYPE_TEXT) || post instanceof TextPost) {
+			TextPostBody textPostBody = TextPostBodyUtils.textPostBody(((TextPost)post).getBody());
+			if (textPostBody != null && textPostBody.getPhotos() != null && textPostBody.getPhotos().size() > 0) {
+				return downloadTumblrPics(textPostBody.getPhotos());
+			}
 		}
 		return false;
 	}
@@ -206,9 +215,9 @@ public class FileDownloadUtil {
 		RxBus.getInstance().send(new Events<>(Events.EVENT_VIDEO_ADD_TO_DOWNLOAD_FAIL, null));
 	}
 
-	private static boolean downloadTumblrPics(PhotoPost photoPost) {
+	private static boolean downloadTumblrPics(List<Photo> photos) {
 		boolean isAllExist = true;
-		for (Photo photo : photoPost.getPhotos()) {
+		for (Photo photo : photos) {
 			final String imageUrl = photo.getOriginalSize().getUrl();
 			final String imageName = getPicNameByUrl(imageUrl);
 			String path = Tools.getStoragePathByFileName(imageName);
@@ -217,11 +226,11 @@ public class FileDownloadUtil {
 				continue;
 			}
 			isAllExist = false;
-			downloadPicture(imageUrl, file, photo.getSizes().get(photo.getSizes().size() - 1).getUrl());
+			downloadPicture(imageUrl, file, photo.getOriginalSize().getUrl());
 		}
 		if (isAllExist) {
 			RxBus.getInstance().send(new Events<>(Events.EVENT_CODE_DOWNLOAD_FINISH,
-					Tools.getStoragePathByFileName(getPicNameByUrl(photoPost.getPhotos().get(0).getOriginalSize().getUrl()))));
+					Tools.getStoragePathByFileName(getPicNameByUrl(photos.get(0).getOriginalSize().getUrl()))));
 		} else {
 			RxBus.getInstance().send(new Events<>(Events.EVENT_FILE_ADD_TO_DOWNLOAD, null));
 		}

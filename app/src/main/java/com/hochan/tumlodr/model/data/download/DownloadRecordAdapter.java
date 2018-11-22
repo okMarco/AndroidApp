@@ -189,7 +189,10 @@ public class DownloadRecordAdapter extends PagedListAdapter<DownloadRecord, Down
 					if (downloadRecord != null) {
 						viewHolder.updateDownloaded(TasksManagerModel.TYPE_VIDEO.equals(downloadRecord.getType()));
 						TasksManager.getImpl().removeTaskForViewHolder(task.getId());
-						RxBus.getInstance().send(new Events<>(Events.EVENT_CODE_DOWNLOAD_FINISH, task));
+						if (new File(task.getPath()).exists()) {
+							RxBus.getInstance().send(new Events<>(Events.EVENT_CODE_DOWNLOAD_FINISH, task));
+							DownloadRecordDatabase.updateDownloadFinish(task.getId());
+						}
 						if (TumlodrGlideUtil.isContextValid(viewHolder.mViewBinding.ivThumbnail)) {
 							TumlodrGlide.with(viewHolder.mViewBinding.ivThumbnail)
 									.load(downloadRecord.getPath())

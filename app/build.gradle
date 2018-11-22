@@ -19,20 +19,20 @@ def getAppVersionCode(shortVersionCode) {
     return Integer.valueOf(code)
 }
 
-ext.VERSIOM_NAME = '3.0.0'
+ext.VERSIOM_NAME = '3.1.0'
 
 android {
     signingConfigs {
         debug {
             keyAlias 'HoChan'
             keyPassword '088210'
-            storeFile file('G:/Android/WorkSpace/Tunlodr发布版本/hochan.jks')
+            storeFile file('/Users/chenzhendong/Documents/Tunlodr发布版本/hochan.jks')
             storePassword '088210'
         }
         release {
             keyAlias 'HoChan'
             keyPassword '088210'
-            storeFile file('G:/Android/WorkSpace/Tunlodr发布版本/hochan.jks')
+            storeFile file('/Users/chenzhendong/Documents/Tunlodr发布版本/hochan.jks')
             storePassword '088210'
         }
     }

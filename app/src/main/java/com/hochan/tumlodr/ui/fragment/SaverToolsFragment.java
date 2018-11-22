@@ -41,9 +41,7 @@ public class SaverToolsFragment extends BaseFragment implements View.OnClickList
 		mViewBinding.edtvSaverInBatch.setTextColor(AppUiConfig.sTextColor);
 		mViewBinding.edtvSaverInBatch.setTextColor(AppUiConfig.sSubTextColor);
 		mViewBinding.btnGetPostOfLink.setTextColor(AppUiConfig.sTextColor);
-		mViewBinding.btnGetPostOfLink.setBackgroundColor(AppUiConfig.sThemeColor);
 		mViewBinding.btnGetBlogOfLink.setTextColor(AppUiConfig.sTextColor);
-		mViewBinding.btnGetBlogOfLink.setBackgroundColor(AppUiConfig.sThemeColor);
 
 
 		Button btnSaverForIns = view.findViewById(R.id.btn_saver_for_instagram);
@@ -81,14 +79,14 @@ public class SaverToolsFragment extends BaseFragment implements View.OnClickList
 		mViewBinding.btnGetBlogOfLink.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				if (TextUtils.isEmpty(mViewBinding.edtvSaver.getText())) {
+				if (TextUtils.isEmpty(mViewBinding.edtvSaverInBatch.getText())) {
 					Animation shake = AnimationUtils.loadAnimation(getActivity(), R.anim.anim_shake);//加载动画资源文件
 					view.startAnimation(shake);
 					return;
 				}
 				if (getActivity() != null) {
 					Intent intent = new Intent(getActivity(), InstagramParseActivity.class);
-					intent.putExtra(InstagramParseActivity.EXTRA_INSTAGRAM_BLOG_URL, mViewBinding.edtvSaver.getText().toString());
+					intent.putExtra(InstagramParseActivity.EXTRA_INSTAGRAM_BLOG_URL, mViewBinding.edtvSaverInBatch.getText().toString());
 					getActivity().startActivity(intent);
 				}
 			}

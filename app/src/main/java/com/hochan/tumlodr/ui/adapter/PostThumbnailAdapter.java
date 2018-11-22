@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +37,7 @@ import com.tumblr.jumblr.types.VideoPost;
 
 import java.io.File;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * .
@@ -95,18 +97,15 @@ public class PostThumbnailAdapter extends PostAdapter implements ListPreloader.P
 			postThumbnailViewHolder.mItemViewBinding.ivVideoPlay.setVisibility(View.INVISIBLE);
 			postThumbnailViewHolder.mItemViewBinding.tvTextTitleSimple.setVisibility(View.VISIBLE);
 			TextPostBody textPostBody = TextPostBodyUtils.textPostBody(textPost.getBody());
-			if (TextUtils.isEmpty(textPost.getTitle())) {
-				postThumbnailViewHolder.mItemViewBinding.tvTextTitleSimple.setText(HtmlTool.fromHtml(textPost.getBody(),
-						postThumbnailViewHolder.mItemViewBinding.tvTextTitleSimple));
-			} else {
-				postThumbnailViewHolder.mItemViewBinding.tvTextTitleSimple.setText(HtmlTool.fromHtml(textPostBody.getContent(),
-						postThumbnailViewHolder.mItemViewBinding.tvTextTitleSimple));
-			}
 			if (textPostBody != null && textPostBody.getPhotos() != null && textPostBody.getPhotos().size() > 0) {
 				postThumbnailViewHolder.mItemViewBinding.plPostPhotos.setVisibility(View.VISIBLE);
 				postThumbnailViewHolder.mItemViewBinding.plPostPhotos.setThumbnailPhotos(textPostBody.getPhotos());
+				postThumbnailViewHolder.mItemViewBinding.tvTextTitleSimple.setVisibility(View.GONE);
 			} else {
+				postThumbnailViewHolder.mItemViewBinding.ivVideoPlay.setVisibility(View.GONE);
 				postThumbnailViewHolder.mItemViewBinding.plPostPhotos.setVisibility(View.GONE);
+				postThumbnailViewHolder.mItemViewBinding.tvTextTitleSimple.setVisibility(View.VISIBLE);
+				postThumbnailViewHolder.mItemViewBinding.tvTextTitleSimple.setText(textPost.getTitle());
 			}
 		} else if (TYPE_LINK.equals(mDataList.get(position).getType())) {
 			LinkPost linkPost = (LinkPost) mDataList.get(position);
@@ -116,6 +115,11 @@ public class PostThumbnailAdapter extends PostAdapter implements ListPreloader.P
 			String text = linkPost.getTitle() + ":<a href='" + url + "'>" + url + "</a>";
 			postThumbnailViewHolder.mItemViewBinding.tvTextTitleSimple.setText(HtmlTool.fromHtml(text,
 					postThumbnailViewHolder.mItemViewBinding.tvTextTitleSimple));
+		}else {
+		    postThumbnailViewHolder.mItemViewBinding.ivVideoPlay.setVisibility(View.GONE);
+		    postThumbnailViewHolder.mItemViewBinding.plPostPhotos.setVisibility(View.GONE);
+			postThumbnailViewHolder.mItemViewBinding.tvTextTitleSimple.setVisibility(View.VISIBLE);
+			postThumbnailViewHolder.mItemViewBinding.tvTextTitleSimple.setText(mDataList.get(position).getType().toUpperCase(Locale.US));
 		}
 
 		if (null != mDataList.get(position).isLiked() && mDataList.get(position).isLiked()) {
@@ -179,10 +183,10 @@ public class PostThumbnailAdapter extends PostAdapter implements ListPreloader.P
 		public void onImageViewClick(int index) {
 			if (isAdapterPositionValid(getAdapterPosition())) {
 				if (mEventListener != null) {
-					if (mDataList.get(getAdapterPosition()).getType().equals(TYPE_PHOTO)) {
-						mEventListener.onShowImageDetail(index, mItemViewBinding.plPostPhotos, getItem(getAdapterPosition()));
-					} else if (mDataList.get(getAdapterPosition()).getType().equals(TYPE_VIDEO)) {
+					if (mDataList.get(getAdapterPosition()).getType().equals(TYPE_VIDEO)) {
 						mEventListener.onPlayVideo(getAdapterPosition());
+					}else {
+						mEventListener.onShowImageDetail(index, mItemViewBinding.plPostPhotos, getItem(getAdapterPosition()));
 					}
 				}
 			}
@@ -217,9 +221,23 @@ public class PostThumbnailAdapter extends PostAdapter implements ListPreloader.P
 							mDataList.get(getAdapterPosition()).isLiked() != null && mDataList.get(getAdapterPosition()).isLiked(),
 							mDataList.get(getAdapterPosition()).getBlogName());
 				} else {
-					mPopupWindow.showOtherPopup(mRecyclerView.getContext(), point,
-							mDataList.get(getAdapterPosition()).isLiked() != null && mDataList.get(getAdapterPosition()).isLiked(),
-							mDataList.get(getAdapterPosition()).getBlogName());
+                    if (mDataList.get(getAdapterPosition()).getType().equals(TYPE_TEXT)) {
+                        TextPost textPost = (TextPost) mDataList.get(getAdapterPosition());
+                        TextPostBody textPostBody = TextPostBodyUtils.textPostBody(textPost.getBody());
+                        if (textPostBody != null && textPostBody.getPhotos() != null && textPostBody.getPhotos().size() > 0) {
+                            mPopupWindow.showPhotoPopup(mRecyclerView.getContext(), point,
+                                    mDataList.get(getAdapterPosition()).isLiked() != null && mDataList.get(getAdapterPosition()).isLiked(),
+                                    mDataList.get(getAdapterPosition()).getBlogName());
+                        }else {
+                            mPopupWindow.showOtherPopup(mRecyclerView.getContext(), point,
+                                    mDataList.get(getAdapterPosition()).isLiked() != null && mDataList.get(getAdapterPosition()).isLiked(),
+                                    mDataList.get(getAdapterPosition()).getBlogName());
+                        }
+                    }else {
+                        mPopupWindow.showOtherPopup(mRecyclerView.getContext(), point,
+                                mDataList.get(getAdapterPosition()).isLiked() != null && mDataList.get(getAdapterPosition()).isLiked(),
+                                mDataList.get(getAdapterPosition()).getBlogName());
+                    }
 				}
 			}
 		}

@@ -22,7 +22,7 @@
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:orientation="horizontal"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <EditText
                 android:id="@+id/edtv_saver"
@@ -31,13 +31,20 @@
                 android:layout_weight="1"
                 android:background="@null"
                 android:hint="@string/post_link"
-                android:textSize="16sp"/>
+                android:paddingLeft="10dp"
+                android:layout_gravity="center_vertical"
+                android:textSize="12sp"
+                tools:text="https://www.youtube.com/watch?v=AWopnGerGBIhttps://www.youtube.com/watch?v=AWopnGerGBI" />
 
-            <Button
+            <TextView
                 android:id="@+id/btn_get_post_of_link"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Get"
+                android:text="GO"
+                android:textStyle="bold"
+                android:padding="15dp"
+                android:layout_gravity="center_vertical"
+                android:background="@color/transparent"
                 tools:ignore="HardcodedText"/>
         </LinearLayout>
 
@@ -54,7 +61,7 @@
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:orientation="horizontal"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <EditText
                 android:id="@+id/edtv_saver_in_batch"
@@ -62,14 +69,22 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@null"
+                android:paddingLeft="10dp"
+                android:paddingBottom="5dp"
+                android:layout_gravity="center_vertical"
                 android:hint="@string/blog_link"
-                android:textSize="16sp"/>
+                android:textSize="12sp"
+                tools:text="https://www.youtube.com/watch?v=AWopnGerGBIhttps://www.youtube.com/watch?v=AWopnGerGBI"/>
 
-            <Button
+            <TextView
                 android:id="@+id/btn_get_blog_of_link"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Get"
+                android:text="GO"
+                android:padding="15dp"
+                android:textStyle="bold"
+                android:background="@color/transparent"
+                android:layout_gravity="center_vertical"
                 tools:ignore="HardcodedText"/>
         </LinearLayout>
     </LinearLayout>

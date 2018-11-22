@@ -33,6 +33,7 @@
                 android:padding="5dp"
                 android:textColor="@color/colorTextWhite"
                 android:textSize="14sp"
+                android:gravity="center"
                 android:textStyle="bold"/>
         </LinearLayout>
         <LinearLayout
