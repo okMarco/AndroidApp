@@ -70,7 +70,8 @@
                                         android:layout_height="wrap_content"
                                         android:background="@color/colorTransparent"
                                         android:padding="5dp"
-                                        android:src="@drawable/ic_arrow_back"/>
+                                        android:src="@drawable/ic_arrow_back"
+                                        tools:ignore="ContentDescription" />
 
                                     <TextView
                                         android:id="@+id/tv_blog_title"
@@ -109,8 +110,8 @@
 
                                 <ImageView
                                     android:id="@+id/riv_blog_avatar"
-                                    android:layout_width="60dp"
-                                    android:layout_height="60dp"
+                                    android:layout_width="70dp"
+                                    android:layout_height="70dp"
                                     android:layout_marginRight="10dp"
                                     android:background="@drawable/bg_unfollow"
                                     tools:ignore="RtlHardcoded"/>
@@ -118,7 +119,7 @@
                                 <Button
                                     android:id="@+id/btn_follow"
                                     style="@style/Base.Widget.AppCompat.Button.Borderless"
-                                    android:layout_width="60dp"
+                                    android:layout_width="70dp"
                                     android:layout_height="30dp"
                                     android:layout_marginTop="5dp"
                                     android:background="@drawable/bg_following"

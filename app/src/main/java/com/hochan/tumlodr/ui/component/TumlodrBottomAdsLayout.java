@@ -46,7 +46,9 @@ public class TumlodrBottomAdsLayout extends FrameLayout {
     private static final String ADUNIT_ID_DOWNLOAD_ACTIVITY = "ca-app-pub-3870083751110505/5705726593";
     private static final String ADUNIT_ID_FOLLOWING_ACTIVITY = "ca-app-pub-3870083751110505/5925218441";
     private static final String ADUNIT_ID_LIKE_ACTIVITY = "ca-app-pub-3870083751110505/8906605004";
-    private static final String ADUNIT_ID_SETTINGS_ACTIVITY = "ca-app-pub-3870083751110505/3817929853\n";
+    private static final String ADUNIT_ID_SETTINGS_ACTIVITY = "ca-app-pub-3870083751110505/3817929853";
+
+	public static final String ADUNIT_ID_INSTAGRAM_ACTIVITY = "ca-app-pub-3870083751110505/5125381905";
 
 	private AdView mAdView;
 

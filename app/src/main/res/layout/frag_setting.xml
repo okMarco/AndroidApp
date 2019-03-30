@@ -39,24 +39,12 @@
                             android:layout_weight="1"
                             android:text="@string/setting_change_theme_color"/>
 
-                        <android.support.v7.widget.CardView
-                            android:id="@+id/cv_theme_blue"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:foreground="@null"
-                            app:cardBackgroundColor="@color/colorPrimaryBlue"
-                            app:cardCornerRadius="@dimen/cardview_corner_radius"
-                            app:cardElevation="2dp"/>
-
-                        <android.support.v7.widget.CardView
-                            android:id="@+id/cv_theme_white"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:layout_margin="15dp"
-                            android:foreground="@null"
-                            app:cardBackgroundColor="@color/colorPrimaryWhite"
-                            app:cardCornerRadius="@dimen/cardview_corner_radius"
-                            app:cardElevation="2dp"/>
+                        <Switch
+                            android:id="@+id/sw_night_mode"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingRight="15dp"
+                            tools:ignore="RtlHardcoded,RtlSymmetry"/>
                     </LinearLayout>
 
                     <include
@@ -109,13 +97,12 @@
                             android:id="@+id/tv_set_column"
                             style="@style/SettingTextViewStyle"
                             android:layout_weight="1"
-                            android:text="@string/setting_picture_span"/>
+                            android:text="@string/setting_picture_span" />
 
                         <Spinner
                             android:id="@+id/sp_set_column"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            />
+                            android:layout_height="wrap_content" />
                     </LinearLayout>
 
                     <include
@@ -207,12 +194,6 @@
                             android:paddingRight="15dp"
                             tools:ignore="RtlHardcoded,RtlSymmetry"/>
                     </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="5dp"
-                        android:background="@color/colorTranBlack"/>
-
                     <include
                         layout="@layout/view_divider"/>
 
@@ -254,11 +235,12 @@
                     </LinearLayout>
 
                 </LinearLayout>
-
+                <include
+                    layout="@layout/view_divider"/>
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="5dp"
-                    android:background="@color/colorTranBlack"/>
+                    android:background="@color/transparent"/>
 
                 <include
                     layout="@layout/view_divider"/>
@@ -269,20 +251,8 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <LinearLayout
-                        android:id="@+id/ll_feedback"
-                        style="@style/SettingLinearLayoutStyle"
-                        android:visibility="gone">
-
-                        <TextView
-                            android:id="@+id/tv_feedback"
-                            style="@style/SettingTextViewStyle"
-                            android:layout_weight="1"
-                            android:text="@string/setting_feedback"/>
-                    </LinearLayout>
-
-                    <include
-                        layout="@layout/view_divider"/>
+                    <!--<include-->
+                        <!--layout="@layout/view_divider"/>-->
 
                     <LinearLayout
                         android:id="@+id/ll_set_logout"

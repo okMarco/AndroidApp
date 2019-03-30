@@ -75,11 +75,9 @@ public class FitsSystemWindowFrameLayout extends FrameLayout {
 	}
 
 	private void updatePadding(Rect insets) {
-		int leftPadding = this.originalPadding.left + insets.left;
-		int rightPadding = this.originalPadding.right + insets.right;
 		int bottomPadding = this.originalPadding.bottom + insets.bottom;
 		int topPadding = this.originalPadding.top + insets.top;
-		this.setPadding(leftPadding, topPadding, rightPadding, bottomPadding);
+		this.setPadding(0, topPadding, 0, bottomPadding);
 	}
 
 	private boolean navBarCanMove() {

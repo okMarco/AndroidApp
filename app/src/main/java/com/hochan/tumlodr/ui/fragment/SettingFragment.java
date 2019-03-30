@@ -49,11 +49,23 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
 	@Override
 	public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-
-		mViewBinding.llSettingContainerTop.setBackgroundColor(AppUiConfig.sThemeColor);
-		mViewBinding.llSettingContainerBottom.setBackgroundColor(AppUiConfig.sThemeColor);
+		mViewBinding.swNightMode.setChecked(!AppUiConfig.sIsLightTheme);
+		mViewBinding.swNightMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+			@Override
+			public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+				AppUiConfig.setTumlodrTheme(getContext(), isChecked ? R.style.AppTheme_NoActionBar_Dark : R.style.AppTheme_NoActionBar_White);
+				SharedPreferences spTheme = getActivity().getSharedPreferences(AppConfig.SHARE_THEME, Context.MODE_PRIVATE);
+				SharedPreferences.Editor editor = spTheme.edit();
+				editor.putInt(AppConfig.SHARE_THEME_ID, isChecked ? R.style.AppTheme_NoActionBar_Dark : R.style.AppTheme_NoActionBar_White);
+				RxBus.getInstance().send(new Events<>(Events.EVENT_CHANGE_THEME, null));
+				editor.apply();
+				goToDashboard();
+			}
+		});
 
 		initTextColor();
+		mViewBinding.llSettingContainerTop.setBackgroundColor(AppUiConfig.sThemeColor);
+		mViewBinding.llSettingContainerBottom.setBackgroundColor(AppUiConfig.sThemeColor);
 
 		if (AppConfig.sPostListLayoutStyle == AppConfig.LAYOUT_DETAIL) {
 			mViewBinding.rbLayoutDetail.setChecked(true);
@@ -89,8 +101,6 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
 			}
 		});
 
-		mViewBinding.cvThemeWhite.setOnClickListener(this);
-		mViewBinding.cvThemeBlue.setOnClickListener(this);
 		mViewBinding.llStoragePath.setOnClickListener(this);
 
 		initSettingColumn();
@@ -134,7 +144,6 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
 		});
 
 		mViewBinding.tvSelectedStoragePath.setText(AppConfig.mStoragePath);
-		view.findViewById(R.id.ll_feedback).setOnClickListener(this);
 
 		mViewBinding.tvChangeApi.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -194,7 +203,6 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
 
 	private void initTextColor() {
 		mViewBinding.tvChosseTheme.setTextColor(AppUiConfig.sTextColor);
-		mViewBinding.tvFeedback.setTextColor(AppUiConfig.sTextColor);
 		mViewBinding.tvSetColumn.setTextColor(AppUiConfig.sTextColor);
 		mViewBinding.tvSetVideoPaly.setTextColor(AppUiConfig.sTextColor);
 		mViewBinding.tvSetLogout.setTextColor(AppUiConfig.sTextColor);
@@ -220,25 +228,6 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
 		SharedPreferences.Editor editor = spTheme.edit();
 
 		switch (v.getId()) {
-			case R.id.cv_theme_blue: {
-				if (AppUiConfig.sThemId != R.style.AppTheme_NoActionBar_Dark) {
-					AppUiConfig.setTumlodrTheme(getContext(), R.style.AppTheme_NoActionBar_Dark);
-					editor.putInt(AppConfig.SHARE_THEME_ID, R.style.AppTheme_NoActionBar_Dark);
-					RxBus.getInstance().send(new Events<>(Events.EVENT_CHANGE_THEME, null));
-					goToDashboard();
-				}
-
-				break;
-			}
-			case R.id.cv_theme_white: {
-				if (AppUiConfig.sThemId != R.style.AppTheme_NoActionBar_White) {
-					AppUiConfig.setTumlodrTheme(getContext(), R.style.AppTheme_NoActionBar_White);
-					editor.putInt(AppConfig.SHARE_THEME_ID, R.style.AppTheme_NoActionBar_White);
-					RxBus.getInstance().send(new Events<>(Events.EVENT_CHANGE_THEME, null));
-					goToDashboard();
-				}
-				break;
-			}
 			case R.id.ll_set_logout: {
 				logout();
 				break;

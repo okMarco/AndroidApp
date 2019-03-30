@@ -64,7 +64,7 @@
     <string name="menu_download_manager_only_image">图片</string>
     <string name="menu_download_manager_only_video">视频</string>
     <string name="menu_download_manager_unfinish">未完成</string>
-    <string name="setting_change_theme_color">Change theme color</string>
+    <string name="setting_change_theme_color">夜间模式</string>
     <string name="setting_save_file_path">设置文件存储路径</string>
     <string name="splash_login">Login</string>
     <string name="string_copy">已复制:</string>

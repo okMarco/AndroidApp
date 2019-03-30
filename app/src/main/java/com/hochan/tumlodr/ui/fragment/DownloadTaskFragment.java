@@ -237,7 +237,7 @@ public class DownloadTaskFragment extends BaseMvpListFragment implements Downloa
 				@Override
 				public void onChanged(@Nullable PagedList<DownloadRecord> downloadRecords) {
 					if (getActivity() instanceof InstagramParseActivity) {
-						mViewBinding.recyclerView.scrollToPosition(0);
+						//mViewBinding.recyclerView.scrollToPosition(0);
 					}
 					mDownloadRecordAdapter.setList(downloadRecords);
 				}

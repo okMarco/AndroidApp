@@ -106,7 +106,7 @@ public class LeftMenuFragment extends BaseFragment {
 						Tools.loadAvatar(ivUserIcon, UserInfo.sBlogName);
 					}
 					if (tvUserName != null) {
-						//tvUserName.setText(UserInfo.sBlogName);
+						tvUserName.setText(UserInfo.sBlogName);
 					}
 					setUpLeftMenu();
 				} else if (o instanceof Events && ((Events) o).mCode == Events.EVENT_UPDATE_LAST_VISITED_BLOG) {
@@ -137,7 +137,7 @@ public class LeftMenuFragment extends BaseFragment {
 
 		tvUserName = view.findViewById(R.id.tv_user_name);
 		tvUserName.setTextColor(AppUiConfig.sTextColor);
-		//tvUserName.setText(UserInfo.sBlogName);
+		tvUserName.setText(UserInfo.sBlogName);
 
 		setUpLeftMenu();
 

@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">ColdSoup</string>
     <string name="title_activity_splash" translatable="false">SplashActivity</string>
     <string name="title_activity_like">Like</string>
@@ -118,7 +118,7 @@
     <string name="menu_download_manager_only_image">Image</string>
     <string name="menu_download_manager_only_video">Video</string>
     <string name="menu_download_manager_unfinish">Unfinished</string>
-    <string name="setting_change_theme_color">Change theme color</string>
+    <string name="setting_change_theme_color">Night Mode</string>
     <string name="setting_save_file_path">File storage path</string>
     <string name="splash_login">Login</string>
     <string name="string_copy">Copy:</string>
@@ -129,7 +129,7 @@
     <string name="video_list_more_videos">More Videos</string>
     <string name="unsupported_video">Unsupported</string>
     <string name="follow_success">Following</string>
-    <string name="title_activity_saver_tools">SaverToolsActivity</string>
+    <string name="title_activity_saver_tools" tools:ignore="MissingTranslation">SaverToolsActivity</string>
     <string name="left_menu_saver_tools">Saver Tools</string>
     <string name="saver_tools_have_a_try">Try</string>
     <string name="saver_tools_ok">OK</string>
@@ -145,14 +145,14 @@
     <string name="parsing">Parsing</string>
     <string name="select_all">Select all</string>
     <string name="cancle_select_all">Cancel select all</string>
-    <string name="title_activity_group_download_task_manager">GroupDownloadTaskManagerActivity
+    <string name="title_activity_group_download_task_manager" translatable="false">GroupDownloadTaskManagerActivity
     </string>
     <string name="post_detail">Post</string>
     <string name="setting_layout">Layout</string>
     <string name="layout_water_fall">Waterfall</string>
     <string name="layout_detail">Detail</string>
     <string name="allow_draw_overlay">NO OVERLAY PERMISSION.</string>
-    <string name="left_menu_search">Search</string>
+    <string name="left_menu_search" translatable="false">Search</string>
     <string name="menu_show_only_text">Text</string>
     <string name="set_custom_api_key">Set Custom API Key</string>
     <string name="setting_change_video_player">Change Video Player</string>

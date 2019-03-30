@@ -71,10 +71,8 @@ public class FitsSystemWindowTabLayout extends TabLayout {
 	}
 
 	private void updatePadding(Rect insets) {
-		int leftPadding = this.originalPadding.left + insets.left;
-		int rightPadding = this.originalPadding.right + insets.right;
 		int topPadding = this.originalPadding.top + insets.top;
-		this.setPadding(leftPadding, topPadding, rightPadding, 0);
+		this.setPadding(0, topPadding, 0, 0);
 	}
 
 	private boolean navBarCanMove() {

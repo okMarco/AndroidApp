@@ -141,7 +141,7 @@ public class Tools {
 					.load(avatarUrl)
 					.placeholder(AppUiConfig.sPicHolderResource)
 					.skipMemoryCache(true)
-					.transform(new MultiTransformation<>(new RoundedCorners(15),
+					.transform(new MultiTransformation<>(new RoundedCorners(5),
 							new FitCenter()))
 					.into(imageView);
 		}

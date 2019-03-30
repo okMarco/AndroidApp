@@ -19,7 +19,7 @@ def getAppVersionCode(shortVersionCode) {
     return Integer.valueOf(code)
 }
 
-ext.VERSIOM_NAME = '3.3.0'
+ext.VERSIOM_NAME = '3.3.1'
 
 android {
     signingConfigs {

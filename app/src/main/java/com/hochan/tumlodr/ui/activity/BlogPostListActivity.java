@@ -121,7 +121,7 @@ public class BlogPostListActivity extends BaseViewBindingActivity<ActivityBlogBi
 				.skipMemoryCache(true)
 				.transform(new MultiTransformation<>(new CenterCrop(),
 						new BlurTransformation(this, 25),
-						new ColorFilterTransformation(Color.parseColor("#70000000"))))
+						new ColorFilterTransformation(Color.parseColor("#A0000000"))))
 				.into(mViewBinding.ivBigAvatar);
 
 		mViewBinding.rivBlogAvatar.setOnClickListener(new View.OnClickListener() {

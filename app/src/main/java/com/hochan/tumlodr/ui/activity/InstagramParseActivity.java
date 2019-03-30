@@ -2,13 +2,14 @@ package com.hochan.tumlodr.ui.activity;
 
 import android.annotation.SuppressLint;
 import android.graphics.drawable.Drawable;
-import android.media.MediaScannerConnection;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.gson.Gson;
 import com.hochan.tumlodr.R;
@@ -24,6 +25,7 @@ import com.hochan.tumlodr.tools.InstagramParse;
 import com.hochan.tumlodr.tools.Tools;
 import com.hochan.tumlodr.ui.activity.baseactivity.BaseViewBindingActivity;
 import com.hochan.tumlodr.ui.component.SingleMediaScanner;
+import com.hochan.tumlodr.ui.component.TumlodrBottomAdsLayout;
 import com.hochan.tumlodr.ui.fragment.DownloadTaskFragment;
 import com.hochan.tumlodr.util.FileDownloadUtil;
 import com.hochan.tumlodr.util.ViewUtils;
@@ -64,6 +66,8 @@ public class InstagramParseActivity extends BaseViewBindingActivity<ActivityInst
 	private String mGroupName;
 	private String mBlogName;
     private boolean noMoreData;
+
+    private boolean mIsFirstEnter = true;
 
 	private WebViewClient mWebViewClient = new WebViewClient() {
 		@Override
@@ -152,7 +156,6 @@ public class InstagramParseActivity extends BaseViewBindingActivity<ActivityInst
 					if (instagramBlogPostListVo != null && instagramBlogPostListVo.status.equals("ok")) {
 						List<InstagramBlogPostListVo.Edge> edges = instagramBlogPostListVo.data.user.edge_owner_to_timeline_media.edges;
 						if (!instagramBlogPostListVo.data.user.edge_owner_to_timeline_media.page_info.has_next_page) {
-							mHandler.removeCallbacks(mWebViewScroll);
 							mHandler.post(new Runnable() {
 								@Override
 								public void run() {
@@ -163,7 +166,8 @@ public class InstagramParseActivity extends BaseViewBindingActivity<ActivityInst
 									noMoreData = false;
 								}
 							});
-						}
+                            mHandler.removeCallbacks(mWebViewScroll);
+                        }
 						if (edges != null && edges.size() > 0) {
 							mParseCount += edges.size();
 							for (InstagramBlogPostListVo.Edge edge : edges) {
@@ -244,6 +248,7 @@ public class InstagramParseActivity extends BaseViewBindingActivity<ActivityInst
 		mGroupName = TAG_INSTAGRAM + "_" + mBlogName;
 	}
 
+    @SuppressWarnings("deprecation")
 	@SuppressLint("SetJavaScriptEnabled")
 	@Override
 	protected void onResume() {
@@ -253,8 +258,6 @@ public class InstagramParseActivity extends BaseViewBindingActivity<ActivityInst
 		mViewBinding.webView.setWebViewClient(mWebViewClient);
 		mViewBinding.webView.getSettings().setJavaScriptEnabled(true);
 		mViewBinding.webView.setWebChromeClient(mWebChromeClient);
-
-		mHandler.postDelayed(mWebViewScroll, 2000);
 
 		DownloadTaskFragment downloadTaskFragment = (DownloadTaskFragment) getSupportFragmentManager().findFragmentById(R.id.fl_content_container);
 		if (downloadTaskFragment == null) {
@@ -270,24 +273,31 @@ public class InstagramParseActivity extends BaseViewBindingActivity<ActivityInst
 				mViewBinding.webView.loadUrl(mUrl);
 			}
 		}, 1000);
-
-//		mInterstitialAd = new InterstitialAd(this);
-//		mInterstitialAd.setAdUnitId("ca-app-pub-3870083751110505/5125381905");
-//		mInterstitialAd.loadAd(new AdRequest.Builder().addTestDevice(TumlodrBottomAdsLayout.DEVICE_ID).build());
-//		mInterstitialAd.setAdListener(new AdListener() {
-//			@Override
-//			public void onAdLoaded() {
-//				super.onAdLoaded();
-//				mInterstitialAd.show();
-//			}
-//		});
+        mHandler.postDelayed(mWebViewScroll, 2000);
 
 		mViewBinding.btnSaveImage.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+                if (mHandler != null) {
+                    mHandler.removeCallbacks(mWebViewScroll);
+                }
 				finish();
 			}
 		});
+
+		if (mIsFirstEnter) {
+		    mIsFirstEnter = false;
+            final InterstitialAd interstitialAd = new InterstitialAd(this);
+            interstitialAd.setAdUnitId(TumlodrBottomAdsLayout.ADUNIT_ID_INSTAGRAM_ACTIVITY);
+            interstitialAd.loadAd(new AdRequest.Builder().addTestDevice(TumlodrBottomAdsLayout.DEVICE_ID).build());
+            interstitialAd.setAdListener(new AdListener() {
+                @Override
+                public void onAdLoaded() {
+                    super.onAdLoaded();
+                    interstitialAd.show();
+                }
+            });
+        }
 	}
 
 	private Runnable mWebViewScroll = new Runnable() {
