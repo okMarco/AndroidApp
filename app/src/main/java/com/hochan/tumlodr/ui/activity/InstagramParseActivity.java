@@ -2,6 +2,7 @@ package com.hochan.tumlodr.ui.activity;
 
 import android.annotation.SuppressLint;
 import android.graphics.drawable.Drawable;
+import android.media.MediaScannerConnection;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
@@ -22,6 +23,7 @@ import com.hochan.tumlodr.tools.AppUiConfig;
 import com.hochan.tumlodr.tools.InstagramParse;
 import com.hochan.tumlodr.tools.Tools;
 import com.hochan.tumlodr.ui.activity.baseactivity.BaseViewBindingActivity;
+import com.hochan.tumlodr.ui.component.SingleMediaScanner;
 import com.hochan.tumlodr.ui.fragment.DownloadTaskFragment;
 import com.hochan.tumlodr.util.FileDownloadUtil;
 import com.hochan.tumlodr.util.ViewUtils;
@@ -49,8 +51,7 @@ import okhttp3.Request;
 public class InstagramParseActivity extends BaseViewBindingActivity<ActivityInstagramParseBinding> {
 
 	public static final String EXTRA_INSTAGRAM_BLOG_URL = "name";
-	public static final String INSTAGRAM_URL = "https://www.instagram.com/";
-	public static final String TAG_INSTAGRAM = "instagram";
+    public static final String TAG_INSTAGRAM = "instagram";
 
 	private Handler mHandler = new Handler();
 	boolean mPageDown = true;
@@ -62,8 +63,7 @@ public class InstagramParseActivity extends BaseViewBindingActivity<ActivityInst
 	private String mUrl;
 	private String mGroupName;
 	private String mBlogName;
-	private InterstitialAd mInterstitialAd;
-
+    private boolean noMoreData;
 
 	private WebViewClient mWebViewClient = new WebViewClient() {
 		@Override
@@ -158,6 +158,9 @@ public class InstagramParseActivity extends BaseViewBindingActivity<ActivityInst
 								public void run() {
 									Toast.makeText(InstagramParseActivity.this, "No more data.", Toast.LENGTH_LONG).show();
 									mViewBinding.progressBar.setVisibility(View.GONE);
+									mViewBinding.btnImageUrlCount.setVisibility(View.GONE);
+									mViewBinding.btnSaveImage.setVisibility(View.GONE);
+									noMoreData = false;
 								}
 							});
 						}
@@ -209,10 +212,8 @@ public class InstagramParseActivity extends BaseViewBindingActivity<ActivityInst
 		}
 	};
 
-	@Override
-	public void setUpObserver() {
-		// 不监听
-	}
+    public InstagramParseActivity() {
+    }
 
 	private void notifyDataChange() {
 		mHandler.post(new Runnable() {
@@ -237,6 +238,9 @@ public class InstagramParseActivity extends BaseViewBindingActivity<ActivityInst
 		int startIndex = tmpString.lastIndexOf("/") + 1;
 		int endIndex = tmpString.length();
 		mBlogName = tmpString.substring(startIndex, endIndex);
+		if (mBlogName.contains("?")) {
+			mBlogName = mBlogName.substring(0, mBlogName.indexOf("?"));
+		}
 		mGroupName = TAG_INSTAGRAM + "_" + mBlogName;
 	}
 
@@ -295,7 +299,9 @@ public class InstagramParseActivity extends BaseViewBindingActivity<ActivityInst
 				mViewBinding.webView.pageUp(false);
 			}
 			mPageDown = !mPageDown;
-			mHandler.postDelayed(mWebViewScroll, 2000);
+			if (!noMoreData) {
+                mHandler.postDelayed(mWebViewScroll, 2000);
+            }
 		}
 	};
 
@@ -321,4 +327,12 @@ public class InstagramParseActivity extends BaseViewBindingActivity<ActivityInst
 			mHandler.removeCallbacks(mWebViewScroll);
 		}
 	}
+//video/mp4
+    public void showImageDownloadSuccessSnackBar(String imagePath) {
+        new SingleMediaScanner(this, imagePath);
+    }
+
+    public void showVideoDownloadSuccessSnackBar(String videoPath) {
+	    new SingleMediaScanner(this, videoPath);
+    }
 }

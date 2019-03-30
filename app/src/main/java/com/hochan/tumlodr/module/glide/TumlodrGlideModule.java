@@ -9,22 +9,28 @@ import com.bumptech.glide.GlideBuilder;
 import com.bumptech.glide.Registry;
 import com.bumptech.glide.annotation.GlideModule;
 import com.bumptech.glide.integration.okhttp3.OkHttpUrlLoader;
-import com.bumptech.glide.load.DecodeFormat;
 import com.bumptech.glide.load.engine.cache.DiskLruCacheFactory;
 import com.bumptech.glide.load.engine.cache.ExternalPreferredCacheDiskCacheFactory;
 import com.bumptech.glide.load.engine.cache.LruResourceCache;
 import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.module.AppGlideModule;
-import com.bumptech.glide.request.RequestOptions;
-import com.tumblr.jumblr.types.Photo;
+import com.hochan.tumlodr.jumblr.types.Photo;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.security.cert.CertificateException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.WeakHashMap;
 import java.util.concurrent.TimeUnit;
+
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
@@ -69,12 +75,15 @@ public class TumlodrGlideModule extends AppGlideModule {
 	@Override
 	public void registerComponents(Context context, Glide glide, Registry registry) {
 		super.registerComponents(context, glide, registry);
-		OkHttpClient client = new OkHttpClient.Builder().connectTimeout(100, TimeUnit.SECONDS)
+		OkHttpClient.Builder builder = new OkHttpClient.Builder();
+		OkHttpClient client = builder
+				.connectTimeout(100, TimeUnit.SECONDS)
 				.readTimeout(100, TimeUnit.SECONDS)
 				.addNetworkInterceptor(createInterceptor(new DispatchingProgressListener()))
 				.build();
-		registry.append(Photo.class, InputStream.class, new TunlodrGlideModelLoder.Factory());
 		registry.replace(GlideUrl.class, InputStream.class, new OkHttpUrlLoader.Factory(client));
+		registry.append(Photo.class, InputStream.class, new TunlodrGlideModelLoder.Factory());
+
 	}
 
 	public static void forget(String url) {

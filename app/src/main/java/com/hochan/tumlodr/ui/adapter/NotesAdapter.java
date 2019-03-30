@@ -7,13 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.hochan.tumlodr.jumblr.types.Note;
 import com.hochan.tumlodr.module.glide.TumlodrGlide;
 import com.hochan.tumlodr.tools.AppUiConfig;
 import com.hochan.tumlodr.ui.activity.BlogPostListActivity;
 import com.hochan.tumlodr.R;
 import com.hochan.tumlodr.databinding.ItemNoteBinding;
 import com.hochan.tumlodr.tools.Tools;
-import com.tumblr.jumblr.types.Note;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,7 +63,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
 				if (mActivity == null) {
 					return;
 				}
-				BlogPostListActivity.start(mActivity, note.getBlogName(), false);
+				BlogPostListActivity.start(mActivity, note.getBlogName(), note.followed);
 			}
 		});
 	}

@@ -5,7 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.hochan.tumlodr.TumlodrApp;
-import com.tumblr.jumblr.types.Blog;
+import com.hochan.tumlodr.jumblr.types.Blog;
 
 import java.util.ArrayList;
 import java.util.List;

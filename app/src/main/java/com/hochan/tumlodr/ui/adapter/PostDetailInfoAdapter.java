@@ -1,13 +1,18 @@
 package com.hochan.tumlodr.ui.adapter;
 
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.hochan.tumlodr.R;
 import com.hochan.tumlodr.TumlodrApp;
+import com.hochan.tumlodr.jumblr.types.Note;
+import com.hochan.tumlodr.jumblr.types.Post;
+import com.hochan.tumlodr.jumblr.types.VideoPost;
 import com.hochan.tumlodr.module.glide.TumlodrGlide;
 import com.hochan.tumlodr.module.glide.TumlodrGlideUtil;
 import com.hochan.tumlodr.tools.AppUiConfig;
@@ -15,11 +20,7 @@ import com.hochan.tumlodr.tools.ScreenTools;
 import com.hochan.tumlodr.tools.Tools;
 import com.hochan.tumlodr.ui.activity.BlogPostListActivity;
 import com.hochan.tumlodr.ui.component.TumlodrBottomAdsLayout;
-import com.tumblr.jumblr.types.Note;
-import com.tumblr.jumblr.types.Post;
-import com.tumblr.jumblr.types.VideoPost;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -54,23 +55,21 @@ public class PostDetailInfoAdapter extends PostDetailAdapter {
 	public int getItemViewType(int position) {
 		if (position == 0) {
 			switch (mPost.getType()) {
-				case TYPE_PHOTO: {
+				case PHOTO: {
 					return CODE_TYPE_PHOTO;
 				}
-				case TYPE_VIDEO: {
+				case VIDEO: {
 					return CODE_TYPE_VIDEO;
 				}
-				case TYPE_TEXT: {
+				case TEXT: {
 					return CODE_TYPE_TEXT;
 				}
 				default: {
 					return CODE_TYPE_UNKNOWN;
 				}
 			}
-		} else if (position >= 2 && position - 1 < mPost.getNotes().size()) {
+		} else if (position >= 1 && position - 1 < mPost.getNotes().size()) {
 			return CODE_TYPE_NOTE;
-		} else if (position == 1) {
-			return CODE_TYPE_AD;
 		}
 		return CODE_TYPE_UNKNOWN;
 	}
@@ -79,16 +78,6 @@ public class PostDetailInfoAdapter extends PostDetailAdapter {
 	public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 		if (viewType == CODE_TYPE_NOTE) {
 			return new NotesAdapter.NoteViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_note, parent, false));
-		} else if (viewType == CODE_TYPE_AD) {
-			TumlodrBottomAdsLayout adsLayout = new TumlodrBottomAdsLayout(parent.getContext());
-			adsLayout.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-					ViewGroup.LayoutParams.WRAP_CONTENT));
-			return new RecyclerView.ViewHolder(adsLayout) {
-				@Override
-				public String toString() {
-					return super.toString();
-				}
-			};
 		}
 		return super.onCreateViewHolder(parent, viewType);
 	}
@@ -96,7 +85,7 @@ public class PostDetailInfoAdapter extends PostDetailAdapter {
 	@Override
 	public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 		if (getItemViewType(position) == CODE_TYPE_NOTE) {
-			int notePosition = position - 2;
+			int notePosition = position - 1;
 			if (notePosition >= 0 && notePosition < mPost.getNotes().size()) {
 				final Note note = mPost.getNotes().get(notePosition);
 				NotesAdapter.NoteViewHolder noteViewHolder = (NotesAdapter.NoteViewHolder) holder;
@@ -115,12 +104,11 @@ public class PostDetailInfoAdapter extends PostDetailAdapter {
 				noteViewHolder.mViewBinding.llNoteRootView.setOnClickListener(new View.OnClickListener() {
 					@Override
 					public void onClick(View view) {
-						BlogPostListActivity.start(mRecyclerView.getContext(), note.getBlogName(), false);
+						BlogPostListActivity.start(mRecyclerView.getContext(), note.getBlogName(), note.followed);
 					}
 				});
 			}
-			return;
-		} else if (getItemViewType(position) != CODE_TYPE_AD) {
+		} else {
 			super.onBindViewHolder(holder, position);
 		}
 	}

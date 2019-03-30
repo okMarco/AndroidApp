@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.WindowManager;
 
 import com.hochan.tumlodr.R;
 import com.hochan.tumlodr.tools.AppUiConfig;
@@ -14,6 +15,8 @@ import com.hochan.tumlodr.util.statusbar.StatusBarCompat;
 
 import static android.os.Build.VERSION_CODES.LOLLIPOP;
 import static android.os.Build.VERSION_CODES.M;
+import static android.view.View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR;
+import static android.view.WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION;
 import static com.hochan.tumlodr.util.statusbar.PhoneSystemCompat.isEMUI;
 import static com.hochan.tumlodr.util.statusbar.PhoneSystemCompat.isMEIZU;
 import static com.hochan.tumlodr.util.statusbar.PhoneSystemCompat.isMIUI;
@@ -31,6 +34,10 @@ public abstract class BaseAppUiActivity extends BaseAppObserverActivity {
 		setTheme(getThemeId());
 		super.onCreate(savedInstanceState);
 		initStatusBar();
+
+        if (!AppUiConfig.sIsLightTheme && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
+            getWindow().addFlags(FLAG_TRANSLUCENT_NAVIGATION);
+        }
 	}
 
 	public int getThemeId() {

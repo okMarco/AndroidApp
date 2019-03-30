@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,24 +15,24 @@ import com.bumptech.glide.RequestBuilder;
 import com.hochan.tumlodr.R;
 import com.hochan.tumlodr.TumlodrApp;
 import com.hochan.tumlodr.databinding.ItemPostThumbnailBinding;
+import com.hochan.tumlodr.jumblr.types.LinkPost;
+import com.hochan.tumlodr.jumblr.types.PhotoPost;
+import com.hochan.tumlodr.jumblr.types.Post;
+import com.hochan.tumlodr.jumblr.types.TextPost;
+import com.hochan.tumlodr.jumblr.types.VideoPost;
 import com.hochan.tumlodr.model.TumlodrService;
 import com.hochan.tumlodr.model.data.TextPostBody;
 import com.hochan.tumlodr.model.sharedpreferences.UserInfo;
+import com.hochan.tumlodr.module.webbrowser.WebViewActivity;
 import com.hochan.tumlodr.tools.HtmlTool;
 import com.hochan.tumlodr.tools.ScreenTools;
 import com.hochan.tumlodr.tools.Tools;
-import com.hochan.tumlodr.module.webbrowser.WebViewActivity;
 import com.hochan.tumlodr.ui.component.IPhotoLayout;
 import com.hochan.tumlodr.ui.component.PostPhotoLayout;
 import com.hochan.tumlodr.ui.component.TumlodrPopupWindow;
 import com.hochan.tumlodr.util.FileDownloadUtil;
 import com.hochan.tumlodr.util.TextPostBodyUtils;
 import com.hochan.tumlodr.util.ViewUtils;
-import com.tumblr.jumblr.types.LinkPost;
-import com.tumblr.jumblr.types.PhotoPost;
-import com.tumblr.jumblr.types.Post;
-import com.tumblr.jumblr.types.TextPost;
-import com.tumblr.jumblr.types.VideoPost;
 
 import java.io.File;
 import java.util.List;
@@ -84,15 +83,15 @@ public class PostThumbnailAdapter extends PostAdapter implements ListPreloader.P
 		postThumbnailViewHolder.mItemViewBinding.tvTextTitleSimple.setVisibility(View.GONE);
 		postThumbnailViewHolder.mItemViewBinding.plPostPhotos.setVisibility(View.VISIBLE);
 		postThumbnailViewHolder.mItemViewBinding.plPostPhotos.setImageViewWidth(mImageViewWidth);
-		if (TYPE_PHOTO.equals(mDataList.get(position).getType())) {
+		if (mDataList.get(position).getType() == Post.PostType.PHOTO) {
 			postThumbnailViewHolder.mItemViewBinding.plPostPhotos
 					.setThumbnailPhotos(((PhotoPost) mDataList.get(position)).getPhotos());
-		} else if (TYPE_VIDEO.equals(mDataList.get(position).getType())) {
+		} else if (mDataList.get(position).getType() == Post.PostType.VIDEO) {
 			postThumbnailViewHolder.mItemViewBinding.ivVideoPlay.setVisibility(View.VISIBLE);
 			VideoPost videoPost = (VideoPost) mDataList.get(position);
 			postThumbnailViewHolder.mItemViewBinding.plPostPhotos.setVideoThumbnail(videoPost.getThumbnailUrl(),
 					videoPost.getThumbnailWidth(), videoPost.getThumbnailHeight());
-		} else if (TYPE_TEXT.equals(mDataList.get(position).getType())) {
+		} else if (mDataList.get(position).getType() == Post.PostType.TEXT) {
 			TextPost textPost = (TextPost) mDataList.get(position);
 			postThumbnailViewHolder.mItemViewBinding.ivVideoPlay.setVisibility(View.INVISIBLE);
 			postThumbnailViewHolder.mItemViewBinding.tvTextTitleSimple.setVisibility(View.VISIBLE);
@@ -105,9 +104,13 @@ public class PostThumbnailAdapter extends PostAdapter implements ListPreloader.P
 				postThumbnailViewHolder.mItemViewBinding.ivVideoPlay.setVisibility(View.GONE);
 				postThumbnailViewHolder.mItemViewBinding.plPostPhotos.setVisibility(View.GONE);
 				postThumbnailViewHolder.mItemViewBinding.tvTextTitleSimple.setVisibility(View.VISIBLE);
-				postThumbnailViewHolder.mItemViewBinding.tvTextTitleSimple.setText(textPost.getTitle());
+				if (TextUtils.isEmpty(textPost.getTitle())) {
+				    postThumbnailViewHolder.mItemViewBinding.tvTextTitleSimple.setText(textPost.getType().name().toUpperCase());
+                }else {
+                    postThumbnailViewHolder.mItemViewBinding.tvTextTitleSimple.setText(textPost.getTitle());
+                }
 			}
-		} else if (TYPE_LINK.equals(mDataList.get(position).getType())) {
+		} else if (mDataList.get(position).getType() == Post.PostType.LINK) {
 			LinkPost linkPost = (LinkPost) mDataList.get(position);
 			postThumbnailViewHolder.mItemViewBinding.tvTextTitleSimple.setVisibility(View.VISIBLE);
 			postThumbnailViewHolder.mItemViewBinding.plPostPhotos.setVisibility(View.GONE);
@@ -119,7 +122,7 @@ public class PostThumbnailAdapter extends PostAdapter implements ListPreloader.P
 		    postThumbnailViewHolder.mItemViewBinding.ivVideoPlay.setVisibility(View.GONE);
 		    postThumbnailViewHolder.mItemViewBinding.plPostPhotos.setVisibility(View.GONE);
 			postThumbnailViewHolder.mItemViewBinding.tvTextTitleSimple.setVisibility(View.VISIBLE);
-			postThumbnailViewHolder.mItemViewBinding.tvTextTitleSimple.setText(mDataList.get(position).getType().toUpperCase(Locale.US));
+			postThumbnailViewHolder.mItemViewBinding.tvTextTitleSimple.setText(mDataList.get(position).getType().name().toUpperCase(Locale.US));
 		}
 
 		if (null != mDataList.get(position).isLiked() && mDataList.get(position).isLiked()) {
@@ -128,7 +131,7 @@ public class PostThumbnailAdapter extends PostAdapter implements ListPreloader.P
 			((PostThumbnailViewHolder) holder).mItemViewBinding.ivLike.setVisibility(View.GONE);
 		}
 
-		if (mDataList.get(position).getType().equals(TYPE_PHOTO)) {
+		if (mDataList.get(position).getType() == Post.PostType.PHOTO) {
 			String originalUrl = ((PhotoPost) mDataList.get(position)).getPhotos().get(0).getOriginalSize().getUrl();
 			String path = Tools.getStoragePathByFileName(originalUrl.substring(originalUrl.lastIndexOf("/"), originalUrl.length()));
 			if (new File(path).exists()) {
@@ -136,7 +139,7 @@ public class PostThumbnailAdapter extends PostAdapter implements ListPreloader.P
 			} else {
 				postThumbnailViewHolder.mItemViewBinding.ivDownload.setVisibility(View.GONE);
 			}
-		} else if (mDataList.get(position).getType().equals(TYPE_VIDEO)) {
+		} else if (mDataList.get(position).getType() == Post.PostType.VIDEO) {
 			FileDownloadUtil.TumblrVideoDownloadInfo tumblrVideoDownloadInfo = FileDownloadUtil.getVideoDownloadInfo((VideoPost) mDataList.get(position));
 			try {
 				if (tumblrVideoDownloadInfo != null && new File(tumblrVideoDownloadInfo.getVideoPath()).exists()) {
@@ -183,7 +186,7 @@ public class PostThumbnailAdapter extends PostAdapter implements ListPreloader.P
 		public void onImageViewClick(int index) {
 			if (isAdapterPositionValid(getAdapterPosition())) {
 				if (mEventListener != null) {
-					if (mDataList.get(getAdapterPosition()).getType().equals(TYPE_VIDEO)) {
+					if (mDataList.get(getAdapterPosition()).getType() == Post.PostType.VIDEO) {
 						mEventListener.onPlayVideo(getAdapterPosition());
 					}else {
 						mEventListener.onShowImageDetail(index, mItemViewBinding.plPostPhotos, getItem(getAdapterPosition()));
@@ -212,16 +215,16 @@ public class PostThumbnailAdapter extends PostAdapter implements ListPreloader.P
 				if (mPopupWindow.isShowing()) {
 					mPopupWindow.dismiss();
 				}
-				if (mDataList.get(getAdapterPosition()).getType().equals(TYPE_PHOTO)) {
+				if (mDataList.get(getAdapterPosition()).getType() == Post.PostType.PHOTO) {
 					mPopupWindow.showPhotoPopup(mRecyclerView.getContext(), point,
 							mDataList.get(getAdapterPosition()).isLiked() != null && mDataList.get(getAdapterPosition()).isLiked(),
 							mDataList.get(getAdapterPosition()).getBlogName());
-				} else if (mDataList.get(getAdapterPosition()).getType().equals(TYPE_VIDEO)) {
+				} else if (mDataList.get(getAdapterPosition()).getType() == Post.PostType.VIDEO) {
 					mPopupWindow.showVideoPopup(mRecyclerView.getContext(), point,
 							mDataList.get(getAdapterPosition()).isLiked() != null && mDataList.get(getAdapterPosition()).isLiked(),
 							mDataList.get(getAdapterPosition()).getBlogName());
 				} else {
-                    if (mDataList.get(getAdapterPosition()).getType().equals(TYPE_TEXT)) {
+                    if (mDataList.get(getAdapterPosition()).getType() == Post.PostType.TEXT) {
                         TextPost textPost = (TextPost) mDataList.get(getAdapterPosition());
                         TextPostBody textPostBody = TextPostBodyUtils.textPostBody(textPost.getBody());
                         if (textPostBody != null && textPostBody.getPhotos() != null && textPostBody.getPhotos().size() > 0) {

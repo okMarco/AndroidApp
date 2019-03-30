@@ -5,16 +5,14 @@ import android.support.v7.widget.RecyclerView;
 
 import com.crashlytics.android.Crashlytics;
 import com.hochan.tumlodr.TumlodrApp;
+import com.hochan.tumlodr.jumblr.types.Post;
 import com.hochan.tumlodr.model.BaseObserver;
 import com.hochan.tumlodr.tools.ScreenTools;
 import com.hochan.tumlodr.ui.component.WrapLinearLayoutManager;
 import com.hochan.tumlodr.ui.component.WrapStaggeredGridLayoutManager;
-import com.tencent.bugly.crashreport.CrashReport;
-import com.tumblr.jumblr.types.Post;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
 
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
@@ -29,11 +27,6 @@ import io.reactivex.schedulers.Schedulers;
  */
 
 public abstract class PostAdapter extends RecyclerView.Adapter {
-
-	public static final String TYPE_PHOTO = "photo";
-	public static final String TYPE_VIDEO = "video";
-	public static final String TYPE_TEXT = "text";
-	public static final String TYPE_LINK = "link";
 
 	public RecyclerView mRecyclerView;
 	int mImageViewWidth;

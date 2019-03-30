@@ -3,17 +3,13 @@ package com.hochan.tumlodr.ui.fragment;
 import android.os.Bundle;
 import android.text.TextUtils;
 
+import com.hochan.tumlodr.jumblr.types.Post;
 import com.hochan.tumlodr.prensenter.LikePostListPresenter;
 import com.hochan.tumlodr.ui.activity.Router;
-import com.hochan.tumlodr.ui.adapter.PostAdapter;
-import com.tumblr.jumblr.types.Post;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
-import static com.hochan.tumlodr.ui.adapter.PostAdapter.TYPE_PHOTO;
-import static com.hochan.tumlodr.ui.adapter.PostAdapter.TYPE_VIDEO;
 
 /**
  * .
@@ -63,12 +59,12 @@ public class LikePostsThumbnailFragment extends PostThumbnailFragment<LikePostLi
 	}
 
 	public void showOnlyPicture() {
-		mFilter = TYPE_PHOTO;
+		mFilter = Post.PostType.PHOTO.getValue();
 		changeData();
 	}
 
 	public void showOnlyVideo() {
-		mFilter = TYPE_VIDEO;
+		mFilter = Post.PostType.VIDEO.getValue();
 		changeData();
 	}
 

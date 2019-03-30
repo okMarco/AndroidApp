@@ -14,13 +14,13 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.hochan.tumlodr.jumblr.types.Photo;
 import com.hochan.tumlodr.module.glide.GlideRequest;
 import com.hochan.tumlodr.module.glide.TumlodrGlide;
 import com.hochan.tumlodr.module.glide.TumlodrGlideUtil;
 import com.hochan.tumlodr.module.glide.TunlodrGlideModelLoder;
 import com.hochan.tumlodr.tools.AppUiConfig;
 import com.hochan.tumlodr.tools.Tools;
-import com.tumblr.jumblr.types.Photo;
 
 import java.io.File;
 import java.util.ArrayList;

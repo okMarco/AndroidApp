@@ -1,6 +1,9 @@
 package com.hochan.tumlodr.prensenter;
 
+import com.hochan.tumlodr.jumblr.types.Post;
 import com.hochan.tumlodr.ui.view.IPostListView;
+
+import java.util.List;
 
 import static com.hochan.tumlodr.model.TumlodrService.REQUEST_OFFSET;
 import static com.hochan.tumlodr.model.TumlodrService.loadBlogPosts;
@@ -22,7 +25,11 @@ public class BlogVideoPostListPresenter extends BlogPostListPresenter{
 	}
 
 	@Override
-	public void loadMorePostList(long offset) {
+	public void loadMorePostList(List<Post> posts) {
+		long offset = 0;
+		if (posts != null && posts.size() > 0) {
+			offset = posts.size();
+		}
 		loadBlogPosts(mBlogName, REQUEST_OFFSET, offset, "video").subscribe(getLoadMoreObserver());
 	}
 }

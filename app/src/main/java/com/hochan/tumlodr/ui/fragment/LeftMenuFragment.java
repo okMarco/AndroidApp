@@ -1,5 +1,6 @@
 package com.hochan.tumlodr.ui.fragment;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
@@ -64,7 +65,7 @@ public class LeftMenuFragment extends BaseFragment {
 		}
 
 		@Override
-		public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+		public void onBindViewHolder(RecyclerView.ViewHolder holder, @SuppressLint("RecyclerView") final int position) {
 			ImageView imageView = (ImageView) holder.itemView;
 			int size = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
 					40, getResources().getDisplayMetrics());
@@ -99,13 +100,13 @@ public class LeftMenuFragment extends BaseFragment {
 		super.onCreate(savedInstanceState);
 		RxBus.with(new FragmentLifecycleProvider(this)).onNext(new Consumer<Object>() {
 			@Override
-			public void accept(Object o) throws Exception {
+			public void accept(Object o) {
 				if (o instanceof Events && ((Events) o).mCode == Events.EVENT_USER_INFO_UPDATE) {
 					if (ivUserIcon != null) {
 						Tools.loadAvatar(ivUserIcon, UserInfo.sBlogName);
 					}
 					if (tvUserName != null) {
-						tvUserName.setText(UserInfo.sBlogName);
+						//tvUserName.setText(UserInfo.sBlogName);
 					}
 					setUpLeftMenu();
 				} else if (o instanceof Events && ((Events) o).mCode == Events.EVENT_UPDATE_LAST_VISITED_BLOG) {
@@ -136,7 +137,7 @@ public class LeftMenuFragment extends BaseFragment {
 
 		tvUserName = view.findViewById(R.id.tv_user_name);
 		tvUserName.setTextColor(AppUiConfig.sTextColor);
-		tvUserName.setText(UserInfo.sBlogName);
+		//tvUserName.setText(UserInfo.sBlogName);
 
 		setUpLeftMenu();
 

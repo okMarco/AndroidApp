@@ -8,7 +8,6 @@ import android.arch.persistence.room.PrimaryKey;
 
 import com.hochan.tumlodr.R;
 import com.hochan.tumlodr.TumlodrApp;
-import com.hochan.tumlodr.tools.Tools;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +17,7 @@ import java.util.List;
  * Created by hochan on 2018/3/2.
  */
 
+@SuppressWarnings("ALL")
 @Entity(tableName = "download_records", indices = {@Index(value = {"path", "url"}, unique = true)})
 public class DownloadRecord {
 

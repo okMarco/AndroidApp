@@ -16,6 +16,10 @@ public class GroupDownloadTaskManagerActivity extends BaseSingleFragmentActivity
 	}
 
 	@Override
+	public void setUpObserver() {
+	}
+
+	@Override
 	protected String getTitleString() {
 		return getIntent().getStringExtra(Router.GROUP_NAME);
 	}

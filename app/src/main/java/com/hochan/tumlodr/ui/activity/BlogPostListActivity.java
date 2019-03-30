@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -32,8 +31,10 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 import com.hochan.tumlodr.R;
 import com.hochan.tumlodr.databinding.ActivityBlogBinding;
+import com.hochan.tumlodr.jumblr.types.Blog;
 import com.hochan.tumlodr.model.BaseObserver;
 import com.hochan.tumlodr.model.TumlodrService;
+import com.hochan.tumlodr.model.data.blog.FollowingBlogDatabase;
 import com.hochan.tumlodr.module.glide.TumlodrGlide;
 import com.hochan.tumlodr.tools.AppConfig;
 import com.hochan.tumlodr.tools.AppUiConfig;
@@ -49,7 +50,6 @@ import com.hochan.tumlodr.util.Events;
 import com.hochan.tumlodr.util.RxBus;
 import com.hochan.tumlodr.util.ViewUtils;
 import com.hochan.tumlodr.util.statusbar.StatusBarCompat;
-import com.tumblr.jumblr.types.Blog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,11 +77,13 @@ public class BlogPostListActivity extends BaseViewBindingActivity<ActivityBlogBi
 		super.onCreate(savedInstanceState);
 		mIsFollowing = getIntent().getBooleanExtra(IS_FOLLOW, false);
 		setUpFollowBtn();
+
 	}
 
 	@Override
 	public void initStatusBar() {
-		StatusBarCompat.setStatusBarHalfTranslucent(getWindow());
+		// StatusBarCompat.setStatusBarHalfTranslucent(getWindow());
+		StatusBarCompat.setStatusBarTranslucent(getWindow());
 	}
 
 	@Override
@@ -102,6 +104,8 @@ public class BlogPostListActivity extends BaseViewBindingActivity<ActivityBlogBi
 		spannable.setSpan(new BackgroundColorSpan(Color.BLACK), 0,
 				blogName.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 		mViewBinding.tvBlogTitle.setText(spannable);
+
+		FollowingBlogDatabase.updateFollowingBlog(blogName);
 
 		TumlodrGlide.with(BlogPostListActivity.this)
 				.load(Tools.getAvatarUrlByBlogName(blogName, 128))
@@ -135,8 +139,8 @@ public class BlogPostListActivity extends BaseViewBindingActivity<ActivityBlogBi
 					TransitionManager.beginDelayedTransition((ViewGroup) mViewBinding.llBlogInfo.getParent());
 				}
 				mViewBinding.llBlogInfo.setVisibility(View.VISIBLE);
-
-
+				mIsFollowing = blog.followed;
+				setUpFollowBtn();
 				SpannableStringBuilder spannableStringBuilder = HtmlTool.fromHtml(blog.getDescription(), mViewBinding.tvBlogDescription);
 				spannableStringBuilder.setSpan(new BackgroundColorSpan(Color.BLACK), 0,
 						spannableStringBuilder.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);

@@ -39,6 +39,8 @@ import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
 
+import static com.google.android.exoplayer2.Player.REPEAT_MODE_ONE;
+
 /**
  * .
  * <p>
@@ -49,7 +51,7 @@ public class ExoVideoPlayer extends VideoPlayer implements ExoPlayerListener {
 
 	private static final String USER_AGENT_FORMAT = "ExoMedia %s (%d) / Android %s / %s";
 
-	static final String USER_AGENT = String.format(Locale.US, USER_AGENT_FORMAT,
+	private static final String USER_AGENT = String.format(Locale.US, USER_AGENT_FORMAT,
 			BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE, Build.VERSION.RELEASE, Build.MODEL);
 
 	public static ExoVideoPlayer getInstance() {
@@ -108,12 +110,10 @@ public class ExoVideoPlayer extends VideoPlayer implements ExoPlayerListener {
 		if (mExoMediaPlayer == null) {
 			mExoMediaPlayer = new ExoMediaPlayer(context.getApplicationContext());
 		}
-
+		mExoMediaPlayer.setRepeatMode(REPEAT_MODE_ONE);
 		mExoMediaPlayer.setMetadataListener(new MetadataListener() {
 			@Override
-			public void onMetadata(Metadata metadata) {
-
-			}
+			public void onMetadata(Metadata metadata) {}
 		});
 		mExoMediaPlayer.setBufferUpdateListener(new OnBufferUpdateListener() {
 			@Override

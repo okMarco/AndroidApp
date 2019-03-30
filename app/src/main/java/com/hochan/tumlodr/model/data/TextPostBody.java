@@ -1,6 +1,6 @@
 package com.hochan.tumlodr.model.data;
 
-import com.tumblr.jumblr.types.Photo;
+import com.hochan.tumlodr.jumblr.types.Photo;
 
 import java.util.List;
 

@@ -30,7 +30,7 @@
                 android:id="@+id/btn_login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="30dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:background="@drawable/selector_light_btn_bg_round_corner"
@@ -43,14 +43,14 @@
                 android:id="@+id/btn_change_api"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
+                android:layout_marginBottom="20dp"
                 android:background="@drawable/selector_light_btn_bg_round_corner"
                 android:text="@string/set_custom_api_key"
                 android:textColor="@color/colorText"
                 android:textStyle="bold"
-                android:visibility="visible"/>
+                android:visibility="gone" />
         </com.hochan.tumlodr.ui.component.FitsSystemWindowLinearLayout>
     </com.hochan.tumlodr.ui.component.BubbleLayout>
 

@@ -1,6 +1,8 @@
 package com.hochan.tumlodr.ui.activity.baseactivity;
 
 import android.annotation.TargetApi;
+import android.media.MediaScannerConnection;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,6 +14,8 @@ import android.view.WindowInsets;
 import com.crashlytics.android.Crashlytics;
 import com.hochan.tumlodr.R;
 import com.hochan.tumlodr.tools.AppConfig;
+import com.hochan.tumlodr.ui.activity.InstagramParseActivity;
+import com.hochan.tumlodr.ui.component.SingleMediaScanner;
 import com.hochan.tumlodr.util.ActivityLifecycleProvider;
 import com.hochan.tumlodr.util.Events;
 import com.hochan.tumlodr.util.RxBus;
@@ -156,7 +160,7 @@ public abstract class BaseAppObserverActivity extends BaseActivity {
 	private void handleDownloadFinishEvent(Events events) {
 		if (events.mContent instanceof BaseDownloadTask) {
 			BaseDownloadTask task = (BaseDownloadTask) events.mContent;
-			if (!task.getUrl().endsWith("jpg") && !task.getUrl().endsWith("gif") && !task.getUrl().endsWith("png")) {
+			if (!task.getPath().endsWith("jpg") && !task.getPath().endsWith("gif") && !task.getPath().endsWith("png")) {
 				downloadVideoFinish(task);
 			} else {
 				downloadImageFinish(task);
@@ -172,7 +176,7 @@ public abstract class BaseAppObserverActivity extends BaseActivity {
 
 	private void downloadVideoFinish(final BaseDownloadTask task) {
 		if (new File(task.getPath()).exists()) {
-			showVideoDownloadSuccessSnackBar(task.getPath());
+            showVideoDownloadSuccessSnackBar(task.getPath());
 		} else {
 			@SuppressWarnings("ThrowableResultOfMethodCallIgnored")
 			Throwable e = task.getErrorCause();
@@ -194,10 +198,6 @@ public abstract class BaseAppObserverActivity extends BaseActivity {
 				}
 			}
 		}
-	}
-
-	public void showVideoDownloadSuccessSnackBar(String videoPath) {
-		showSimpleGreenSnackBar(getString(R.string.snackbar_video_download_complete) + videoPath);
 	}
 
 	private void downloadImageFinish(final BaseDownloadTask task) {
@@ -225,6 +225,12 @@ public abstract class BaseAppObserverActivity extends BaseActivity {
 	}
 
 	public void showImageDownloadSuccessSnackBar(String imagePath) {
-		showSimpleGreenSnackBar(getString(R.string.snackbar_save_finish) + imagePath);
-	}
+	    showSimpleGreenSnackBar(getString(R.string.snackbar_save_finish) + imagePath);
+        new SingleMediaScanner(this, imagePath);
+    }
+
+    public void showVideoDownloadSuccessSnackBar(String videoPath) {
+        showSimpleGreenSnackBar(getString(R.string.snackbar_video_download_complete) + videoPath);
+        new SingleMediaScanner(this, videoPath );
+    }
 }

@@ -5,10 +5,10 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.hochan.tumlodr.R;
+import com.hochan.tumlodr.jumblr.types.Post;
 import com.hochan.tumlodr.model.BaseObserver;
 import com.hochan.tumlodr.model.TumlodrService;
 import com.hochan.tumlodr.ui.view.IPostListView;
-import com.tumblr.jumblr.types.Post;
 
 import java.util.List;
 
@@ -31,7 +31,7 @@ public abstract class PostListPresenter extends BaseMvpPresenter<IPostListView> 
 
 	public abstract void refreshPostList(long sinceId);
 
-	public abstract void loadMorePostList(long offset);
+	public abstract void loadMorePostList(List<Post> posts);
 
 	BaseObserver<List<Post>> getRefreshObserver() {
 		return new BaseObserver<List<Post>>() {

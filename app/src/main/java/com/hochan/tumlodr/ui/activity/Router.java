@@ -2,17 +2,14 @@ package com.hochan.tumlodr.ui.activity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.view.View;
-import android.widget.ImageView;
 
+import com.hochan.tumlodr.jumblr.types.Post;
 import com.hochan.tumlodr.tools.Tools;
 import com.hochan.tumlodr.ui.component.IPhotoLayout;
-import com.hochan.tumlodr.ui.component.PostPhotoLayout;
 import com.hochan.tumlodr.util.Events;
 import com.hochan.tumlodr.util.RxBus;
-import com.tumblr.jumblr.types.Post;
 
 import java.util.ArrayList;
 import java.util.List;

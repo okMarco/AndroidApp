@@ -15,8 +15,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.hochan.tumlodr.R;
+import com.hochan.tumlodr.jumblr.types.VideoPost;
 import com.hochan.tumlodr.model.sharedpreferences.UserInfo;
-import com.hochan.tumlodr.module.webbrowser.WebViewActivity;
 import com.hochan.tumlodr.tools.AppUiConfig;
 import com.hochan.tumlodr.tools.ScreenTools;
 import com.hochan.tumlodr.ui.fragment.DashBoardThumbnailFragment;
@@ -25,7 +25,6 @@ import com.hochan.tumlodr.util.ActivityLifecycleProvider;
 import com.hochan.tumlodr.util.Events;
 import com.hochan.tumlodr.util.RxBus;
 import com.trello.rxlifecycle2.android.ActivityEvent;
-import com.tumblr.jumblr.types.VideoPost;
 
 import io.reactivex.functions.Consumer;
 

@@ -31,6 +31,7 @@ import com.hochan.tumlodr.ui.activity.baseactivity.BaseAppUiActivity;
 import com.hochan.tumlodr.util.statusbar.StatusBarCompat;
 
 import static android.os.Build.VERSION_CODES.M;
+import static android.view.View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR;
 import static com.hochan.tumlodr.TumlodrApp.sOAuthToken;
 import static com.hochan.tumlodr.TumlodrApp.sOAuthTokenSecret;
 import static com.hochan.tumlodr.util.statusbar.PhoneSystemCompat.isMEIZU;
@@ -48,9 +49,6 @@ public class SplashActivity extends BaseAppUiActivity implements View.OnClickLis
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-			getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-		}
 		mViewBinding = ActivitySplashBinding.inflate(getLayoutInflater());
 		setContentView(mViewBinding.getRoot());
 		initWidget();
@@ -98,7 +96,6 @@ public class SplashActivity extends BaseAppUiActivity implements View.OnClickLis
 		} else {
 			StatusBarCompat.setStatusBarHalfTranslucent(getWindow());
 		}
-		StatusBarCompat.setNavigationBarTranslucent(getWindow());
 	}
 
 	private void checkNetwork() {

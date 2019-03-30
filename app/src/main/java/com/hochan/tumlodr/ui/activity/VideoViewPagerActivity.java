@@ -8,10 +8,11 @@ import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.view.View;
 
 import com.hochan.tumlodr.R;
+import com.hochan.tumlodr.jumblr.types.Post;
+import com.hochan.tumlodr.jumblr.types.VideoPost;
 import com.hochan.tumlodr.model.viewmodel.PostListViewModel;
 import com.hochan.tumlodr.module.video.MiniVideoWindowManager;
 import com.hochan.tumlodr.module.video.player.VideoPlayer;
@@ -22,8 +23,6 @@ import com.hochan.tumlodr.ui.fragment.VideoPostThumbnailFragment;
 import com.hochan.tumlodr.util.SystemUtils;
 import com.hochan.tumlodr.util.ViewUtils;
 import com.hochan.tumlodr.util.statusbar.StatusBarCompat;
-import com.tumblr.jumblr.types.Post;
-import com.tumblr.jumblr.types.VideoPost;
 
 import java.util.ArrayList;
 import java.util.List;

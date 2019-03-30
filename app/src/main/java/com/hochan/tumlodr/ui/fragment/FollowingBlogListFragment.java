@@ -1,13 +1,22 @@
 package com.hochan.tumlodr.ui.fragment;
 
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.Observer;
+import android.arch.paging.LivePagedListBuilder;
+import android.arch.paging.PagedList;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.hochan.tumlodr.jumblr.types.Blog;
 import com.hochan.tumlodr.model.BaseObserver;
 import com.hochan.tumlodr.model.TumlodrService;
+import com.hochan.tumlodr.model.data.blog.FollowingBlog;
+import com.hochan.tumlodr.model.data.blog.FollowingBlogDatabase;
+import com.hochan.tumlodr.model.data.download.DownloadRecord;
+import com.hochan.tumlodr.model.data.download.DownloadRecordDatabase;
 import com.hochan.tumlodr.prensenter.BaseMvpPresenter;
 import com.hochan.tumlodr.tools.ScreenTools;
 import com.hochan.tumlodr.ui.adapter.BaseLoadingAdapter;
@@ -15,7 +24,6 @@ import com.hochan.tumlodr.ui.adapter.BlogListAdapter;
 import com.hochan.tumlodr.ui.fragment.base.BaseMvpListFragment;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.trello.rxlifecycle2.android.FragmentEvent;
-import com.tumblr.jumblr.types.Blog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,11 +34,8 @@ import java.util.List;
  */
 public class FollowingBlogListFragment extends BaseMvpListFragment {
 
-	private List<Blog> mTumBlogList = new ArrayList<>();
-
 	private BlogListAdapter mBlogListAdapter;
-
-	private boolean showRefreshOnVisible = true;
+	public LiveData<PagedList<FollowingBlog>> mFollowingBlogList;
 
 	public static FollowingBlogListFragment newInstance() {
 		return new FollowingBlogListFragment();
@@ -49,11 +54,25 @@ public class FollowingBlogListFragment extends BaseMvpListFragment {
 	@Override
 	protected void iniWidget(View view) {
 		super.iniWidget(view);
-		mBlogListAdapter = new BlogListAdapter(mTumBlogList);
+		mBlogListAdapter = new BlogListAdapter();
 		mRecyclerView.setAdapter(mBlogListAdapter);
 		mSmartRefreshLayout.setPadding(ScreenTools.dip2px(mRecyclerView.getContext(), 5), 0,
 				ScreenTools.dip2px(mRecyclerView.getContext(), 5), 0);
-		loadMore();
+
+		mFollowingBlogList = new LivePagedListBuilder<>(FollowingBlogDatabase.getFollowingBlogs(), 1000).build();
+
+		if (getActivity() != null) {
+			mFollowingBlogList.observe(getActivity(), new Observer<PagedList<FollowingBlog>>() {
+				@Override
+				public void onChanged(@Nullable PagedList<FollowingBlog> followingBlogs) {
+					mBlogListAdapter.setList(followingBlogs);
+					if (followingBlogs == null || followingBlogs.size() == 0) {
+						mSmartRefreshLayout.autoRefresh();
+					}
+				}
+			});
+		}
+
 	}
 
 	@Override
@@ -76,27 +95,22 @@ public class FollowingBlogListFragment extends BaseMvpListFragment {
 	}
 
 	private void loadMore() {
-		final int offset = mTumBlogList.size();
-
+		final int offset = mBlogListAdapter.getItemCount();
 		TumlodrService.getUserFollowing(offset).subscribe(new BaseObserver<List<Blog>>() {
 			@Override
 			public void onNext(List<Blog> blogList) {
-				showRefreshOnVisible = false;
 				mSmartRefreshLayout.finishRefresh();
 				if (blogList == null) {
 					return;
 				}
 				if (blogList.size() == 0) {
 					mSmartRefreshLayout.setNoMoreData(true);
-					return;
+				}else {
+					mSmartRefreshLayout.finishLoadMore();
+					if (mBlogListAdapter.getItemCount() < 50) {
+						mSmartRefreshLayout.autoLoadMore();
+					}
 				}
-				if (mTumBlogList.size() > 0) {
-					mTumBlogList.remove(mTumBlogList.size() - 1);
-					mBlogListAdapter.notifyItemRemoved(mTumBlogList.size());
-				}
-				mTumBlogList.addAll(blogList);
-				mBlogListAdapter.notifyItemRangeInserted(offset, blogList.size());
-				mSmartRefreshLayout.finishLoadMore();
 			}
 		});
 	}
@@ -107,10 +121,6 @@ public class FollowingBlogListFragment extends BaseMvpListFragment {
 				.subscribe(new BaseObserver<List<Blog>>() {
 					@Override
 					public void onNext(List<Blog> blogs) {
-						mTumBlogList.clear();
-						mTumBlogList.addAll(blogs);
-						mBlogListAdapter.notifyDataSetChanged();
-						showRefreshOnVisible = false;
 						mSmartRefreshLayout.finishRefresh();
 					}
 				});	}

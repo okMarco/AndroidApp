@@ -1,6 +1,7 @@
 package com.hochan.tumlodr.tools.log;
 
-import com.tumblr.jumblr.types.PhotoPost;
+
+import com.hochan.tumlodr.jumblr.types.PhotoPost;
 
 /**
  *

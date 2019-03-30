@@ -9,10 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.hochan.tumlodr.R;
+import com.hochan.tumlodr.jumblr.types.Note;
 import com.hochan.tumlodr.tools.AppUiConfig;
 import com.hochan.tumlodr.ui.adapter.NotesAdapter;
 import com.hochan.tumlodr.ui.component.WrapLinearLayoutManager;
-import com.tumblr.jumblr.types.Note;
 
 import java.util.List;
 

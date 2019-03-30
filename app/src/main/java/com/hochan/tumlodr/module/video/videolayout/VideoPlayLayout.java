@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -16,9 +15,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -32,8 +29,6 @@ import com.hochan.tumlodr.module.video.VideoTextureView;
 import com.hochan.tumlodr.module.video.player.VideoPlayer;
 import com.hochan.tumlodr.module.video.videocontrol.DefaultVideoControl;
 import com.hochan.tumlodr.module.video.videocontrol.VideoControl;
-
-import java.io.ByteArrayInputStream;
 
 /**
  * .
@@ -113,21 +108,6 @@ public class VideoPlayLayout extends FrameLayout implements VideoPlayer.OnPlayIn
 	 */
 	public void play() {
 		if (!TextUtils.isEmpty(mVideoUrl)) {
-			if (sIsInEuro && mVideoUrl.contains("video_file")) {
-				String realVideoUrl = VIDEO_URL_INEURO.get(mVideoUrl);
-				if (!TextUtils.isEmpty(realVideoUrl)) {
-					setVideoUrl(realVideoUrl);
-				} else {
-					getVideoControl().onPlayStateChange(VideoPlayer.STATE_BUFFERING_PLAYING);
-					mHandler.postDelayed(new Runnable() {
-						@Override
-						public void run() {
-							getWebView().loadUrl(mVideoUrl);
-						}
-					}, 200);
-					return;
-				}
-			}
 			VideoPlayer.getInstance().play(this);
 			if (!mIsSurfaceAttach) {
 				attachToVideoPlayer();
@@ -202,8 +182,7 @@ public class VideoPlayLayout extends FrameLayout implements VideoPlayer.OnPlayIn
 	public void onPlayError(Exception e) {
 		if (e.getCause() != null) {
 			if (e.getCause() instanceof UnrecognizedInputFormatException) {
-				sIsInEuro = true;
-				getWebView().loadUrl(getVideoUrl());
+				Toast.makeText(getContext(), e.getCause().getMessage(), Toast.LENGTH_SHORT).show();
 			} else {
 				if (mVideoControl != null) {
 					mVideoControl.pause();
@@ -398,39 +377,6 @@ public class VideoPlayLayout extends FrameLayout implements VideoPlayer.OnPlayIn
 
 	public VideoControl getVideoControl() {
 		return mVideoControl;
-	}
-
-	@SuppressLint("SetJavaScriptEnabled")
-	private WebView getWebView() {
-		if (mWebView == null) {
-			mWebView = new WebView(getContext());
-			mWebView.getSettings().setJavaScriptEnabled(true);
-			addView(mWebView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-			mWebView.setWebViewClient(new WebViewClient() {
-				@Override
-				public WebResourceResponse shouldInterceptRequest(WebView view, final String url) {
-					if (Uri.parse(url).getPath().endsWith("mp4")) {
-						mHandler.post(new Runnable() {
-							@Override
-							public void run() {
-								VIDEO_URL_INEURO.put(getVideoUrl(), url);
-								setVideoUrl(url);
-								play();
-								if (mWebView != null) {
-									mWebView.setVisibility(INVISIBLE);
-									mWebView.destroy();
-									removeView(mWebView);
-									mWebView = null;
-								}
-							}
-						});
-						return new WebResourceResponse("video/mp4", null, new ByteArrayInputStream(new byte[0]));
-					}
-					return super.shouldInterceptRequest(view, url);
-				}
-			});
-		}
-		return mWebView;
 	}
 
 	@Override

@@ -1,12 +1,9 @@
 package com.hochan.tumlodr.tools;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Environment;
 import android.os.storage.StorageManager;
 import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.widget.ImageView;
@@ -20,10 +17,6 @@ import com.hochan.tumlodr.module.glide.TumlodrGlide;
 import com.hochan.tumlodr.module.glide.TumlodrGlideUtil;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -52,6 +45,7 @@ public class Tools {
 		try {
 			storageVolumeClazz = Class.forName("android.os.storage.StorageVolume");
 			Method getVolumeList = mStorageManager.getClass().getMethod("getVolumeList");
+			@SuppressWarnings("JavaReflectionMemberAccess")
 			Method getPath = storageVolumeClazz.getMethod("getPath");
 			Method isRemovable = storageVolumeClazz.getMethod("isRemovable");
 			Object result = getVolumeList.invoke(mStorageManager);
@@ -118,11 +112,8 @@ public class Tools {
 	private static boolean isNumeric(String str) {
 		Pattern pattern = Pattern.compile("[0-9]*");
 		Matcher isNum = pattern.matcher(str);
-		if (!isNum.matches()) {
-			return false;
-		}
-		return true;
-	}
+        return isNum.matches();
+    }
 
 	public static String getAvatarUrlByBlogName(String blogName) {
 		return String.format("https://api.tumblr.com/v2/blog/%s.tumblr.com/avatar/128",
@@ -141,7 +132,8 @@ public class Tools {
 		loadAvatar(imageView, blogName, 128);
 	}
 
-	private static void loadAvatar(final ImageView imageView, String blogName, int size) {
+	@SuppressWarnings("SameParameterValue")
+    private static void loadAvatar(final ImageView imageView, String blogName, int size) {
 		String avatarUrl = Tools.getAvatarUrlByBlogName(blogName, size);
 		if (TumlodrGlideUtil.isContextValid(imageView)) {
 			TumlodrGlide.with(imageView)
@@ -149,7 +141,7 @@ public class Tools {
 					.load(avatarUrl)
 					.placeholder(AppUiConfig.sPicHolderResource)
 					.skipMemoryCache(true)
-					.transform(new MultiTransformation<>(new RoundedCorners(5),
+					.transform(new MultiTransformation<>(new RoundedCorners(15),
 							new FitCenter()))
 					.into(imageView);
 		}
@@ -178,8 +170,9 @@ public class Tools {
 				DateUtils.FORMAT_ABBREV_MONTH | DateUtils.FORMAT_SHOW_YEAR);
 	}
 
-	static CharSequence getRelativeTimeSpanString(@NonNull Context context, long nowMs,
-	                                              long timeMs, int flags) {
+	@SuppressWarnings("SameParameterValue")
+    private static CharSequence getRelativeTimeSpanString(@NonNull Context context, long nowMs,
+                                                          long timeMs, int flags) {
 		if (nowMs - timeMs < DateUtils.SECOND_IN_MILLIS) {
 			return context.getString(R.string.post_detail_time_just_now);
 		} else {
@@ -188,21 +181,4 @@ public class Tools {
 		}
 	}
 
-	public static int copySdcardFile(String fromFile, String toFile) {
-		try {
-			InputStream fosfrom = new FileInputStream(fromFile);
-			OutputStream fosto = new FileOutputStream(toFile);
-			byte bt[] = new byte[1024];
-			int c;
-			while ((c = fosfrom.read(bt)) > 0) {
-				fosto.write(bt, 0, c);
-			}
-			fosfrom.close();
-			fosto.close();
-			return 0;
-
-		} catch (Exception ex) {
-			return -1;
-		}
-	}
 }

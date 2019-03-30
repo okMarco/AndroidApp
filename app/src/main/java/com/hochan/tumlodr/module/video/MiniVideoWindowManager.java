@@ -1,7 +1,6 @@
 package com.hochan.tumlodr.module.video;
 
 import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -20,9 +19,6 @@ import com.hochan.tumlodr.module.video.videolayout.MiniVideoPlayLayout;
 import com.hochan.tumlodr.module.video.videolayout.VideoPlayLayout;
 import com.hochan.tumlodr.ui.activity.VideoViewPagerActivity;
 import com.hochan.tumlodr.util.ViewUtils;
-import com.tumblr.jumblr.types.VideoPost;
-
-import java.lang.ref.WeakReference;
 
 
 /**

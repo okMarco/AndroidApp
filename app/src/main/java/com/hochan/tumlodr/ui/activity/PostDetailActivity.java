@@ -7,12 +7,12 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.SharedElementCallback;
-import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.hochan.tumlodr.R;
 import com.hochan.tumlodr.databinding.ActivityPostDetailBinding;
+import com.hochan.tumlodr.jumblr.types.Post;
 import com.hochan.tumlodr.prensenter.PostListPresenter;
 import com.hochan.tumlodr.ui.activity.baseactivity.BaseViewBindingActivity;
 import com.hochan.tumlodr.ui.adapter.PostDetailInfoAdapter;
@@ -24,7 +24,6 @@ import com.hochan.tumlodr.util.ActivityLifecycleProvider;
 import com.hochan.tumlodr.util.Events;
 import com.hochan.tumlodr.util.RxBus;
 import com.trello.rxlifecycle2.android.ActivityEvent;
-import com.tumblr.jumblr.types.Post;
 
 import java.lang.ref.WeakReference;
 import java.util.List;

@@ -1,16 +1,11 @@
 package com.hochan.tumlodr.ui.fragment;
 
-import android.app.Activity;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 
-import com.hochan.tumlodr.model.TumlodrService;
-import com.hochan.tumlodr.prensenter.BaseMvpPresenter;
+import com.hochan.tumlodr.jumblr.types.Post;
 import com.hochan.tumlodr.prensenter.SearchPostPresenter;
-import com.hochan.tumlodr.ui.activity.SearchPostActivity;
 import com.hochan.tumlodr.ui.adapter.PostAdapter;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.tumblr.jumblr.types.Post;
 
 import java.util.Collections;
 import java.util.List;
@@ -55,14 +50,10 @@ public class SearchPostFragment extends PostThumbnailFragment<SearchPostPresente
 		if (mPresenter != null && mPostListViewModel.getDashBoardPostList() != null) {
 			List<Post> postList = mPostListViewModel.getDashBoardPostList().getValue();
 			if (postList != null && postList.size() > 0) {
-				for (int i = postList.size() - 1; i >= 0; i--) {
-					if (postList.get(i) != null) {
-						mPresenter.loadMorePostList(postList.get(i).getTimestamp());
-						return;
-					}
-				}
+				mPresenter.loadMorePostList(postList);
 			}
-		}	}
+		}
+	}
 
 	public PostAdapter getAdapter() {
 		return mAdapter;

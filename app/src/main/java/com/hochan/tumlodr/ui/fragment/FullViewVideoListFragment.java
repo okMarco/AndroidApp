@@ -32,6 +32,8 @@ import com.google.android.exoplayer2.upstream.cache.CacheUtil;
 import com.hochan.tumlodr.R;
 import com.hochan.tumlodr.TumlodrApp;
 import com.hochan.tumlodr.databinding.FragmentFullViewVideoListBinding;
+import com.hochan.tumlodr.jumblr.types.Post;
+import com.hochan.tumlodr.jumblr.types.VideoPost;
 import com.hochan.tumlodr.model.viewmodel.PostListViewModel;
 import com.hochan.tumlodr.module.glide.TumlodrGlide;
 import com.hochan.tumlodr.module.glide.TumlodrGlideUtil;
@@ -52,12 +54,11 @@ import com.hochan.tumlodr.ui.adapter.VideoPostThumbnailAdapter;
 import com.hochan.tumlodr.ui.component.WrapLinearLayoutManager;
 import com.hochan.tumlodr.ui.view.IPostListView;
 import com.hochan.tumlodr.util.FileDownloadUtil;
+import com.hochan.tumlodr.util.SystemUtils;
 import com.hochan.tumlodr.util.ViewUtils;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
-import com.tumblr.jumblr.types.Post;
-import com.tumblr.jumblr.types.VideoPost;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -109,7 +110,7 @@ public class FullViewVideoListFragment extends Fragment implements TikTokVideoLa
 			}
 			tikTokVideoLayout.getThumbnailImageView().setScaleType(ImageView.ScaleType.FIT_CENTER);
 			Post post = mVideoDataList.get(position);
-			if (post == null || !(post instanceof VideoPost)) {
+			if (post.getType() != Post.PostType.VIDEO) {
 				return;
 			}
 			VideoPost videoPost = (VideoPost) post;
@@ -393,8 +394,7 @@ public class FullViewVideoListFragment extends Fragment implements TikTokVideoLa
 			@Override
 			public void onLoadMore(RefreshLayout refreshLayout) {
 				if (mVideoPostListPresenter != null) {
-					mVideoPostListPresenter.loadMorePostList((mVideoDataList != null && mVideoDataList.size() > 0) ?
-							mVideoDataList.size() : 0);
+					mVideoPostListPresenter.loadMorePostList(mVideoDataList);
 				}
 			}
 		});
@@ -416,7 +416,7 @@ public class FullViewVideoListFragment extends Fragment implements TikTokVideoLa
 			tikTokVideoLayout.play();
 
 			final int nextPosition = findFirstCompleteVisiblePosition() + 1;
-			if (!VideoPlayLayout.sIsInEuro && nextPosition > 0 && nextPosition < mVideoDataList.size()) {
+			if (nextPosition > 0 && nextPosition < mVideoDataList.size()) {
 				Completable.create(new CompletableOnSubscribe() {
 					@Override
 					public void subscribe(CompletableEmitter e) throws Exception {
@@ -612,10 +612,8 @@ public class FullViewVideoListFragment extends Fragment implements TikTokVideoLa
 	@Override
 	public void refreshPostComplete(List<Post> newPosts) {
 		mViewBinding.smartRefreshLayout.finishRefresh();
-		PostThumbnailFragment.removeSamePost(newPosts, mVideoDataList);
 		if (newPosts != null && newPosts.size() > 0) {
-			List<Post> newPostList = new ArrayList<>();
-			newPostList.addAll(newPosts);
+			List<Post> newPostList = new ArrayList<>(newPosts);
 			if (mVideoDataList != null && mVideoDataList.size() > 0) {
 				newPostList.addAll(mVideoDataList);
 			}
@@ -639,7 +637,6 @@ public class FullViewVideoListFragment extends Fragment implements TikTokVideoLa
 	@Override
 	public void loadMorePostComplete(List<Post> morePosts) {
 		mViewBinding.smartRefreshLayout.finishLoadMore();
-		PostThumbnailFragment.removeSamePost(morePosts, mVideoDataList);
 		if (morePosts != null && morePosts.size() > 0) {
 			List<Post> newPostList = new ArrayList<>();
 			if (mVideoDataList != null && mVideoDataList.size() > 0) {

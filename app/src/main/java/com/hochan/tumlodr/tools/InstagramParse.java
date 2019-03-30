@@ -16,7 +16,6 @@ import com.hochan.tumlodr.model.data.download.DownloadRecord;
 import com.hochan.tumlodr.model.data.instagramsidecar.com.besjon.pojo.Edges;
 import com.hochan.tumlodr.model.data.instagramsidecar.com.besjon.pojo.PostPageJsonRootBean;
 import com.hochan.tumlodr.ui.activity.InstagramParseActivity;
-import com.tencent.bugly.crashreport.CrashReport;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -57,7 +56,7 @@ public class InstagramParse {
 					return url;
 				}
 
-				if (url.matches(MATCH_INS_BLOG)) {
+				if (url.contains("ig_profile_share")) {
 					cbm.setPrimaryClip(ClipData.newPlainText(null, ""));
 					Intent intent = new Intent(activity, InstagramParseActivity.class);
 					intent.putExtra(InstagramParseActivity.EXTRA_INSTAGRAM_BLOG_URL, url);

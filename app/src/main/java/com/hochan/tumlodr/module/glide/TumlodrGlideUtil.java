@@ -7,7 +7,7 @@ import android.support.v4.app.Fragment;
 import android.util.LruCache;
 import android.view.View;
 
-import com.tumblr.jumblr.types.Photo;
+import com.hochan.tumlodr.jumblr.types.Photo;
 
 /**
  * .

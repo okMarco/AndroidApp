@@ -18,6 +18,8 @@ import android.widget.ImageView;
 
 import com.hochan.tumlodr.R;
 import com.hochan.tumlodr.TumlodrApp;
+import com.hochan.tumlodr.jumblr.types.Post;
+import com.hochan.tumlodr.jumblr.types.VideoPost;
 import com.hochan.tumlodr.model.viewmodel.PostListViewModel;
 import com.hochan.tumlodr.module.glide.TumlodrGlide;
 import com.hochan.tumlodr.module.glide.TumlodrGlideUtil;
@@ -43,8 +45,6 @@ import com.hochan.tumlodr.util.FragmentLifecycleProvider;
 import com.hochan.tumlodr.util.RxBus;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.trello.rxlifecycle2.android.FragmentEvent;
-import com.tumblr.jumblr.types.Post;
-import com.tumblr.jumblr.types.VideoPost;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -53,8 +53,6 @@ import java.util.List;
 import java.util.Map;
 
 import io.reactivex.functions.Consumer;
-
-import static com.hochan.tumlodr.ui.adapter.PostAdapter.TYPE_VIDEO;
 
 /**
  * .
@@ -267,9 +265,7 @@ public abstract class PostThumbnailFragment<T extends PostListPresenter> extends
 			}
 			if (maxPosition >= mAdapter.getItemCount() - 10 && !mIsLoadingMore) {
 				mIsLoadingMore = true;
-				long offset = (mAdapter.getPostList() != null && mAdapter.getPostList().size() > 0)
-						? mAdapter.getPostList().size() - 1 : 0;
-				mPresenter.loadMorePostList(offset);
+				mPresenter.loadMorePostList(mAdapter.getPostList());
 			}
 		}
 	}
@@ -345,9 +341,7 @@ public abstract class PostThumbnailFragment<T extends PostListPresenter> extends
 	public void onLoadMore(RefreshLayout refreshLayout) {
 		if (mPresenter != null && !mSmartRefreshLayout.isRefreshing() && !mIsLoadingMore) {
 			mIsLoadingMore = true;
-			long offset = (mAdapter.getPostList() != null && mAdapter.getPostList().size() > 0)
-					? mAdapter.getPostList().size() - 1 : 0;
-			mPresenter.loadMorePostList(offset);
+			mPresenter.loadMorePostList(mAdapter.getPostList());
 		}
 	}
 
@@ -357,9 +351,6 @@ public abstract class PostThumbnailFragment<T extends PostListPresenter> extends
 		if (newPosts == null || newPosts.size() == 0) {
 			return;
 		}
-		List<Post> currentPostList = mAdapter.getPostList();
-		currentPostList = currentPostList == null ? new ArrayList<Post>() : currentPostList;
-		removeSamePost(newPosts, currentPostList);
 		List<Post> newPostList = mAdapter.refreshPosts(newPosts);
 		mPostListViewModel.getDashBoardPostList().setValue(newPostList);
 		if (mScrollToTopOnRefreshComplete) {
@@ -374,46 +365,14 @@ public abstract class PostThumbnailFragment<T extends PostListPresenter> extends
 		mIsRefreshing = false;
 	}
 
-	public static void removeSamePost(List<Post> newPosts, List<Post> currentPostList) {
-		if (currentPostList == null || currentPostList.size() == 0
-				|| newPosts == null || newPosts.size() == 0) {
-			return;
-		}
-		for (Iterator<Post> iterator = newPosts.iterator(); iterator.hasNext(); ) {
-			Post tmpPost = iterator.next();
-			for (int i = currentPostList.size() - 1; i >= 0; i--) {
-				if (tmpPost != null && currentPostList.get(i) != null
-						&& tmpPost.getId().longValue() == currentPostList.get(i).getId().longValue()) {
-					try {
-						iterator.remove();
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-					break;
-				}
-			}
-		}
-	}
-
 	@Override
 	public void loadMorePostComplete(List<Post> newPost) {
 		mIsLoadingMore = false;
-		List<Post> currentPostList = mAdapter.getPostList();
 		if (newPost == null || newPost.size() == 0) {
 			return;
 		}
-		currentPostList = currentPostList == null ? new ArrayList<Post>() : currentPostList;
-		removeSamePost(newPost, currentPostList);
-		if (newPost.size() == 0) {
-			if (!mIsRefreshing) {
-				mIsRefreshing = true;
-				mScrollToTopOnRefreshComplete = false;
-				mPresenter.refreshPostList(mAdapter.getPostList().get(0).getId());
-			}
-		} else {
-			List<Post> newPostList = mAdapter.loadMorePosts(newPost);
-			mPostListViewModel.getDashBoardPostList().setValue(newPostList);
-		}
+		List<Post> newPostList = mAdapter.loadMorePosts(newPost);
+		mPostListViewModel.getDashBoardPostList().setValue(newPostList);
 		mSmartRefreshLayout.finishLoadMore();
 	}
 
@@ -516,7 +475,7 @@ public abstract class PostThumbnailFragment<T extends PostListPresenter> extends
 		if (mAdapter != null && mAdapter.getPostList() != null && mAdapter.getPostList().size() > 0) {
 			for (int i = 0; i < mAdapter.getPostList().size(); i++) {
 				Post post = mAdapter.getPostList().get(i);
-				if (post != null && post.getType().equals(TYPE_VIDEO) && post instanceof VideoPost) {
+				if (post != null && post.getType() == Post.PostType.VIDEO && post instanceof VideoPost) {
 					return (VideoPost) post;
 				}
 			}

@@ -8,27 +8,22 @@ import android.os.Bundle;
 import android.support.multidex.MultiDexApplication;
 
 import com.danikula.videocache.HttpProxyCacheServer;
-import com.danikula.videocache.file.DiskUsage;
 import com.danikula.videocache.file.FileNameGenerator;
 import com.google.android.gms.ads.MobileAds;
 import com.hochan.tumlodr.model.ApiConstants;
 import com.hochan.tumlodr.module.glide.TumlodrGlide;
 import com.hochan.tumlodr.tools.AppConfig;
 import com.hochan.tumlodr.tools.AppUiConfig;
-import com.hochan.tumlodr.tools.Tools;
 import com.hochan.tumlodr.ui.component.TumlodrBottomAdsLayout;
 import com.hochan.tumlodr.util.FileDownloadUtil;
 import com.liulishuo.filedownloader.FileDownloader;
 import com.liulishuo.filedownloader.connection.FileDownloadUrlConnection;
 import com.liulishuo.filedownloader.util.FileDownloadLog;
 import com.squareup.leakcanary.LeakCanary;
-import com.tencent.bugly.Bugly;
 
 import java.io.File;
-import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.net.Proxy;
-import java.net.SocketAddress;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -97,9 +92,6 @@ public class TumlodrApp extends MultiDexApplication {
 		mContext = getApplicationContext();
 
 		AppConfig.initAppConfig(this);
-
-		// 初始化Bugly
-		Bugly.init(getApplicationContext(), ApiConstants.BUGLY_APPID, BuildConfig.DEBUG);
 
 		// just for open the log in this demo project.
 		FileDownloadLog.NEED_LOG = BuildConfig.DEBUG;

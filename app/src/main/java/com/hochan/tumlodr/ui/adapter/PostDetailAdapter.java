@@ -26,6 +26,11 @@ import com.hochan.tumlodr.databinding.ItemPostAudioBinding;
 import com.hochan.tumlodr.databinding.ItemPostDetailBinding;
 import com.hochan.tumlodr.databinding.ItemPostDetailVideoBinding;
 import com.hochan.tumlodr.databinding.LayoutAudioPostDetailBinding;
+import com.hochan.tumlodr.jumblr.types.AudioPost;
+import com.hochan.tumlodr.jumblr.types.PhotoPost;
+import com.hochan.tumlodr.jumblr.types.Post;
+import com.hochan.tumlodr.jumblr.types.TextPost;
+import com.hochan.tumlodr.jumblr.types.VideoPost;
 import com.hochan.tumlodr.model.TumlodrService;
 import com.hochan.tumlodr.model.data.CommentBody;
 import com.hochan.tumlodr.model.data.TextPostBody;
@@ -46,11 +51,6 @@ import com.hochan.tumlodr.util.ColorFilterTransformation;
 import com.hochan.tumlodr.util.FileDownloadUtil;
 import com.hochan.tumlodr.util.TextPostBodyUtils;
 import com.hochan.tumlodr.util.ViewUtils;
-import com.tumblr.jumblr.types.AudioPost;
-import com.tumblr.jumblr.types.PhotoPost;
-import com.tumblr.jumblr.types.Post;
-import com.tumblr.jumblr.types.TextPost;
-import com.tumblr.jumblr.types.VideoPost;
 
 import java.util.List;
 import java.util.Locale;
@@ -61,11 +61,6 @@ import java.util.Locale;
  */
 
 public class PostDetailAdapter extends PostAdapter {
-
-	final static String TYPE_PHOTO = "photo";
-	protected final static String TYPE_VIDEO = "video";
-	final static String TYPE_TEXT = "text";
-	private final static String TYPE_AUDIO = "audio";
 
 	static final int CODE_TYPE_PHOTO = 0;
 	static final int CODE_TYPE_VIDEO = 1;
@@ -87,16 +82,16 @@ public class PostDetailAdapter extends PostAdapter {
 		if (mDataList != null && position >= 0 && position < mDataList.size() &&
 				mDataList.get(position) != null) {
 			switch (mDataList.get(position).getType()) {
-				case TYPE_PHOTO: {
+				case PHOTO: {
 					return CODE_TYPE_PHOTO;
 				}
-				case TYPE_VIDEO: {
+				case VIDEO: {
 					return CODE_TYPE_VIDEO;
 				}
-				case TYPE_TEXT: {
+				case TEXT: {
 					return CODE_TYPE_TEXT;
 				}
-				case TYPE_AUDIO: {
+				case AUDIO: {
 					return CODE_TYPE_AUDIO;
 				}
 				default: {
@@ -393,11 +388,11 @@ public class PostDetailAdapter extends PostAdapter {
 			}
 			switch (v.getId()) {
 				case R.id.ll_post_top: {
-					BlogPostListActivity.start(mRecyclerView.getContext(), mDataList.get(getAdapterPosition()).getBlogName(), false);
+					BlogPostListActivity.start(mRecyclerView.getContext(), mDataList.get(getAdapterPosition()).getBlogName(), mDataList.get(getAdapterPosition()).followed);
 					break;
 				}
 				case R.id.tv_source: {
-					BlogPostListActivity.start(mRecyclerView.getContext(), mDataList.get(getAdapterPosition()).getSourceTitle(), false);
+					BlogPostListActivity.start(mRecyclerView.getContext(), mDataList.get(getAdapterPosition()).getSourceTitle(), mDataList.get(getAdapterPosition()).followed);
 					break;
 				}
 				case R.id.iv_detail_dowanload: {

@@ -1,7 +1,10 @@
 package com.hochan.tumlodr.prensenter;
 
+import com.hochan.tumlodr.jumblr.types.Post;
 import com.hochan.tumlodr.model.TumlodrService;
 import com.hochan.tumlodr.ui.view.IPostListView;
+
+import java.util.List;
 
 /**
  * .
@@ -27,8 +30,13 @@ public class SearchPostPresenter extends PostListPresenter {
 	}
 
 	@Override
-	public void loadMorePostList(long offset) {
-		TumlodrService.loadTaggedPosts(mSearchTag, offset)
-				.subscribe(getLoadMoreObserver());
+	public void loadMorePostList(List<Post> posts) {
+		for (int i = posts.size() - 1; i >= 0; i--) {
+			if (posts.get(i) != null) {
+				TumlodrService.loadTaggedPosts(mSearchTag, posts.get(i).getTimestamp())
+						.subscribe(getLoadMoreObserver());
+				return;
+			}
+		}
 	}
 }

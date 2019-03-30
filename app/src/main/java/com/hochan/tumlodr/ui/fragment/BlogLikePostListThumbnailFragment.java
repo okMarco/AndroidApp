@@ -5,10 +5,10 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
+import com.hochan.tumlodr.jumblr.types.Post;
 import com.hochan.tumlodr.model.viewmodel.PostListViewModel;
 import com.hochan.tumlodr.prensenter.BlogLikePostListPresenter;
 import com.hochan.tumlodr.ui.activity.Router;
-import com.tumblr.jumblr.types.Post;
 
 import java.util.List;
 

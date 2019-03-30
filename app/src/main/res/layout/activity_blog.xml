@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
+    <com.hochan.tumlodr.ui.component.FitSystemWindowOnlyBottomLinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -36,7 +36,7 @@
                         android:scaleType="centerCrop"
                         tools:ignore="ContentDescription"/>
 
-                    <com.hochan.tumlodr.ui.component.FitsSystemWindowLinearLayout
+                    <com.hochan.tumlodr.ui.component.FitSystemWindowOnlyTopLinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical"
@@ -136,17 +136,27 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             app:tabIndicatorColor="@color/colorText"/>
-                    </com.hochan.tumlodr.ui.component.FitsSystemWindowLinearLayout>
+                    </com.hochan.tumlodr.ui.component.FitSystemWindowOnlyTopLinearLayout>
                 </FrameLayout>
             </android.support.design.widget.AppBarLayout>
-
-            <android.support.v4.view.ViewPager
-                android:id="@+id/vp_content_container"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+                android:orientation="vertical"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/vp_content_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+                <com.hochan.tumlodr.ui.component.TumlodrBottomAdsLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"/>
+            </LinearLayout>
+
         </android.support.design.widget.CoordinatorLayout>
-    </LinearLayout>
+    </com.hochan.tumlodr.ui.component.FitSystemWindowOnlyBottomLinearLayout>
 </layout>
 
 

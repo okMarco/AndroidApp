@@ -19,6 +19,7 @@ import com.crashlytics.android.Crashlytics;
 import com.hochan.tumlodr.R;
 import com.hochan.tumlodr.databinding.ActivityLoginBinding;
 import com.hochan.tumlodr.tools.AppConfig;
+import com.hochan.tumlodr.ui.activity.baseactivity.BaseAppUiActivity;
 import com.hochan.tumlodr.util.statusbar.StatusBarCompat;
 
 import io.reactivex.Observable;
@@ -30,7 +31,8 @@ import io.reactivex.schedulers.Schedulers;
 import oauth.signpost.commonshttp.CommonsHttpOAuthConsumer;
 import oauth.signpost.commonshttp.CommonsHttpOAuthProvider;
 
-public class LoginActivity extends AppCompatActivity {
+@SuppressWarnings("ALL")
+public class LoginActivity extends BaseAppUiActivity {
 
 	public static final String TUMBLR_REQUEST = "https://www.tumblr.com/oauth/request_token";
 	public static final String TUMBLR_ACCESS = "https://www.tumblr.com/oauth/access_token";
@@ -43,11 +45,12 @@ public class LoginActivity extends AppCompatActivity {
 	private CommonsHttpOAuthConsumer mCommonsHttpOAuthConsumer;
 	private CommonsHttpOAuthProvider mCommonsHttpOAuthProvider;
 
+	@SuppressLint("CheckResult")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		StatusBarCompat.setStatusBarColor(getWindow(), ContextCompat.getColor(this, R.color.colorTumblr));
+		//StatusBarCompat.setStatusBarColor(getWindow(), ContextCompat.getColor(this, R.color.colorTumblr));
 
 		mViewBinding = ActivityLoginBinding.inflate(getLayoutInflater());
 		setContentView(mViewBinding.getRoot());
@@ -88,6 +91,11 @@ public class LoginActivity extends AppCompatActivity {
 						finish();
 					}
 				});
+	}
+
+	@Override
+	protected String getTitleString() {
+		return getString(R.string.splash_login);
 	}
 
 	@SuppressLint("SetJavaScriptEnabled")

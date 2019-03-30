@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import com.hochan.tumlodr.R;
 import com.hochan.tumlodr.databinding.FragmentOnlyVideoBinding;
+import com.hochan.tumlodr.jumblr.types.Post;
 import com.hochan.tumlodr.prensenter.BlogVideoPostListPresenter;
 import com.hochan.tumlodr.prensenter.PostListPresenter;
 import com.hochan.tumlodr.prensenter.VideoPostListPresenter;
@@ -19,7 +20,6 @@ import com.hochan.tumlodr.ui.adapter.VideoPostThumbnailAdapter;
 import com.hochan.tumlodr.ui.component.TumlodrBottomAdsLayout;
 import com.hochan.tumlodr.ui.component.WrapStaggeredGridLayoutManager;
 import com.hochan.tumlodr.util.ViewUtils;
-import com.tumblr.jumblr.types.Post;
 
 import java.util.ArrayList;
 

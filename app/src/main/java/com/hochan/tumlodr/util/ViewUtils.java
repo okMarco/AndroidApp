@@ -25,9 +25,11 @@ import com.hochan.tumlodr.TumlodrApp;
 import com.hochan.tumlodr.module.video.StaticAnimatorListenerAdapter;
 import com.hochan.tumlodr.tools.AppUiConfig;
 import com.hochan.tumlodr.tools.ScreenTools;
+import com.hochan.tumlodr.ui.activity.BlogPostListActivity;
 import com.hochan.tumlodr.ui.activity.DownloadFileFullScreenActivity;
 import com.hochan.tumlodr.ui.activity.FullScreenPhotoViewActivity;
 import com.hochan.tumlodr.ui.activity.VideoViewPagerActivity;
+import com.tumblr.jumblr.types.Blog;
 
 import java.lang.ref.WeakReference;
 
@@ -162,6 +164,7 @@ public class ViewUtils {
 						&& !(activityWeakReference.get() instanceof FullScreenPhotoViewActivity)
 						&& !(activityWeakReference.get() instanceof DownloadFileFullScreenActivity)) {
 					index = i;
+					break;
 				}
 			}
 			if (index >= 0 && index < TumlodrApp.ACTIVITY_WEAK_REFERENCE_LIST.size() - 1) {

@@ -2,9 +2,8 @@ package com.hochan.tumlodr.model.viewmodel;
 
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
-import android.support.v4.util.CircularArray;
 
-import com.tumblr.jumblr.types.Post;
+import com.hochan.tumlodr.jumblr.types.Post;
 
 import java.util.ArrayList;
 import java.util.List;

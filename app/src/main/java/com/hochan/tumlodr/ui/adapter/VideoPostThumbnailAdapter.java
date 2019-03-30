@@ -1,6 +1,5 @@
 package com.hochan.tumlodr.ui.adapter;
 
-import android.support.v4.util.CircularArray;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,9 +8,9 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.hochan.tumlodr.R;
+import com.hochan.tumlodr.jumblr.types.Post;
+import com.hochan.tumlodr.jumblr.types.VideoPost;
 import com.hochan.tumlodr.module.glide.TumlodrGlide;
-import com.tumblr.jumblr.types.Post;
-import com.tumblr.jumblr.types.VideoPost;
 
 import java.util.List;
 

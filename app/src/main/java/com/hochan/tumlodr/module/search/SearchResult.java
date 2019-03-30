@@ -1,6 +1,7 @@
 package com.hochan.tumlodr.module.search;
 
-import com.tumblr.jumblr.types.Post;
+
+import com.hochan.tumlodr.jumblr.types.Post;
 
 import java.util.List;
 

@@ -2,9 +2,9 @@ package com.hochan.tumlodr.util;
 
 import android.text.TextUtils;
 
+import com.hochan.tumlodr.jumblr.types.Photo;
+import com.hochan.tumlodr.jumblr.types.PhotoSize;
 import com.hochan.tumlodr.model.data.TextPostBody;
-import com.tumblr.jumblr.types.Photo;
-import com.tumblr.jumblr.types.PhotoSize;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

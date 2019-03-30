@@ -10,6 +10,8 @@ import android.widget.TextView;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.hochan.tumlodr.R;
 import com.hochan.tumlodr.databinding.LayoutTiktokVideoControlBinding;
+import com.hochan.tumlodr.jumblr.types.Post;
+import com.hochan.tumlodr.jumblr.types.VideoPost;
 import com.hochan.tumlodr.model.BaseObserver;
 import com.hochan.tumlodr.model.TumlodrService;
 import com.hochan.tumlodr.model.sharedpreferences.UserInfo;
@@ -21,8 +23,6 @@ import com.hochan.tumlodr.ui.activity.BlogPostListActivity;
 import com.hochan.tumlodr.ui.activity.PostDetailActivity;
 import com.hochan.tumlodr.util.FileDownloadUtil;
 import com.hochan.tumlodr.util.ViewUtils;
-import com.tumblr.jumblr.types.Post;
-import com.tumblr.jumblr.types.VideoPost;
 
 /**
  * .
@@ -111,13 +111,13 @@ public class TikTokViewVideoControl extends DefaultVideoControl {
 		tvBlogName.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				BlogPostListActivity.start(getContext(), mPost.getBlogName(), false);
+				BlogPostListActivity.start(getContext(), mPost.getBlogName(), mPost.followed);
 			}
 		});
 		ivBlogAvatar.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				BlogPostListActivity.start(getContext(), mPost.getBlogName(), false);
+				BlogPostListActivity.start(getContext(), mPost.getBlogName(), mPost.followed);
 			}
 		});
 		btnPost.setVisibility(GONE);

@@ -28,6 +28,7 @@ import com.bumptech.glide.request.target.Target;
 import com.hochan.tumlodr.R;
 import com.hochan.tumlodr.databinding.ActivityPhotoViewBinding;
 import com.hochan.tumlodr.databinding.LayoutFullPhotoViewBinding;
+import com.hochan.tumlodr.jumblr.types.Post;
 import com.hochan.tumlodr.model.TumlodrService;
 import com.hochan.tumlodr.model.data.TasksManagerModel;
 import com.hochan.tumlodr.model.data.download.DownloadRecordDatabase;
@@ -49,7 +50,6 @@ import com.hochan.tumlodr.util.RxBus;
 import com.hochan.tumlodr.util.SimpleCompletableObserver;
 import com.hochan.tumlodr.util.ViewUtils;
 import com.hochan.tumlodr.util.statusbar.StatusBarCompat;
-import com.tumblr.jumblr.types.Post;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -287,7 +287,7 @@ public class FullScreenPhotoViewActivity extends BaseViewBindingActivity<Activit
 				if (sPost == null) {
 					return;
 				}
-				BlogPostListActivity.start(FullScreenPhotoViewActivity.this, sPost.getBlogName(), false);
+				BlogPostListActivity.start(FullScreenPhotoViewActivity.this, sPost.getBlogName(), sPost.followed);
 			}
 		});
 	}

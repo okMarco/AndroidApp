@@ -4,60 +4,73 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <com.hochan.tumlodr.ui.component.DisallowInterceptTouchEventDrawerLayout
-
-        android:id="@+id/drawerlayout"
+    <com.hochan.tumlodr.ui.component.FitsSystemWindowFrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
-        tools:context=".ui.activity.baseactivity.BaseDrawerActivity">
-
-        <LinearLayout
+        >
+        <com.hochan.tumlodr.ui.component.DisallowInterceptTouchEventDrawerLayout
+            android:id="@+id/drawerlayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            tools:context=".ui.activity.baseactivity.BaseDrawerActivity">
 
-            <android.support.design.widget.CoordinatorLayout
-                android:id="@+id/coordinator_layout"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-                <android.support.design.widget.AppBarLayout
+                <android.support.design.widget.CoordinatorLayout
+                    android:id="@+id/coordinator_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:theme="@style/AppTheme.PopupOverlay">
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
 
-                    <android.support.v7.widget.Toolbar
-                        android:id="@id/toolbar"
+                    <android.support.design.widget.AppBarLayout
                         android:layout_width="match_parent"
-                        android:layout_height="?attr/actionBarSize"
-                        android:background="?attr/colorPrimary"
-                        app:layout_scrollFlags="scroll|enterAlways|snap"
-                        app:popupTheme="@style/AppTheme.PopupOverlay"/>
+                        android:layout_height="wrap_content"
+                        android:theme="@style/AppTheme.PopupOverlay">
 
-                    <android.support.design.widget.TabLayout
-                        android:id="@+id/tab_layout"
+                        <android.support.v7.widget.Toolbar
+                            android:id="@id/toolbar"
+                            android:layout_width="match_parent"
+                            android:layout_height="?attr/actionBarSize"
+                            android:background="?attr/colorPrimary"
+                            app:layout_scrollFlags="scroll|enterAlways|snap"
+                            app:popupTheme="@style/AppTheme.PopupOverlay"/>
+
+                        <android.support.design.widget.TabLayout
+                            android:id="@+id/tab_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:visibility="gone"/>
+
+                    </android.support.design.widget.AppBarLayout>
+
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:visibility="gone"/>
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+                        <FrameLayout
+                            android:id="@id/fragment_container"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            />
+                        <com.hochan.tumlodr.ui.component.TumlodrBottomAdsLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="?attr/actionBarSize"/>
+                    </LinearLayout>
+                </android.support.design.widget.CoordinatorLayout>
+            </LinearLayout>
 
-                </android.support.design.widget.AppBarLayout>
+            <FrameLayout
+                android:id="@+id/rl_left_drawer_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="left"/>
+        </com.hochan.tumlodr.ui.component.DisallowInterceptTouchEventDrawerLayout>
 
-                <FrameLayout
-                    android:id="@id/fragment_container"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
-            </android.support.design.widget.CoordinatorLayout>
-        </LinearLayout>
-
-        <FrameLayout
-            android:id="@+id/rl_left_drawer_container"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="left"/>
-    </com.hochan.tumlodr.ui.component.DisallowInterceptTouchEventDrawerLayout>
-
+    </com.hochan.tumlodr.ui.component.FitsSystemWindowFrameLayout>
 </layout>
 

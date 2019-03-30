@@ -4,13 +4,13 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.hochan.tumlodr.TumlodrApp;
+import com.hochan.tumlodr.jumblr.types.Blog;
+import com.hochan.tumlodr.jumblr.types.User;
 import com.hochan.tumlodr.model.BaseObserver;
 import com.hochan.tumlodr.model.TumlodrService;
 import com.hochan.tumlodr.tools.AppConfig;
 import com.hochan.tumlodr.util.Events;
 import com.hochan.tumlodr.util.RxBus;
-import com.tumblr.jumblr.types.Blog;
-import com.tumblr.jumblr.types.User;
 
 import java.util.HashSet;
 import java.util.List;

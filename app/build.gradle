@@ -19,20 +19,20 @@ def getAppVersionCode(shortVersionCode) {
     return Integer.valueOf(code)
 }
 
-ext.VERSIOM_NAME = '3.1.0'
+ext.VERSIOM_NAME = '3.3.0'
 
 android {
     signingConfigs {
         debug {
             keyAlias 'HoChan'
             keyPassword '088210'
-            storeFile file('/Users/chenzhendong/Documents/Tunlodr发布版本/hochan.jks')
+            storeFile file('/Users/chenzhendong/Documents/Workspace/Tunlodr发布版本/hochan.jks')
             storePassword '088210'
         }
         release {
             keyAlias 'HoChan'
             keyPassword '088210'
-            storeFile file('/Users/chenzhendong/Documents/Tunlodr发布版本/hochan.jks')
+            storeFile file('/Users/chenzhendong/Documents/Workspace/Tunlodr发布版本/hochan.jks')
             storePassword '088210'
         }
     }
@@ -124,8 +124,6 @@ dependencies {
     compile 'com.hoooooo:arrow:1.0.0'
     compile 'org.jsoup:jsoup:1.9.2'
     compile 'com.liulishuo.filedownloader:library:1.6.4'
-    compile 'com.tencent.bugly:crashreport_upgrade:1.3.5'
-    compile 'com.tencent.bugly:nativecrashreport:3.3.1'
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.4'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
     compile 'com.android.support:multidex:1.0.3'

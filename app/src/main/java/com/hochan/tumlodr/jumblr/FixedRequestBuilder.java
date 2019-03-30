@@ -5,12 +5,12 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonSyntaxException;
-import com.tumblr.jumblr.JumblrClient;
-import com.tumblr.jumblr.exceptions.JumblrException;
-import com.tumblr.jumblr.request.MultipartConverter;
-import com.tumblr.jumblr.request.RequestBuilder;
-import com.tumblr.jumblr.responses.JsonElementDeserializer;
-import com.tumblr.jumblr.responses.ResponseWrapper;
+import com.hochan.tumlodr.jumblr.JumblrClient;
+import com.hochan.tumlodr.jumblr.exceptions.JumblrException;
+import com.hochan.tumlodr.jumblr.request.MultipartConverter;
+import com.hochan.tumlodr.jumblr.request.RequestBuilder;
+import com.hochan.tumlodr.jumblr.responses.JsonElementDeserializer;
+import com.hochan.tumlodr.jumblr.responses.ResponseWrapper;
 
 import org.scribe.builder.ServiceBuilder;
 import org.scribe.builder.api.TumblrApi;

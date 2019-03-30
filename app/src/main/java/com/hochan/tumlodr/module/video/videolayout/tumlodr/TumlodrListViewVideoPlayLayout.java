@@ -5,8 +5,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 
+import com.hochan.tumlodr.jumblr.types.VideoPost;
 import com.hochan.tumlodr.module.video.videolayout.VideoPlayLayout;
-import com.tumblr.jumblr.types.VideoPost;
 
 /**
  * .

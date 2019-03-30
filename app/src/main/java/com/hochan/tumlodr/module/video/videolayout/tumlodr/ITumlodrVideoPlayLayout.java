@@ -1,6 +1,6 @@
 package com.hochan.tumlodr.module.video.videolayout.tumlodr;
 
-import com.tumblr.jumblr.types.VideoPost;
+import com.hochan.tumlodr.jumblr.types.VideoPost;
 
 /**
  * .

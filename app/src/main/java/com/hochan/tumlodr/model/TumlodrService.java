@@ -1,26 +1,23 @@
 package com.hochan.tumlodr.model;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
-import com.hochan.tumlodr.TumlodrApp;
 import com.hochan.tumlodr.jumblr.FixedJumblrClient;
+import com.hochan.tumlodr.jumblr.JumblrClient;
+import com.hochan.tumlodr.jumblr.types.Blog;
+import com.hochan.tumlodr.jumblr.types.Post;
+import com.hochan.tumlodr.jumblr.types.User;
+import com.hochan.tumlodr.model.data.blog.FollowingBlog;
+import com.hochan.tumlodr.model.data.blog.FollowingBlogDatabase;
 import com.hochan.tumlodr.model.sql.FollowingsBlogDBController;
 import com.hochan.tumlodr.module.search.SearchBlogInfo;
-import com.hochan.tumlodr.module.search.SearchPost;
 import com.hochan.tumlodr.module.search.SearchResult;
-import com.hochan.tumlodr.tools.AppConfig;
 import com.hochan.tumlodr.util.Events;
 import com.hochan.tumlodr.util.RxBus;
-import com.tumblr.jumblr.JumblrClient;
-import com.tumblr.jumblr.types.Blog;
-import com.tumblr.jumblr.types.Post;
-import com.tumblr.jumblr.types.User;
 
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.jsoup.Jsoup;
@@ -28,12 +25,9 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.io.IOException;
 import java.lang.reflect.Field;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -44,20 +38,15 @@ import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
-import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.Cookie;
 import okhttp3.CookieJar;
 import okhttp3.FormBody;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
-import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.Response;
-import okio.BufferedSink;
-import okio.Utf8;
 
 /**
  * .
@@ -69,6 +58,7 @@ public class TumlodrService {
 	public static final String REQUEST_SINCE_ID = "since_id";
 	public static final String REQUEST_AFTER = "after";
 	public static final String REQUEST_OFFSET = "offset";
+	public static final String REQUEST_BEFORE_ID = "before_id";
 	public static final String REQUEST_BEFORE = "before";
 	private static final String REQUEST_TYPE = "type";
 
@@ -188,16 +178,7 @@ public class TumlodrService {
 	}
 
 	public static void setPostLiked(Post post, boolean liked) {
-		System.out.println(((Post) post).getClass());
-		try {
-			Field like = (Post.class.getDeclaredField("liked"));
-			like.setAccessible(true);
-			like.set(post, liked);
-		} catch (NoSuchFieldException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		}
+		post.liked = true;
 	}
 
 	public static Observable<Long> likePost(final long postId, final String reblogKey) {
@@ -262,6 +243,7 @@ public class TumlodrService {
 			@Override
 			public void subscribe(@NonNull ObservableEmitter<Object> e) throws Exception {
 				HOLDER.INSTANCE.follow(blogName);
+				FollowingBlogDatabase.insertBlog(blogName);
 			}
 		}).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
 	}
@@ -271,6 +253,7 @@ public class TumlodrService {
 			@Override
 			public void subscribe(@NonNull ObservableEmitter<Object> e) throws Exception {
 				HOLDER.INSTANCE.unfollow(blogName);
+				FollowingBlogDatabase.deleteBlog(blogName);
 			}
 		}).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe();
 	}
@@ -282,10 +265,8 @@ public class TumlodrService {
 				Map<String, Object> param = new HashMap<>();
 				param.put("offset", 0);
 				List<Blog> blogList = HOLDER.INSTANCE.userFollowing(param);
-
-				FollowingsBlogDBController controller = new FollowingsBlogDBController();
-				controller.addNewBlogs(blogList);
-				e.onNext(controller.getAllBlogs(0));
+                FollowingBlogDatabase.insertBlogs(blogList);
+				e.onNext(blogList);
 			}
 		}).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
 	}
@@ -294,16 +275,11 @@ public class TumlodrService {
 		return Observable.create(new ObservableOnSubscribe<List<Blog>>() {
 			@Override
 			public void subscribe(ObservableEmitter<List<Blog>> e) throws Exception {
-				FollowingsBlogDBController followingsBlogDBController = new FollowingsBlogDBController();
-				List<Blog> userFollowings = followingsBlogDBController.getAllBlogs(offset);
-				if (userFollowings.isEmpty()) {
-					JumblrClient client = HOLDER.INSTANCE;
-					Map<String, Object> param = new HashMap<>();
-					param.put("offset", offset);
-					userFollowings = client.userFollowing(param);
-					System.out.println(userFollowings.size());
-					followingsBlogDBController.addBlogs(userFollowings);
-				}
+				JumblrClient client = HOLDER.INSTANCE;
+				Map<String, Object> param = new HashMap<>();
+				param.put("offset", offset);
+				List<Blog> userFollowings = client.userFollowing(param);
+				FollowingBlogDatabase.insertBlogs(userFollowings);
 				e.onNext(userFollowings);
 			}
 		}).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());

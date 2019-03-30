@@ -10,10 +10,10 @@ import com.bumptech.glide.load.model.ModelLoaderFactory;
 import com.bumptech.glide.load.model.MultiModelLoaderFactory;
 import com.bumptech.glide.load.model.stream.BaseGlideUrlLoader;
 import com.hochan.tumlodr.TumlodrApp;
+import com.hochan.tumlodr.jumblr.types.Photo;
+import com.hochan.tumlodr.jumblr.types.PhotoSize;
 import com.hochan.tumlodr.tools.AppConfig;
 import com.hochan.tumlodr.tools.ScreenTools;
-import com.tumblr.jumblr.types.Photo;
-import com.tumblr.jumblr.types.PhotoSize;
 
 import java.io.InputStream;
 import java.util.List;

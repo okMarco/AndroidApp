@@ -45,6 +45,7 @@ public class AppUiConfig {
 	public static int sPicHolderColor = INVALID;
 	public static boolean sIsLightTheme = false;
 	public static int sSubTextColor;
+	public static int sBackgroundColor;
 
 	public static void setTumlodrTheme(Context context, int themeId) {
 		sThemId = themeId;
@@ -65,6 +66,7 @@ public class AppUiConfig {
 				sPicHolderResource = R.drawable.bg_avatar_holder_dark;
 				sPicHolderColor = ContextCompat.getColor(context, R.color.colorBlueHolder);
 				sSubTextColor = ContextCompat.getColor(context, R.color.colorSubTextDark);
+				sBackgroundColor = ContextCompat.getColor(context, R.color.colorBackgroundBlue);
 				break;
 			}
 			default: {
@@ -82,6 +84,7 @@ public class AppUiConfig {
 				sPicHolderResource = R.drawable.bg_avatar_holder_light;
 				sSubTextColor = ContextCompat.getColor(context, R.color.colorSubTextLight);
 				sPicHolderColor = ContextCompat.getColor(context, R.color.colorWhiteHolder);
+				sBackgroundColor = ContextCompat.getColor(context, R.color.colorBackgroundWhite);
 				break;
 			}
 		}

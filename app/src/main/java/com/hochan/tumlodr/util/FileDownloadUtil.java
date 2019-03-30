@@ -7,6 +7,12 @@ import android.text.TextUtils;
 import android.util.LruCache;
 
 import com.hochan.tumlodr.TumlodrApp;
+import com.hochan.tumlodr.jumblr.types.Photo;
+import com.hochan.tumlodr.jumblr.types.PhotoPost;
+import com.hochan.tumlodr.jumblr.types.Post;
+import com.hochan.tumlodr.jumblr.types.TextPost;
+import com.hochan.tumlodr.jumblr.types.Video;
+import com.hochan.tumlodr.jumblr.types.VideoPost;
 import com.hochan.tumlodr.model.BaseObserver;
 import com.hochan.tumlodr.model.data.TasksManagerModel;
 import com.hochan.tumlodr.model.data.TextPostBody;
@@ -15,12 +21,6 @@ import com.hochan.tumlodr.module.video.videolayout.VideoPlayLayout;
 import com.hochan.tumlodr.tools.AppConfig;
 import com.hochan.tumlodr.tools.Tools;
 import com.liulishuo.filedownloader.FileDownloader;
-import com.tumblr.jumblr.types.Photo;
-import com.tumblr.jumblr.types.PhotoPost;
-import com.tumblr.jumblr.types.Post;
-import com.tumblr.jumblr.types.TextPost;
-import com.tumblr.jumblr.types.Video;
-import com.tumblr.jumblr.types.VideoPost;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -31,6 +31,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URL;
 import java.util.List;
 
 import io.reactivex.ObservableEmitter;
@@ -40,8 +41,6 @@ import io.reactivex.schedulers.Schedulers;
 
 import static com.hochan.tumlodr.model.data.TasksManagerModel.TYPE_VIDEO;
 import static com.hochan.tumlodr.tools.Tools.getPicNameByUrl;
-import static com.hochan.tumlodr.ui.adapter.PostAdapter.TYPE_PHOTO;
-import static com.hochan.tumlodr.ui.adapter.PostAdapter.TYPE_TEXT;
 
 /**
  * .
@@ -50,43 +49,11 @@ import static com.hochan.tumlodr.ui.adapter.PostAdapter.TYPE_TEXT;
 
 public class FileDownloadUtil {
 
-	private static final String TUMBLR_ORIGINAL_VIDEO_URL_TAG = "video_file";
-
-	private static LruCache<Long, TumblrVideoDownloadInfo> mVideoDownloadInfoLruCache = new LruCache<>(500);
-
 	public static TumblrVideoDownloadInfo getVideoDownloadInfo(VideoPost videoPost) {
 		if (videoPost == null || videoPost.getVideos() == null || videoPost.getVideos().size() <= 0) {
 			return null;
 		}
-		TumblrVideoDownloadInfo tumblrVideoDownloadInfo = mVideoDownloadInfoLruCache.get(videoPost.getId());
-		if (tumblrVideoDownloadInfo != null) {
-			return tumblrVideoDownloadInfo;
-		}
-		Video video = videoPost.getVideos().get(0);
-		Document document = Jsoup.parse(video.getEmbedCode());
-		Elements elements = document.getElementsByTag("source");
-		if (elements != null && elements.size() > 0) {
-			String videoUrl = elements.get(0).attr("src");
-			tumblrVideoDownloadInfo = new TumblrVideoDownloadInfo(videoUrl, videoPost.getThumbnailUrl());
-			mVideoDownloadInfoLruCache.put(videoPost.getId(), tumblrVideoDownloadInfo);
-			return tumblrVideoDownloadInfo;
-		}
-		return new TumblrVideoDownloadInfo(null, videoPost.getThumbnailUrl());
-	}
-
-	@Nullable
-	private static String getTransformedVideoUrl(@Nullable String videoUrl) {
-		if (TextUtils.isEmpty(videoUrl))
-			return null;
-		String transformedVideoUrl = null;
-		if (videoUrl.contains("video_file")) {
-			if (AppConfig.sForceStitchingVideoUrl) {
-				transformedVideoUrl = getTumblrStitchedVideoUrl(videoUrl);
-			} else if (VideoPlayLayout.sIsInEuro) {
-				transformedVideoUrl = VideoPlayLayout.VIDEO_URL_INEURO.get(videoUrl);
-			}
-		}
-		return TextUtils.isEmpty(transformedVideoUrl) ? videoUrl : transformedVideoUrl;
+        return new TumblrVideoDownloadInfo(videoPost.video_url, videoPost.getThumbnailUrl());
 	}
 
 	@NonNull
@@ -99,21 +66,20 @@ public class FileDownloadUtil {
 		if (TextUtils.isEmpty(videoUrl)) {
 			return String.valueOf(System.currentTimeMillis()) + ".mp4";
 		}
-		videoUrl = Uri.parse(videoUrl).getPath();
-		if (!TextUtils.isEmpty(videoUrl) && videoUrl.contains("tumblr")) {
-			return (videoUrl.substring(videoUrl.lastIndexOf("tumblr"), videoUrl.length()) + ".mp4")
-					.replace("/", "_");
-		} else {
-			return videoUrl.substring(videoUrl.lastIndexOf("/") + 1);
+		videoUrl = videoUrl.substring(videoUrl.lastIndexOf("/") + 1);
+		if (videoUrl.endsWith(".mp4")) {
+			return videoUrl;
+		}else {
+			return videoUrl + ".mp4";
 		}
 	}
 
 	public static boolean download(Post post) {
-		if (post.getType().equals(TYPE_PHOTO) || post instanceof PhotoPost) {
+		if (post.getType() == Post.PostType.PHOTO || post instanceof PhotoPost) {
 			return downloadTumblrPics(((PhotoPost) post).getPhotos());
-		} else if (post.getType().equals(TYPE_VIDEO) || post instanceof VideoPost) {
+		} else if (post.getType() == Post.PostType.VIDEO || post instanceof VideoPost) {
 			return downloadTumblrVideo((VideoPost) post);
-		} else if (post.getType().equals(TYPE_TEXT) || post instanceof TextPost) {
+		} else if (post.getType() == Post.PostType.TEXT || post instanceof TextPost) {
 			TextPostBody textPostBody = TextPostBodyUtils.textPostBody(((TextPost)post).getBody());
 			if (textPostBody != null && textPostBody.getPhotos() != null && textPostBody.getPhotos().size() > 0) {
 				return downloadTumblrPics(textPostBody.getPhotos());
@@ -185,24 +151,9 @@ public class FileDownloadUtil {
 		return true;
 	}
 
-	@NonNull
-	private static String getTumblrStitchedVideoUrl(@NonNull String videoUrl) {
-		if (!videoUrl.endsWith("/480")) {
-			videoUrl = "https://vt.media.tumblr.com" + videoUrl.substring(videoUrl.lastIndexOf("/")) + ".mp4";
-		} else {
-			videoUrl = videoUrl.replace("/480", "");
-			videoUrl = "https://vt.media.tumblr.com" + videoUrl.substring(videoUrl.lastIndexOf("/")) + "_480.mp4";
-		}
-		return videoUrl;
-	}
-
 	private static void downloadTumblrVideoRemote(TumblrVideoDownloadInfo tumblrVideoDownloadInfo) {
 		if (tumblrVideoDownloadInfo != null) {
 			String videoUrl = tumblrVideoDownloadInfo.getVideoUrl();
-			if (!TextUtils.isEmpty(videoUrl) && videoUrl.contains(TUMBLR_ORIGINAL_VIDEO_URL_TAG)
-					&& VideoPlayLayout.sIsInEuro) {
-				videoUrl = getTumblrStitchedVideoUrl(videoUrl);
-			}
 			FileDownloader.getImpl().create(videoUrl)
 					.setPath(tumblrVideoDownloadInfo.getVideoPath())
 					.addFinishListener(AppConfig.mDownloadFinishListener)
@@ -247,7 +198,7 @@ public class FileDownloadUtil {
 	}
 
 	public static void addInstagramPicDownload(String url, String groupName) {
-		String fileName = url.substring(url.lastIndexOf("/") + 1, url.length());
+		String fileName = getFileNameOfInstagramUrl(url, ".jpg");
 		String direct = Tools.getStoragePathByFileName("") + groupName + File.separator;
 		if (!new File(direct).exists()) {
 			if (!new File(direct).mkdirs()) {
@@ -268,7 +219,7 @@ public class FileDownloadUtil {
 	}
 
 	public static void addInstagramVideoDownload(String thumbnail, String videoUrl, String groupName) {
-		String fileName = videoUrl.substring(videoUrl.lastIndexOf("/") + 1, videoUrl.length());
+		String fileName = getFileNameOfInstagramUrl(videoUrl, ".mp4");
 		String direct = Tools.getStoragePathByFileName("") + groupName + File.separator;
 		if (!new File(direct).exists()) {
 			if (!new File(direct).mkdirs()) {
@@ -288,6 +239,17 @@ public class FileDownloadUtil {
 				.start();
 	}
 
+	private static String getFileNameOfInstagramUrl(String url, String subfix) {
+        if (url.contains("?")) {
+            url = url.substring(0, url.lastIndexOf("?"));
+        }
+        String fileName = url.substring(url.lastIndexOf("/") + 1, url.length());
+        if (!fileName.endsWith(subfix)) {
+            fileName = fileName + subfix;
+        }
+        return fileName;
+    }
+
 	@SuppressWarnings({"unused", "WeakerAccess"})
 	public static class TumblrVideoDownloadInfo {
 
@@ -303,7 +265,7 @@ public class FileDownloadUtil {
 		}
 
 		public String getVideoUrl() {
-			return getTransformedVideoUrl(mVideoUrl);
+			return mVideoUrl;
 		}
 
 		public String getVideoPath() {

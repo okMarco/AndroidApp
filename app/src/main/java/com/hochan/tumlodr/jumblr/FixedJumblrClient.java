@@ -4,11 +4,11 @@ import android.content.SharedPreferences;
 import android.widget.Toast;
 
 import com.hochan.tumlodr.TumlodrApp;
+import com.hochan.tumlodr.jumblr.JumblrClient;
+import com.hochan.tumlodr.jumblr.types.Blog;
+import com.hochan.tumlodr.jumblr.types.Post;
+import com.hochan.tumlodr.jumblr.types.User;
 import com.hochan.tumlodr.tools.AppConfig;
-import com.tumblr.jumblr.JumblrClient;
-import com.tumblr.jumblr.types.Blog;
-import com.tumblr.jumblr.types.Post;
-import com.tumblr.jumblr.types.User;
 
 import org.scribe.model.Token;
 
