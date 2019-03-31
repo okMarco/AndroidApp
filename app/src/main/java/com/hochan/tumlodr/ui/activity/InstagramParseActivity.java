@@ -66,6 +66,7 @@ public class InstagramParseActivity extends BaseViewBindingActivity<ActivityInst
 	private String mGroupName;
 	private String mBlogName;
     private boolean noMoreData;
+    private boolean hasExit;
 
     private boolean mIsFirstEnter = true;
 
@@ -88,14 +89,13 @@ public class InstagramParseActivity extends BaseViewBindingActivity<ActivityInst
 							InstagramPageShareDataVo instagramPageShareDataVo = new Gson().fromJson(json, InstagramPageShareDataVo.class);
 							if (instagramPageShareDataVo != null) {
 								String avatar = instagramPageShareDataVo.getEntry_data().getProfilePage().get(0).getGraphql().getUser().getProfile_pic_url_hd();
-								String fileName = avatar.substring(avatar.lastIndexOf("/"), avatar.length());
-								final String toFile = Tools.getStoragePathByFileName(fileName);
+								String toFile = FileDownloadUtil.getInstagramGroupDownloadDirect(mGroupName) + mGroupName + ".jpg";
 								if (!new File(toFile).exists()) {
 									FileDownloader.getImpl().create(avatar)
 											.setPath(toFile)
 											.start();
 								}
-								DownloadRecordDatabase.insertNewGroupDownload(avatar, mGroupName);
+								DownloadRecordDatabase.insertNewGroupDownload(avatar, toFile, mGroupName);
 								mTotalCount = instagramPageShareDataVo.getEntry_data().getProfilePage().get(0).getGraphql().getUser().getEdge_owner_to_timeline_media().getCount();
 								List<Edges> nodesList = instagramPageShareDataVo.getEntry_data().getProfilePage().get(0).getGraphql().getUser().getEdge_owner_to_timeline_media().getEdges();
 								mParseCount += nodesList.size();
@@ -309,7 +309,7 @@ public class InstagramParseActivity extends BaseViewBindingActivity<ActivityInst
 				mViewBinding.webView.pageUp(false);
 			}
 			mPageDown = !mPageDown;
-			if (!noMoreData) {
+			if (!noMoreData && !hasExit) {
                 mHandler.postDelayed(mWebViewScroll, 2000);
             }
 		}
@@ -330,19 +330,15 @@ public class InstagramParseActivity extends BaseViewBindingActivity<ActivityInst
 		return mBlogName;
 	}
 
-	@Override
+    @Override
+    public void setUpObserver() {}
+
+    @Override
 	protected void onDestroy() {
 		super.onDestroy();
+		hasExit = true;
 		if (mHandler != null) {
 			mHandler.removeCallbacks(mWebViewScroll);
 		}
 	}
-//video/mp4
-    public void showImageDownloadSuccessSnackBar(String imagePath) {
-        new SingleMediaScanner(this, imagePath);
-    }
-
-    public void showVideoDownloadSuccessSnackBar(String videoPath) {
-	    new SingleMediaScanner(this, videoPath);
-    }
 }

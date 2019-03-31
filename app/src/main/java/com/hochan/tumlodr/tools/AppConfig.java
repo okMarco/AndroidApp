@@ -8,6 +8,7 @@ import com.crashlytics.android.Crashlytics;
 import com.hochan.tumlodr.TumlodrApp;
 import com.hochan.tumlodr.model.data.download.DownloadRecordDatabase;
 import com.hochan.tumlodr.module.listener.SimpleFileDownloadListener;
+import com.hochan.tumlodr.ui.component.SingleMediaScanner;
 import com.hochan.tumlodr.util.Events;
 import com.hochan.tumlodr.util.RxBus;
 import com.liulishuo.filedownloader.BaseDownloadTask;
@@ -158,6 +159,7 @@ public class AppConfig {
 				if (new File(task.getPath()).exists()) {
 					RxBus.getInstance().send(new Events<>(Events.EVENT_CODE_DOWNLOAD_FINISH, task));
 					DownloadRecordDatabase.updateDownloadFinish(task.getId());
+					new SingleMediaScanner(task.getPath());
 				}
 			}
 		};

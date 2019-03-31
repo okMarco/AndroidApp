@@ -21,6 +21,8 @@ import java.util.List;
 @Entity(tableName = "download_records", indices = {@Index(value = {"path", "url"}, unique = true)})
 public class DownloadRecord {
 
+	// Group的类型：tumblr、instagram、group、instagram_xxx
+
 	@Ignore
 	public static final String GROUP_TUMBLR = "tumblr";
 	@Ignore

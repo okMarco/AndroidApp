@@ -45,9 +45,7 @@ public class DeleteDialogFragment extends TumloadrDialogFragment {
 	}
 
 	@Override
-	public void onCancel() {
-
-	}
+	public void onCancel() {}
 
 	public void setDownloadTaskDeleteListener(OnDownloadTaskDeleteListener downloadTaskDeleteListener) {
 		mDownloadTaskDeleteListener = downloadTaskDeleteListener;

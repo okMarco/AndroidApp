@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-
-    >
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <CheckBox
         android:id="@+id/rbtn_delete_file"
@@ -14,6 +10,7 @@
         android:layout_marginLeft="20dp"
         android:button="@drawable/bg_white_checkbox"
         android:text="@string/delete_download_task_fragment_file"
+        android:textSize="15sp"
         android:textColor="@color/colorWhite"
         tools:ignore="RtlHardcoded"/>
 

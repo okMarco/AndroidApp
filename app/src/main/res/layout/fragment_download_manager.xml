@@ -1,22 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.scwang.smartrefresh.layout.SmartRefreshLayout
-            android:id="@+id/smart_refresh_layout"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_view"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-            </android.support.v7.widget.RecyclerView>
-        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+        </android.support.v7.widget.RecyclerView>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -30,9 +24,11 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:background="@drawable/shape_circle_orange"
-                android:scaleType="fitCenter"
+                android:scaleType="center"
                 android:scaleX="0"
                 android:scaleY="0"
+                tools:scaleX="1"
+                tools:scaleY="1"
                 android:src="@drawable/ic_download_delete"/>
 
             <Button
@@ -47,9 +43,11 @@
                 android:paddingRight="20dp"
                 android:scaleX="0"
                 android:scaleY="0"
-                android:text="全选"
+                tools:scaleX="1"
+                tools:scaleY="1"
+                android:text="@string/download_select_all"
                 android:textColor="@color/colorWhite"
-                android:textSize="14sp"/>
+                android:textSize="15sp"/>
 
             <ImageButton
                 android:id="@+id/btn_cancel"
@@ -58,6 +56,9 @@
                 android:background="@drawable/shape_circle_orange"
                 android:scaleX="0"
                 android:scaleY="0"
+                tools:scaleY="1"
+                tools:scaleX="1"
+                android:scaleType="center"
                 android:src="@drawable/ic_download_delete_cancel"/>
         </LinearLayout>
     </FrameLayout>

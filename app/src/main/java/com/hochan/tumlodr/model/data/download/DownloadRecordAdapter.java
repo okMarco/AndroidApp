@@ -63,6 +63,7 @@ public class DownloadRecordAdapter extends PagedListAdapter<DownloadRecord, Down
 
 	public void cancelDeleteMode() {
 		mIsDeleteMode = false;
+
 		mSparseBooleanArray.clear();
 		notifyDataSetChanged();
 	}

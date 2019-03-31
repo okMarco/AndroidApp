@@ -1,6 +1,7 @@
 package com.hochan.tumlodr.ui.fragment;
 
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
@@ -34,6 +35,7 @@ import com.hochan.tumlodr.ui.activity.GroupDownloadTaskManagerActivity;
 import com.hochan.tumlodr.ui.activity.InstagramParseActivity;
 import com.hochan.tumlodr.ui.activity.Router;
 import com.hochan.tumlodr.ui.adapter.BaseLoadingAdapter;
+import com.hochan.tumlodr.ui.component.SingleMediaScanner;
 import com.hochan.tumlodr.ui.fragment.base.BaseMvpListFragment;
 import com.hochan.tumlodr.util.Events;
 import com.hochan.tumlodr.util.FragmentLifecycleProvider;
@@ -44,11 +46,22 @@ import com.trello.rxlifecycle2.android.FragmentEvent;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
+import java.security.acl.Group;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import io.reactivex.Completable;
+import io.reactivex.CompletableEmitter;
+import io.reactivex.CompletableOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
+
+import static com.hochan.tumlodr.model.data.download.DownloadRecord.GROUP_GROUP;
+import static com.hochan.tumlodr.model.data.download.DownloadRecordDatabase.getGroupDownloadsSync;
 
 /**
  * .
@@ -116,10 +129,6 @@ public class DownloadTaskFragment extends BaseMvpListFragment implements Downloa
 	@Override
 	protected void iniWidget(View view) {
 		super.iniWidget(view);
-		mSmartRefreshLayout.setPadding(ScreenTools.dip2px(mRecyclerView.getContext(), 2), 0,
-				ScreenTools.dip2px(mRecyclerView.getContext(), 2), 0);
-		mSmartRefreshLayout.setEnableLoadMore(false);
-
 		int photoSize = (ScreenTools.getScreenWidth(getContext()) - ScreenTools.dip2px(getContext(), 2) * 6) / 3;
 		int heightCount = getResources().getDisplayMetrics().heightPixels / photoSize;
 		mRecyclerView.getRecycledViewPool().setMaxRecycledViews(0, 3 * heightCount * 2);
@@ -151,6 +160,9 @@ public class DownloadTaskFragment extends BaseMvpListFragment implements Downloa
 
 		mDownloadRecordAdapter = new DownloadRecordAdapter((AppCompatActivity) getActivity(), this);
 		mDownloadRecordAdapter.setOnItemClickListener(this);
+        mRecyclerView.setAdapter(mDownloadRecordAdapter);
+        //((SimpleItemAnimator) mRecyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
+        //mRecyclerView.setItemAnimator(null);
 
 		mDeleteModeSpring = SpringSystem.create().createSpring();
 		mDeleteModeSpring.addListener(new SimpleSpringListener() {
@@ -164,10 +176,6 @@ public class DownloadTaskFragment extends BaseMvpListFragment implements Downloa
 				mViewBinding.btnCancel.setScaleY((float) spring.getCurrentValue());
 			}
 		});
-
-		mRecyclerView.setAdapter(mDownloadRecordAdapter);
-		((SimpleItemAnimator) mRecyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
-		mRecyclerView.setItemAnimator(null);
 	}
 
 	@Override
@@ -175,7 +183,7 @@ public class DownloadTaskFragment extends BaseMvpListFragment implements Downloa
 		super.onActivityCreated(savedInstanceState);
 		RxBus.with(new FragmentLifecycleProvider(this)).setEndEvent(FragmentEvent.DESTROY).onNext(new Consumer<Object>() {
 			@Override
-			public void accept(Object o) throws Exception {
+			public void accept(Object o) {
 				if (o instanceof Events && ((Events) o).mCode == Events.EVENT_SHAREELEMENT_ENTER_INDEX_CHANGE) {
 					mShareEnterIndex = (int) ((Events) o).mContent;
 				}
@@ -236,16 +244,7 @@ public class DownloadTaskFragment extends BaseMvpListFragment implements Downloa
 			mDownloadRecordList.observe(getActivity(), new Observer<PagedList<DownloadRecord>>() {
 				@Override
 				public void onChanged(@Nullable PagedList<DownloadRecord> downloadRecords) {
-					if (getActivity() instanceof InstagramParseActivity) {
-						//mViewBinding.recyclerView.scrollToPosition(0);
-					}
 					mDownloadRecordAdapter.setList(downloadRecords);
-				}
-			});
-			mRecyclerView.post(new Runnable() {
-				@Override
-				public void run() {
-					mRecyclerView.postInvalidate();
 				}
 			});
 		}
@@ -330,6 +329,13 @@ public class DownloadTaskFragment extends BaseMvpListFragment implements Downloa
 		setUpDataObserver();
 	}
 
+	public void getGroupDownloads() {
+		List<String> groups = new ArrayList<>();
+		groups.add(GROUP_GROUP);
+		mDownloadRecordList = new LivePagedListBuilder<>(DownloadRecordDatabase.getGroupDownloads(groups), 20).build();
+		setUpDataObserver();
+	}
+
 	public DownloadRecordAdapter getAdapter() {
 		return mDownloadRecordAdapter;
 	}
@@ -357,33 +363,8 @@ public class DownloadTaskFragment extends BaseMvpListFragment implements Downloa
 				mDeleteDialogFragment.setDownloadTaskDeleteListener(new DeleteDialogFragment.OnDownloadTaskDeleteListener() {
 					@Override
 					@SuppressWarnings("all")
-					public void delete(boolean deleteFile) {
-						SparseBooleanArray mSparseBooleanArray = mDownloadRecordAdapter.getSparseBooleanArray();
-						List<DownloadRecord> deleteTasks = new ArrayList<>();
-						for (int i = 0; i < mSparseBooleanArray.size(); i++) {
-							if (mSparseBooleanArray.valueAt(i) &&
-									mDownloadRecordAdapter.getCurrentList() != null) {
-								int position = mSparseBooleanArray.keyAt(i);
-								if (position < 0 || position >= mDownloadRecordAdapter.getCurrentList().size()) {
-									continue;
-								}
-								DownloadRecord downloadRecord = mDownloadRecordAdapter.getCurrentList().get(position);
-								if (downloadRecord != null) {
-									deleteTasks.add(mDownloadRecordAdapter.getCurrentList().get(position));
-									if (deleteFile) {
-										File file = new File(downloadRecord.getPath());
-										if (file.exists()) {
-											file.delete();
-										} else if (FileDownloader.getImpl().isServiceConnected()) {
-											FileDownloader.getImpl().clear(downloadRecord.getId(), downloadRecord.getPath());
-										}
-									}
-								}
-							}
-						}
-						DownloadRecordDatabase.deleteDownloadRecords(deleteTasks);
-						mDownloadRecordAdapter.cancelDeleteMode();
-						onDeleteModeChange(false);
+					public void delete(final boolean deleteFile) {
+					    commitDelete(deleteFile);
 					}
 				});
 			}
@@ -400,9 +381,63 @@ public class DownloadTaskFragment extends BaseMvpListFragment implements Downloa
 			}
 		} else if (v.getId() == mViewBinding.btnCancel.getId()) {
 			mDownloadRecordAdapter.cancelDeleteMode();
+            mSelectAll = false;
+            mViewBinding.btnSelectAll.setText(R.string.select_all);
 			onDeleteModeChange(false);
 		}
 	}
+
+	@SuppressWarnings("ResultOfMethodCallIgnored")
+    @SuppressLint("CheckResult")
+    private void commitDelete(final boolean deleteFile) {
+        Completable.create(new CompletableOnSubscribe() {
+            @Override
+            public void subscribe(CompletableEmitter e) {
+                SparseBooleanArray mSparseBooleanArray = mDownloadRecordAdapter.getSparseBooleanArray();
+                List<DownloadRecord> deleteTasks = new ArrayList<>();
+                for (int i = 0; i < mSparseBooleanArray.size(); i++) {
+                    if (mSparseBooleanArray.valueAt(i) && mDownloadRecordAdapter.getCurrentList() != null) {
+                        int position = mSparseBooleanArray.keyAt(i);
+                        if (position < 0 || position >= mDownloadRecordAdapter.getCurrentList().size()) {
+                            continue;
+                        }
+                        DownloadRecord downloadRecord = mDownloadRecordAdapter.getCurrentList().get(position);
+                        if (downloadRecord != null) {
+                            deleteTasks.add(mDownloadRecordAdapter.getCurrentList().get(position));
+                            FileDownloader.getImpl().clear(downloadRecord.getId(), downloadRecord.getPath());
+                            if (deleteFile) {
+                                File file = new File(downloadRecord.getPath());
+                                if (downloadRecord.getGroupName().equals(GROUP_GROUP)) {
+                                    List<DownloadRecord> groupTasks = getGroupDownloadsSync(Collections.singletonList(downloadRecord.getType()));
+                                    for (DownloadRecord tmpRecord : groupTasks) {
+                                        FileDownloader.getImpl().clear(tmpRecord.getId(), tmpRecord.getPath());
+                                        new File(tmpRecord.getGroupName()).delete();
+                                        new SingleMediaScanner(tmpRecord.getPath());
+                                    }
+                                    deleteTasks.addAll(groupTasks);
+                                    //noinspection ResultOfMethodCallIgnored
+                                    file.delete();
+                                }else {
+                                    //noinspection ResultOfMethodCallIgnored
+                                    file.delete();
+                                }
+                                new SingleMediaScanner(file.getAbsolutePath());
+                            }
+                        }
+                        e.onComplete();
+                    }
+                }
+                DownloadRecordDatabase.deleteDownloadRecords(deleteTasks);
+            }
+        }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Action() {
+            @Override
+            public void run() {
+                mDownloadRecordAdapter.cancelDeleteMode();
+                onDeleteModeChange(false);
+            }
+        });
+    }
+
 
 	@Override
 	public void onShowGroupDownload(String groupName) {

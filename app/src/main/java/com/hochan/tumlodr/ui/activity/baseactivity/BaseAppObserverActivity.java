@@ -228,11 +228,9 @@ public abstract class BaseAppObserverActivity extends BaseActivity {
 
 	public void showImageDownloadSuccessSnackBar(String imagePath) {
 	    showSimpleGreenSnackBar(getString(R.string.snackbar_save_finish) + imagePath);
-        new SingleMediaScanner(this, imagePath);
     }
 
     public void showVideoDownloadSuccessSnackBar(String videoPath) {
         showSimpleGreenSnackBar(getString(R.string.snackbar_video_download_complete) + videoPath);
-        new SingleMediaScanner(this, videoPath );
     }
 }

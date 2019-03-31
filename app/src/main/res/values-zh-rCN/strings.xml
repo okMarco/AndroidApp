@@ -107,5 +107,8 @@
     <string name="play_video_auto">列表模式下自动播放视频</string>
     <string name="force_changing_video_url">强制拼接视频地址</string>
     <string name="force_change_url_tip">解决修改Host无法播放视频的问题，可能会导致部分视频内容错误</string>
+    <string name="save_all">Save All</string>
+    <string name="download_manager_group">Group</string>
+    <string name="download_select_all">Select All</string>
 
 </resources>

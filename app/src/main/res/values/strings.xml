@@ -165,4 +165,7 @@
     <string name="play_video_auto">Play video automatically in detail mode</string>
     <string name="force_changing_video_url">Force stitching video address</string>
     <string name="force_change_url_tip">Check this if it fail to play video</string>
+    <string name="save_all">Save All</string>
+    <string name="download_manager_group">Group</string>
+    <string name="download_select_all">Select All</string>
 </resources>

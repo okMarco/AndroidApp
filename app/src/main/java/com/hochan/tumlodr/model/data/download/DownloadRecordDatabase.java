@@ -6,7 +6,6 @@ import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 
 import com.hochan.tumlodr.TumlodrApp;
-import com.hochan.tumlodr.tools.Tools;
 import com.liulishuo.filedownloader.util.FileDownloadUtils;
 
 import java.util.List;
@@ -39,6 +38,10 @@ public abstract class DownloadRecordDatabase extends RoomDatabase {
 
 	public static DataSource.Factory<Integer, DownloadRecord> getGroupDownloads(List<String> groupNames) {
 		return getDatabase().getDownloadRecordDao().getDownloadRecordsInGroups(groupNames);
+	}
+
+	public static List<DownloadRecord> getGroupDownloadsSync(List<String> groupNames) {
+		return getDatabase().getDownloadRecordDao().getDownloadRecordsInGroupsSync(groupNames);
 	}
 
 	public static DataSource.Factory<Integer, DownloadRecord> getGroupImageDownloads(List<String> groupNames) {
@@ -78,8 +81,7 @@ public abstract class DownloadRecordDatabase extends RoomDatabase {
 		insertNewDownload(downloadRecord);
 	}
 
-	public static void insertNewGroupDownload(String url, String type) {
-		String path = Tools.getStoragePathByFileName(url.substring(url.lastIndexOf("/") + 1, url.length()));
+	public static void insertNewGroupDownload(String url, String path, String type) {
 		int id = FileDownloadUtils.generateId(url, path);
 		DownloadRecord downloadRecord = new DownloadRecord(id, url, path, null, DownloadRecord.GROUP_GROUP, type);
 		insertNewDownload(downloadRecord);
@@ -110,7 +112,7 @@ public abstract class DownloadRecordDatabase extends RoomDatabase {
 	public static void deleteDownloadRecords(final List<DownloadRecord> downloadRecords) {
 		Completable.create(new CompletableOnSubscribe() {
 			@Override
-			public void subscribe(CompletableEmitter e) throws Exception {
+			public void subscribe(CompletableEmitter e) {
 				getDatabase().getDownloadRecordDao().deleteDownloadRecords(downloadRecords);
 			}
 		}).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe();

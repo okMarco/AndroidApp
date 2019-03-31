@@ -100,10 +100,7 @@ public class BlogPostListActivity extends BaseViewBindingActivity<ActivityBlogBi
 			return;
 		}
 
-		Spannable spannable = new SpannableString(blogName);
-		spannable.setSpan(new BackgroundColorSpan(Color.BLACK), 0,
-				blogName.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-		mViewBinding.tvBlogTitle.setText(spannable);
+		mViewBinding.tvBlogTitle.setText(blogName);
 
 		FollowingBlogDatabase.updateFollowingBlog(blogName);
 
@@ -115,13 +112,12 @@ public class BlogPostListActivity extends BaseViewBindingActivity<ActivityBlogBi
 
 		TumlodrGlide.with(BlogPostListActivity.this)
 				.asBitmap()
-				.load(Tools.getAvatarUrlByBlogName(blogName))
+				.load(Tools.getAvatarUrlByBlogName(blogName, 16))
 				.placeholder(AppUiConfig.sPicHolderResource)
 				.transition(BitmapTransitionOptions.withCrossFade())
 				.skipMemoryCache(true)
 				.transform(new MultiTransformation<>(new CenterCrop(),
-						new BlurTransformation(this, 25),
-						new ColorFilterTransformation(Color.parseColor("#A0000000"))))
+						new BlurTransformation(this, 25)))
 				.into(mViewBinding.ivBigAvatar);
 
 		mViewBinding.rivBlogAvatar.setOnClickListener(new View.OnClickListener() {
@@ -141,10 +137,14 @@ public class BlogPostListActivity extends BaseViewBindingActivity<ActivityBlogBi
 				mViewBinding.llBlogInfo.setVisibility(View.VISIBLE);
 				mIsFollowing = blog.followed;
 				setUpFollowBtn();
-				SpannableStringBuilder spannableStringBuilder = HtmlTool.fromHtml(blog.getDescription(), mViewBinding.tvBlogDescription);
-				spannableStringBuilder.setSpan(new BackgroundColorSpan(Color.BLACK), 0,
-						spannableStringBuilder.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-				mViewBinding.tvBlogDescription.setText(spannableStringBuilder);
+				if (blog.getDescription().length() > 0) {
+					mViewBinding.tvBlogDescription.setVisibility(View.VISIBLE);
+					SpannableStringBuilder spannableStringBuilder = HtmlTool.fromHtml(blog.getDescription(), mViewBinding.tvBlogDescription);
+					mViewBinding.tvBlogDescription.setText(spannableStringBuilder);
+				}else {
+					mViewBinding.tvBlogDescription.setVisibility(View.GONE);
+				}
+
 
 				updateLastVisited(blogName);
 			}
@@ -255,11 +255,9 @@ public class BlogPostListActivity extends BaseViewBindingActivity<ActivityBlogBi
 		if (mIsFollowing) {
 			mViewBinding.btnFollow.setText(R.string.blog_unfollow);
 			mViewBinding.btnFollow.setBackgroundResource(R.drawable.bg_following);
-			mViewBinding.btnFollow.setTextColor(Color.WHITE);
 		} else {
 			mViewBinding.btnFollow.setText(R.string.blog_follow);
 			mViewBinding.btnFollow.setBackgroundResource(R.drawable.bg_unfollow);
-			mViewBinding.btnFollow.setTextColor(Color.BLACK);
 		}
 	}
 

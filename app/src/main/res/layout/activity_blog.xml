@@ -36,18 +36,44 @@
                         android:scaleType="centerCrop"
                         tools:ignore="ContentDescription"/>
 
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#c0000000"/>
+
                     <com.hochan.tumlodr.ui.component.FitSystemWindowOnlyTopLinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical"
+                        tools:background="#88000000"
                         android:paddingTop="10dp">
+
+                        <ImageButton
+                            android:id="@+id/btn_arrow_back"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@color/colorTransparent"
+                            android:padding="5dp"
+                            android:src="@drawable/ic_arrow_back"
+                            tools:ignore="ContentDescription,RtlHardcoded"
+                            tools:background="@color/colorBlack"
+                            android:layout_marginRight="15dp"/>
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="1"
                             android:orientation="horizontal"
-                            tools:ignore="DisableBaselineAlignment">
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginTop="15dp"
+                            tools:ignore="DisableBaselineAlignment,RtlHardcoded">
+
+                            <ImageView
+                                android:id="@+id/riv_blog_avatar"
+                                android:layout_width="90dp"
+                                android:layout_height= "90dp"
+                                android:layout_marginRight="10dp"
+                                tools:ignore="ContentDescription,RtlHardcoded"/>
 
                             <LinearLayout
                                 android:id="@+id/ll_blog_info"
@@ -58,80 +84,77 @@
                                 android:paddingRight="15dp"
                                 tools:ignore="NestedWeights,RtlHardcoded,RtlSymmetry">
 
+                                <TextView
+                                    android:id="@+id/tv_blog_title"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="left"
+                                    android:gravity="left"
+                                    android:paddingBottom="5dp"
+                                    android:textColor="@color/colorWhite"
+                                    android:textSize="25sp"
+                                    android:textStyle="bold"
+                                    tools:ignore="RtlHardcoded,RtlSymmetry"
+                                    tools:text="BLOG_TITLE"/>
+
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:orientation="horizontal"
                                     tools:ignore="TooDeepLayout">
 
-                                    <ImageButton
-                                        android:id="@+id/btn_arrow_back"
+                                    <TextView
+                                        android:id="@+id/btn_follow"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:background="@color/colorTransparent"
-                                        android:padding="5dp"
-                                        android:src="@drawable/ic_arrow_back"
-                                        tools:ignore="ContentDescription" />
+                                        android:layout_marginTop="5dp"
+                                        android:background="@drawable/bg_following"
+                                        android:text="@string/blog_follow"
+                                        android:textColor="@color/colorWhite"
+                                        android:textSize="14sp"
+                                        android:textStyle="bold"
+                                        tools:background="@drawable/bg_following"
+                                        android:paddingLeft="15dp"
+                                        android:paddingRight="15dp"
+                                        android:paddingTop="7dp"
+                                        android:paddingBottom="7dp"
+                                        />
 
                                     <TextView
-                                        android:id="@+id/tv_blog_title"
-                                        android:layout_width="0dp"
+                                        android:id="@+id/btn_save_all"
+                                        android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:layout_gravity="center"
-                                        android:layout_weight="1"
-                                        android:gravity="right"
-                                        android:paddingBottom="5dp"
-                                        android:paddingLeft="15dp"
-                                        android:paddingStart="15dp"
-                                        android:textColor="@color/colorText"
-                                        android:textSize="25sp"
+                                        android:layout_marginTop="5dp"
+                                        android:background="@drawable/bg_following"
+                                        android:text="@string/save_all"
+                                        android:textColor="@color/colorWhite"
+                                        android:textSize="14sp"
+                                        android:layout_marginLeft="10dp"
                                         android:textStyle="bold"
-                                        tools:ignore="RtlHardcoded,RtlSymmetry"
-                                        tools:text="BLOG_TITLE"/>
+                                        android:paddingLeft="15dp"
+                                        android:paddingRight="15dp"
+                                        android:paddingTop="7dp"
+                                        android:paddingBottom="7dp"
+                                        />
+
                                 </LinearLayout>
 
-                                <TextView
-                                    android:id="@+id/tv_blog_description"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="right"
-                                    android:maxLines="5"
-                                    android:paddingBottom="15dp"
-                                    android:paddingLeft="15dp"
-                                    android:textColor="@color/colorText"
-                                    android:textSize="14sp"
-                                    tools:text="CAPTION"/>
                             </LinearLayout>
 
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:orientation="vertical">
-
-                                <ImageView
-                                    android:id="@+id/riv_blog_avatar"
-                                    android:layout_width="70dp"
-                                    android:layout_height="70dp"
-                                    android:layout_marginRight="10dp"
-                                    android:background="@drawable/bg_unfollow"
-                                    tools:ignore="RtlHardcoded"/>
-
-                                <Button
-                                    android:id="@+id/btn_follow"
-                                    style="@style/Base.Widget.AppCompat.Button.Borderless"
-                                    android:layout_width="70dp"
-                                    android:layout_height="30dp"
-                                    android:layout_marginTop="5dp"
-                                    android:background="@drawable/bg_following"
-                                    android:text="@string/blog_follow"
-                                    android:textColor="@color/colorWhite"
-                                    android:textSize="12sp"
-                                    android:textStyle="bold"
-                                    tools:background="@drawable/bg_unfollow"
-                                    />
-                            </LinearLayout>
                         </LinearLayout>
 
+                        <TextView
+                            android:id="@+id/tv_blog_description"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="left"
+                            android:layout_marginTop="10dp"
+                            android:maxLines="5"
+                            android:paddingLeft="15dp"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="14sp"
+                            tools:text="CAPTION"
+                            tools:ignore="RtlHardcoded,RtlSymmetry" />
                         <com.hochan.tumlodr.ui.component.FitsSystemWindowTabLayout
                             android:id="@+id/tl_blog_item"
                             android:layout_width="match_parent"

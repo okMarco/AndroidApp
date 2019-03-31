@@ -30,11 +30,14 @@ import com.hochan.tumlodr.ui.fragment.DownloadTaskFragment;
  */
 public class DownloadTasksManagerActivity extends BaseDrawerActivity {
 
-	DownloadTaskFragment mDownloadTaskFragment;
+	public DownloadTaskFragment mDownloadTaskFragment;
 	boolean mIsDeleteMode = false;
 	int mFragmentId;
 
-	@Override
+    @Override
+    public void setUpObserver() {}
+
+    @Override
 	protected String getTitleString() {
 		return getString(R.string.activity_title_download_manager);
 	}
@@ -57,7 +60,6 @@ public class DownloadTasksManagerActivity extends BaseDrawerActivity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		mDownloadTaskFragment = (DownloadTaskFragment) getSupportFragmentManager().findFragmentById(mFragmentId);
 		if (mDownloadTaskFragment == null) {
 			return false;
 		}
@@ -72,6 +74,10 @@ public class DownloadTasksManagerActivity extends BaseDrawerActivity {
 			}
 			case R.id.menu_only_video: {
 				mDownloadTaskFragment.showOnlyVideo();
+				break;
+			}
+			case R.id.menu_only_group: {
+			    mDownloadTaskFragment.getGroupDownloads();
 				break;
 			}
 			case R.id.menu_only_unfinish: {

@@ -197,16 +197,18 @@ public class FileDownloadUtil {
 		DownloadRecordDatabase.insertNewTumblrNormalDownload(imageUrl, file.getAbsolutePath(), thumbnail, TasksManagerModel.TYPE_IMAGE);
 	}
 
+	public static String getInstagramGroupDownloadDirect(String groupName) {
+        String direct = Tools.getStoragePathByFileName("") + groupName + File.separator;
+        if (!new File(direct).exists()) {
+            //noinspection ResultOfMethodCallIgnored
+            new File(direct).mkdirs();
+        }
+        return direct;
+    }
+
 	public static void addInstagramPicDownload(String url, String groupName) {
 		String fileName = getFileNameOfInstagramUrl(url, ".jpg");
-		String direct = Tools.getStoragePathByFileName("") + groupName + File.separator;
-		if (!new File(direct).exists()) {
-			if (!new File(direct).mkdirs()) {
-				direct = Tools.getStoragePathByFileName("");
-			}
-
-		}
-		final String toFile = direct + fileName;
+		final String toFile = getInstagramGroupDownloadDirect(groupName) + fileName;
 		DownloadRecordDatabase.insertNewInstagramGroupDownload(groupName, url, toFile, null, TasksManagerModel.TYPE_IMAGE);
 		if (new File(toFile).exists()) {
 			return;
@@ -220,13 +222,7 @@ public class FileDownloadUtil {
 
 	public static void addInstagramVideoDownload(String thumbnail, String videoUrl, String groupName) {
 		String fileName = getFileNameOfInstagramUrl(videoUrl, ".mp4");
-		String direct = Tools.getStoragePathByFileName("") + groupName + File.separator;
-		if (!new File(direct).exists()) {
-			if (!new File(direct).mkdirs()) {
-				direct = Tools.getStoragePathByFileName("");
-			}
-		}
-		final String toFile = direct + fileName;
+		final String toFile = getInstagramGroupDownloadDirect(groupName) + fileName;
 		DownloadRecordDatabase.insertNewInstagramGroupDownload(groupName, videoUrl, toFile, thumbnail, TasksManagerModel.TYPE_VIDEO);
 		if (new File(toFile).exists()) {
 			System.out.println("FileDownloadUtil" + ":" + "addInstagramPicDownload" + " --> " + "已存在");

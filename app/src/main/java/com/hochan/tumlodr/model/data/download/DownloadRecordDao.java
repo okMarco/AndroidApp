@@ -21,6 +21,9 @@ public interface DownloadRecordDao {
 	@Query("SELECT * FROM download_records WHERE group_name IN (:groups) order by created_at DESC")
 	DataSource.Factory<Integer, DownloadRecord> getDownloadRecordsInGroups(List<String> groups);
 
+	@Query("SELECT * FROM download_records WHERE group_name IN (:groups) order by created_at DESC")
+	List<DownloadRecord> getDownloadRecordsInGroupsSync(List<String> groups);
+
 	@Query("SELECT * FROM download_records WHERE group_name IN (:groups) and type = (:type) order by created_at DESC")
 	DataSource.Factory<Integer, DownloadRecord> getDownloadRecordsByType(List<String> groups, String type);
 

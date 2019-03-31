@@ -5,6 +5,8 @@ import android.content.Context;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 
+import com.hochan.tumlodr.TumlodrApp;
+
 import java.io.File;
 
 public class SingleMediaScanner implements MediaScannerConnection.MediaScannerConnectionClient {
@@ -12,9 +14,9 @@ public class SingleMediaScanner implements MediaScannerConnection.MediaScannerCo
     private MediaScannerConnection mMs;
     private String  mFilePath;
 
-    public SingleMediaScanner(Context context, String filePath) {
+    public SingleMediaScanner(String filePath) {
         mFilePath = filePath;
-        mMs = new MediaScannerConnection(context, this);
+        mMs = new MediaScannerConnection(TumlodrApp.getContext(), this);
         mMs.connect();
     }
 
