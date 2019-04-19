@@ -6,13 +6,10 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.view.PagerAdapter;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Priority;
@@ -37,20 +34,20 @@ public class DownloadFileFullScreenActivity extends FullScreenPhotoViewActivity 
 	@Override
 	public void initData() {
 		super.initData();
-		mDefaultIndex = getIntent().getIntExtra(Router.EXTRA_DEFAULT_INDEX, 0);
+		mDefaultIndex = getIntent().getIntExtra(Router.EXTRA_DEFAULT_IMAGE_INDEX, 0);
 
-		mViewBinding.tvPicIndex.setText(String.format(Locale.US, "%d/%d", mDefaultIndex + 1,
+		viewBinding.tvPicIndex.setText(String.format(Locale.US, "%d/%d", mDefaultIndex + 1,
 				DownloadTaskFragment.sDownloadRecordList == null ?
 						0 : DownloadTaskFragment.sDownloadRecordList.size()));
-		mViewBinding.viewPager.setAdapter(getAdapter());
-		mViewBinding.viewPager.setCurrentItem(mDefaultIndex, false);
+		viewBinding.viewPager.setAdapter(getAdapter());
+		viewBinding.viewPager.setCurrentItem(mDefaultIndex, false);
 	}
 
 	@Override
 	public void initWidget() {
 		super.initWidget();
-		mViewBinding.btnSave.setVisibility(View.GONE);
-		mViewBinding.llBlogInfo.setVisibility(View.GONE);
+		viewBinding.btnSave.setVisibility(View.GONE);
+		viewBinding.llBlogInfo.setVisibility(View.GONE);
 	}
 
 	@Override
@@ -98,7 +95,7 @@ public class DownloadFileFullScreenActivity extends FullScreenPhotoViewActivity 
 				container.addView(fullPhotoViewBinding.getRoot());
 				if (position == mDefaultIndex) {
 					if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-						fullPhotoViewBinding.photoView.setTransitionName(Router.SHAREELEMENT_NAME);
+						fullPhotoViewBinding.photoView.setTransitionName(Router.SHARE_ELEMENT_NAME);
 					}
 				}
 
@@ -159,7 +156,7 @@ public class DownloadFileFullScreenActivity extends FullScreenPhotoViewActivity 
 				mBindingSparseArray.put(position, videoPlayLayout);
 				if (position == mDefaultIndex) {
 					if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-						videoPlayLayout.setTransitionName(Router.SHAREELEMENT_NAME);
+						videoPlayLayout.setTransitionName(Router.SHARE_ELEMENT_NAME);
 					}
 					supportStartPostponedEnterTransition();
 				}

@@ -26,15 +26,12 @@ public class TextPostBodyUtils {
 		TextPostBody textPostBody = new TextPostBody();
 
 		Document doc = Jsoup.parse(body);
-		Elements ps = doc.select("p");
 		Elements figures = doc.select("figure");
 
 		if (!figures.isEmpty()) {
 			textPostBody.setPhotos(getPhotos(figures));
 		}
-
 		textPostBody.setContent(doc.html());
-
 		return textPostBody;
 	}
 
@@ -61,6 +58,7 @@ public class TextPostBodyUtils {
 					try {
 						for (Field field : photoSizeFields) {
 							field.setAccessible(true);
+							//noinspection IfCanBeSwitch
 							if (field.getName().equals("url")) {
 								field.set(photoSize, imgUrl);
 							} else if (field.getName().equals("width")) {

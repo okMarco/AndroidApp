@@ -14,6 +14,10 @@ public class SingleMediaScanner implements MediaScannerConnection.MediaScannerCo
     private MediaScannerConnection mMs;
     private String  mFilePath;
 
+    static public void scanFile(String path) {
+        new SingleMediaScanner(path);
+    }
+
     public SingleMediaScanner(String filePath) {
         mFilePath = filePath;
         mMs = new MediaScannerConnection(TumlodrApp.getContext(), this);

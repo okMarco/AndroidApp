@@ -4,8 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -20,7 +18,6 @@ import com.hochan.tumlodr.R;
 import com.hochan.tumlodr.databinding.ActivityLoginBinding;
 import com.hochan.tumlodr.tools.AppConfig;
 import com.hochan.tumlodr.ui.activity.baseactivity.BaseAppUiActivity;
-import com.hochan.tumlodr.util.statusbar.StatusBarCompat;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;

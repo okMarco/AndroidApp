@@ -65,7 +65,7 @@ public class FollowingBlogListFragment extends BaseMvpListFragment {
 			mFollowingBlogList.observe(getActivity(), new Observer<PagedList<FollowingBlog>>() {
 				@Override
 				public void onChanged(@Nullable PagedList<FollowingBlog> followingBlogs) {
-					mBlogListAdapter.setList(followingBlogs);
+					mBlogListAdapter.submitList(followingBlogs);
 					if (followingBlogs == null || followingBlogs.size() == 0) {
 						mSmartRefreshLayout.autoRefresh();
 					}

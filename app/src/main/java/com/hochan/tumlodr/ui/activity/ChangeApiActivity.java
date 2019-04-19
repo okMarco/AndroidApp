@@ -46,29 +46,29 @@ public class ChangeApiActivity extends BaseViewBindingActivity<ActivityChangeApi
 		super.onCreate(savedInstanceState);
 
 		mWebView = new WebView(this);
-		mViewBinding.webViewContainer.addView(mWebView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+		viewBinding.webViewContainer.addView(mWebView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
 				ViewGroup.LayoutParams.MATCH_PARENT));
 
-		mViewBinding.etConsumerKey.setTextColor(AppUiConfig.sTextColor);
-		mViewBinding.etSecretKey.setTextColor(AppUiConfig.sTextColor);
-		mViewBinding.btnSaveApi.setBackgroundResource(AppUiConfig.sIsLightTheme ? R.drawable.selector_light_btn_bg_round_corner
+		viewBinding.etConsumerKey.setTextColor(AppUiConfig.sTextColor);
+		viewBinding.etSecretKey.setTextColor(AppUiConfig.sTextColor);
+		viewBinding.btnSaveApi.setBackgroundResource(AppUiConfig.sIsLightTheme ? R.drawable.selector_light_btn_bg_round_corner
 				: R.drawable.selector_dark_btn_bg_round_corner);
-		mViewBinding.btnSaveApi.setTextColor(AppUiConfig.sTextColor);
+		viewBinding.btnSaveApi.setTextColor(AppUiConfig.sTextColor);
 
 		final SharedPreferences sharedPreferences = this.getSharedPreferences(AppConfig.SHARE_USER, MODE_PRIVATE);
 		String userConsumerKey = sharedPreferences.getString(AppConfig.SHARE_CUSTOM_CONSUMER_KEY, null);
 		String userSecretKey = sharedPreferences.getString(AppConfig.SHARE_CUSTOM_SECRET_KEY, null);
 		if (!TextUtils.isEmpty(userConsumerKey) && !TextUtils.isEmpty(userSecretKey)) {
-			mViewBinding.etConsumerKey.setText(userConsumerKey);
-			mViewBinding.etSecretKey.setText(userSecretKey);
-			mViewBinding.btnDeleteApi.setVisibility(View.VISIBLE);
-			mViewBinding.btnSaveApi.setVisibility(View.GONE);
+			viewBinding.etConsumerKey.setText(userConsumerKey);
+			viewBinding.etSecretKey.setText(userSecretKey);
+			viewBinding.btnDeleteApi.setVisibility(View.VISIBLE);
+			viewBinding.btnSaveApi.setVisibility(View.GONE);
 		} else {
-			mViewBinding.btnDeleteApi.setVisibility(View.GONE);
-			mViewBinding.btnSaveApi.setVisibility(View.VISIBLE);
+			viewBinding.btnDeleteApi.setVisibility(View.GONE);
+			viewBinding.btnSaveApi.setVisibility(View.VISIBLE);
 		}
 
-		mViewBinding.btnDeleteApi.setOnClickListener(new View.OnClickListener() {
+		viewBinding.btnDeleteApi.setOnClickListener(new View.OnClickListener() {
 			@SuppressLint("ApplySharedPref")
 			@Override
 			public void onClick(View view) {
@@ -83,11 +83,11 @@ public class ChangeApiActivity extends BaseViewBindingActivity<ActivityChangeApi
 			@Override
 			public void onProgressChanged(WebView view, int newProgress) {
 				if (newProgress == 100) {
-					mViewBinding.loadingProgress.setVisibility(View.INVISIBLE);
+					viewBinding.loadingProgress.setVisibility(View.INVISIBLE);
 				} else {
-					mViewBinding.loadingProgress.setVisibility(View.VISIBLE);
+					viewBinding.loadingProgress.setVisibility(View.VISIBLE);
 				}
-				mViewBinding.loadingProgress.setProgress(newProgress);
+				viewBinding.loadingProgress.setProgress(newProgress);
 			}
 		});
 
@@ -108,16 +108,16 @@ public class ChangeApiActivity extends BaseViewBindingActivity<ActivityChangeApi
 			}
 		});
 		mWebView.loadUrl(CHANGE_API_GUIDE_URL);
-		mViewBinding.btnSaveApi.setOnClickListener(new View.OnClickListener() {
+		viewBinding.btnSaveApi.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				if (TextUtils.isEmpty(mViewBinding.etConsumerKey.getText())
-						|| TextUtils.isEmpty(mViewBinding.etSecretKey.getText())) {
+				if (TextUtils.isEmpty(viewBinding.etConsumerKey.getText())
+						|| TextUtils.isEmpty(viewBinding.etSecretKey.getText())) {
 					return;
 				}
-				final String consumerKey = mViewBinding.etConsumerKey.getText().toString();
-				final String secretKey = mViewBinding.etSecretKey.getText().toString();
-				mViewBinding.loadingIndicator.setVisibility(View.VISIBLE);
+				final String consumerKey = viewBinding.etConsumerKey.getText().toString();
+				final String secretKey = viewBinding.etSecretKey.getText().toString();
+				viewBinding.loadingIndicator.setVisibility(View.VISIBLE);
 				Observable.create(new ObservableOnSubscribe<String>() {
 					@Override
 					public void subscribe(ObservableEmitter<String> e) throws Exception {
@@ -152,7 +152,7 @@ public class ChangeApiActivity extends BaseViewBindingActivity<ActivityChangeApi
 						}, new Consumer<Throwable>() {
 							@Override
 							public void accept(Throwable throwable) throws Exception {
-								mViewBinding.loadingIndicator.setVisibility(View.INVISIBLE);
+								viewBinding.loadingIndicator.setVisibility(View.INVISIBLE);
 								Toast.makeText(ChangeApiActivity.this, "Consumer key 或 Secret key 无效，请检查后重试。", Toast.LENGTH_SHORT).show();
 							}
 						});
@@ -183,7 +183,7 @@ public class ChangeApiActivity extends BaseViewBindingActivity<ActivityChangeApi
 	protected void onDestroy() {
 		super.onDestroy();
 		if (mWebView != null) {
-			mViewBinding.webViewContainer.removeView(mWebView);
+			viewBinding.webViewContainer.removeView(mWebView);
 			mWebView.destroy();
 			mWebView = null;
 		}

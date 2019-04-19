@@ -45,16 +45,16 @@ public class SearchPostActivity extends BaseViewBindingActivity<ActivitySearchPo
 	@Override
 	public void initWidget() {
 		super.initWidget();
-		mViewBinding.edSearchTag.setTextColor(AppUiConfig.sTextColor);
-		mViewBinding.btnSearch.setImageResource(AppUiConfig.sIsLightTheme ? R.drawable.ic_search_black : R.drawable.ic_search_white);
-		mViewBinding.btnSearch.setOnClickListener(new View.OnClickListener() {
+		viewBinding.edSearchTag.setTextColor(AppUiConfig.sTextColor);
+		viewBinding.btnSearch.setImageResource(AppUiConfig.sIsLightTheme ? R.drawable.ic_search_black : R.drawable.ic_search_white);
+		viewBinding.btnSearch.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				startSearch();
 			}
 		});
 
-		mViewBinding.edSearchTag.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+		viewBinding.edSearchTag.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 
 			@Override
 			public boolean onEditorAction(TextView v, int actionId,
@@ -74,12 +74,12 @@ public class SearchPostActivity extends BaseViewBindingActivity<ActivitySearchPo
 		} catch (Exception ignored) {
 
 		}
-		if (TextUtils.isEmpty(mViewBinding.edSearchTag.getText().toString())) {
+		if (TextUtils.isEmpty(viewBinding.edSearchTag.getText().toString())) {
 			return true;
 		}
-		searchFromHtml(mViewBinding.edSearchTag.getText().toString());
+		searchFromHtml(viewBinding.edSearchTag.getText().toString());
 		if (mPostListFragment != null) {
-			mPostListFragment.search(mViewBinding.edSearchTag.getText().toString());
+			mPostListFragment.search(viewBinding.edSearchTag.getText().toString());
 		}
 		return false;
 	}
@@ -88,7 +88,7 @@ public class SearchPostActivity extends BaseViewBindingActivity<ActivitySearchPo
 		mSearchWord = tag;
 		mCurrentPage = 2;
 		mCurrentPostSize = 0;
-		mViewBinding.rvBlogList.setAdapter(null);
+		viewBinding.rvBlogList.setAdapter(null);
 		TumlodrService.searchFirstPage(tag)
 				.subscribe(new BaseObserver<SearchResult>() {
 					@Override
@@ -112,8 +112,8 @@ public class SearchPostActivity extends BaseViewBindingActivity<ActivitySearchPo
 		if (searchResult != null && searchResult.getSearchBlogInfoList() != null &&
 				searchResult.getSearchBlogInfoList().size() > 0) {
 			final List<SearchBlogInfo> searchBlogInfoList = searchResult.getSearchBlogInfoList();
-			mViewBinding.rvBlogList.setLayoutManager(new LinearLayoutManager(SearchPostActivity.this, LinearLayoutManager.HORIZONTAL, false));
-			mViewBinding.rvBlogList.setAdapter(new RecyclerView.Adapter<ItemSearchBlogViewHolder>() {
+			viewBinding.rvBlogList.setLayoutManager(new LinearLayoutManager(SearchPostActivity.this, LinearLayoutManager.HORIZONTAL, false));
+			viewBinding.rvBlogList.setAdapter(new RecyclerView.Adapter<ItemSearchBlogViewHolder>() {
 				@Override
 				public ItemSearchBlogViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 					return new ItemSearchBlogViewHolder(ItemSearchBlogBinding.inflate(getLayoutInflater()));

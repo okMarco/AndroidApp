@@ -18,7 +18,7 @@ public abstract class PostListActivity extends BaseDrawerActivity {
 	@Override
 	public void initWidget() {
 		super.initWidget();
-		mViewBinding.drawerlayout.addDrawerListener(new DrawerLayout.SimpleDrawerListener() {
+		viewBinding.drawerlayout.addDrawerListener(new DrawerLayout.SimpleDrawerListener() {
 			@Override
 			public void onDrawerStateChanged(int newState) {
 				super.onDrawerStateChanged(newState);

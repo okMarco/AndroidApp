@@ -46,7 +46,7 @@ public class TunlodrGlideModelLoder extends BaseGlideUrlLoader<Photo> {
 
 	@Override
 	protected String getUrl(Photo photo, int width, int height, Options options) {
-		String url = TumlodrGlideUtil.PHOTO_NORMAL_URL_CACHE.get(photo);
+		String url = OkHoGlideUtil.PHOTO_NORMAL_URL_CACHE.get(photo);
 		if (url == null) {
 			PhotoSize photoSize = getResolutionPhotoSize(width, photo);
 			if (photoSize != null) {

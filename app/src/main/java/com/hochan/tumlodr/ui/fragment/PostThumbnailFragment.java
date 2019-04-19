@@ -22,7 +22,7 @@ import com.hochan.tumlodr.jumblr.types.Post;
 import com.hochan.tumlodr.jumblr.types.VideoPost;
 import com.hochan.tumlodr.model.viewmodel.PostListViewModel;
 import com.hochan.tumlodr.module.glide.TumlodrGlide;
-import com.hochan.tumlodr.module.glide.TumlodrGlideUtil;
+import com.hochan.tumlodr.module.glide.OkHoGlideUtil;
 import com.hochan.tumlodr.module.video.videolayout.VideoPlayLayout;
 import com.hochan.tumlodr.prensenter.PostListPresenter;
 import com.hochan.tumlodr.tools.AppConfig;
@@ -30,6 +30,7 @@ import com.hochan.tumlodr.tools.ScreenTools;
 import com.hochan.tumlodr.ui.activity.PostDetailActivity;
 import com.hochan.tumlodr.ui.activity.Router;
 import com.hochan.tumlodr.ui.activity.VideoViewPagerActivity;
+import com.hochan.tumlodr.ui.activity.baseactivity.BaseActivity;
 import com.hochan.tumlodr.ui.adapter.PostAdapter;
 import com.hochan.tumlodr.ui.adapter.PostDetailAdapter;
 import com.hochan.tumlodr.ui.adapter.PostThumbnailAdapter;
@@ -48,7 +49,6 @@ import com.trello.rxlifecycle2.android.FragmentEvent;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -77,7 +77,7 @@ public abstract class PostThumbnailFragment<T extends PostListPresenter> extends
 				.setEndEvent(FragmentEvent.DESTROY)
 				.onNext(new Consumer<Object>() {
 					@Override
-					public void accept(Object o) throws Exception {
+					public void accept(Object o) {
 						if (o instanceof Events) {
 							observeTransitionEvent((Events) o);
 						}
@@ -121,7 +121,7 @@ public abstract class PostThumbnailFragment<T extends PostListPresenter> extends
 							mIPhotoLayoutWeakReference != null
 							&& mIPhotoLayoutWeakReference.get() != null) {
 						sharedElements.clear();
-						sharedElements.put(Router.SHAREELEMENT_NAME,
+						sharedElements.put(Router.SHARE_ELEMENT_NAME,
 								mIPhotoLayoutWeakReference.get().getImageViewInPosition(mShareExitIndex));
 						if (mIPhotoLayoutWeakReference.get().getImageViewInPosition(mShareEnterIndex) != null) {
 							mIPhotoLayoutWeakReference.get().getImageViewInPosition(mShareEnterIndex)
@@ -162,7 +162,7 @@ public abstract class PostThumbnailFragment<T extends PostListPresenter> extends
 		if (mAdapter instanceof PostThumbnailAdapter) {
 			mRecyclerView.setLayoutManager(new WrapStaggeredGridLayoutManager(AppConfig.mPostListColumnCount,
 					WrapStaggeredGridLayoutManager.VERTICAL));
-			if (mAdapter != null && mAdapter instanceof PostAdapter) {
+			if (mAdapter instanceof PostAdapter) {
 				mAdapter.initImageViewWidth();
 			}
 		}
@@ -201,7 +201,7 @@ public abstract class PostThumbnailFragment<T extends PostListPresenter> extends
 			@Override
 			public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
 				super.onScrollStateChanged(recyclerView, newState);
-				if (mAdapter != null && mAdapter instanceof PostThumbnailAdapter) {
+				if (mAdapter instanceof PostThumbnailAdapter) {
 					((PostThumbnailAdapter) mAdapter).dismissPopupWindow();
 				}
 			}
@@ -210,7 +210,7 @@ public abstract class PostThumbnailFragment<T extends PostListPresenter> extends
 		mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 			@Override
 			public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-				if (TumlodrGlideUtil.isContextValid(PostThumbnailFragment.this)) {
+				if (OkHoGlideUtil.isContextValid(PostThumbnailFragment.this)) {
 					if (newState == RecyclerView.SCROLL_STATE_IDLE) {
 						TumlodrGlide.with(PostThumbnailFragment.this).resumeRequests();
 						if (mRecyclerView.getLayoutManager() instanceof LinearLayoutManager
@@ -229,7 +229,7 @@ public abstract class PostThumbnailFragment<T extends PostListPresenter> extends
 			@Override
 			public void onViewRecycled(RecyclerView.ViewHolder holder) {
 				try {
-					if (TumlodrGlideUtil.isContextValid(getActivity())) {
+					if (OkHoGlideUtil.isContextValid(getActivity())) {
 						if (holder instanceof PostThumbnailAdapter.PostThumbnailViewHolder) {
 							for (int i = 0; i < ((PostThumbnailAdapter.PostThumbnailViewHolder) holder).mItemViewBinding.plPostPhotos.getImageViewCount();
 							     i++) {
@@ -420,7 +420,7 @@ public abstract class PostThumbnailFragment<T extends PostListPresenter> extends
 	@Override
 	public void onPause() {
 		super.onPause();
-		if (TumlodrGlideUtil.isContextValid(PostThumbnailFragment.this)) {
+		if (OkHoGlideUtil.isContextValid(PostThumbnailFragment.this)) {
 			TumlodrGlide.with(this).pauseRequests();
 		}
 	}
@@ -428,7 +428,7 @@ public abstract class PostThumbnailFragment<T extends PostListPresenter> extends
 	@Override
 	public void onResume() {
 		super.onResume();
-		if (TumlodrGlideUtil.isContextValid(PostThumbnailFragment.this)) {
+		if (OkHoGlideUtil.isContextValid(PostThumbnailFragment.this)) {
 			TumlodrGlide.with(this).resumeRequests();
 		}
 	}
@@ -453,7 +453,7 @@ public abstract class PostThumbnailFragment<T extends PostListPresenter> extends
 	}
 
 	public void dismissPopupWindow() {
-		if (mAdapter != null && mAdapter instanceof PostThumbnailAdapter) {
+		if (mAdapter instanceof PostThumbnailAdapter) {
 			((PostThumbnailAdapter) mAdapter).dismissPopupWindow();
 		}
 	}

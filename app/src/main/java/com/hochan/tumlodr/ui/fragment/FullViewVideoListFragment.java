@@ -36,7 +36,7 @@ import com.hochan.tumlodr.jumblr.types.Post;
 import com.hochan.tumlodr.jumblr.types.VideoPost;
 import com.hochan.tumlodr.model.viewmodel.PostListViewModel;
 import com.hochan.tumlodr.module.glide.TumlodrGlide;
-import com.hochan.tumlodr.module.glide.TumlodrGlideUtil;
+import com.hochan.tumlodr.module.glide.OkHoGlideUtil;
 import com.hochan.tumlodr.module.video.MiniVideoWindowManager;
 import com.hochan.tumlodr.module.video.RoundCornerViewOutlineProvider;
 import com.hochan.tumlodr.module.video.StaticAnimatorListenerAdapter;
@@ -54,7 +54,6 @@ import com.hochan.tumlodr.ui.adapter.VideoPostThumbnailAdapter;
 import com.hochan.tumlodr.ui.component.WrapLinearLayoutManager;
 import com.hochan.tumlodr.ui.view.IPostListView;
 import com.hochan.tumlodr.util.FileDownloadUtil;
-import com.hochan.tumlodr.util.SystemUtils;
 import com.hochan.tumlodr.util.ViewUtils;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -114,7 +113,7 @@ public class FullViewVideoListFragment extends Fragment implements TikTokVideoLa
 				return;
 			}
 			VideoPost videoPost = (VideoPost) post;
-			if (TumlodrGlideUtil.isContextValid(getActivity())
+			if (OkHoGlideUtil.isContextValid(getActivity())
 					&& mVideoDataList.get(position) != null
 					&& mVideoDataList.get(position) instanceof VideoPost) {
 				TumlodrGlide.with(getActivity())
@@ -366,7 +365,7 @@ public class FullViewVideoListFragment extends Fragment implements TikTokVideoLa
 			public void onViewRecycled(RecyclerView.ViewHolder holder) {
 				if (holder instanceof VideoPostThumbnailAdapter.ItemVideoViewHolder) {
 					final TikTokVideoLayout tikTokVideoLayout = holder.itemView.findViewById(R.id.video_layout);
-					if (TumlodrGlideUtil.isContextValid(getActivity())) {
+					if (OkHoGlideUtil.isContextValid(getActivity())) {
 						TumlodrGlide.with(getActivity())
 								.clear(tikTokVideoLayout.getThumbnailImageView());
 					}

@@ -3,6 +3,7 @@ package com.hochan.tumlodr.ui.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -33,7 +34,10 @@ import static com.hochan.tumlodr.ui.activity.SplashActivity.REQUEST_CODE_CHANGE_
  */
 public class SettingFragment extends BaseFragment implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
-	private FragSettingBinding mViewBinding;
+    public static final	String TEEHUB_URL = "https://play.google.com/store/apps/details?id=com.okmarco.teehub";
+
+
+    private FragSettingBinding mViewBinding;
 	private SelectStoragePathFragment mSelectStoragePathFragment;
 
 	@Override
@@ -151,6 +155,17 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
 				startActivityForResult(new Intent(getActivity(), ChangeApiActivity.class), REQUEST_CODE_CHANGE_API);
 			}
 		});
+
+		mViewBinding.llTeehub.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setAction("android.intent.action.VIEW");
+                Uri content_url = Uri.parse(TEEHUB_URL);
+                intent.setData(content_url);
+                startActivity(intent);
+			}
+		});
 	}
 
 	@SuppressWarnings("unchecked")
@@ -211,6 +226,7 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
 		mViewBinding.tvForceToChangeUrl.setTextColor(AppUiConfig.sTextColor);
 		mViewBinding.tvForceToChangeUrlTip.setTextColor(AppUiConfig.sSubTextColor);
 		mViewBinding.tvChangeApi.setTextColor(AppUiConfig.sTextColor);
+		mViewBinding.tvTeehub.setTextColor(AppUiConfig.sTextColor);
 
 		mViewBinding.rbLayoutWaterfall.setTextColor(AppUiConfig.sTextColor);
 		mViewBinding.rbLayoutDetail.setTextColor(AppUiConfig.sTextColor);

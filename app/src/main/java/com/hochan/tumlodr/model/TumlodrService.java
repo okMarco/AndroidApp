@@ -232,7 +232,7 @@ public class TumlodrService {
 	public static Observable<Blog> getBlogInfo(final String blogName) {
 		return Observable.create(new ObservableOnSubscribe<Blog>() {
 			@Override
-			public void subscribe(@NonNull ObservableEmitter<Blog> e) throws Exception {
+			public void subscribe(@NonNull ObservableEmitter<Blog> e) {
 				e.onNext(HOLDER.INSTANCE.blogInfo(blogName));
 			}
 		}).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());

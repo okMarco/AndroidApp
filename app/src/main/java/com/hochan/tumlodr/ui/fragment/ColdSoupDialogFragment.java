@@ -26,9 +26,9 @@ import com.hochan.tumlodr.tools.ScreenTools;
  * Created by hochan on 2018/1/23.
  */
 
-public abstract class TumloadrDialogFragment extends DialogFragment {
+public abstract class ColdSoupDialogFragment extends DialogFragment {
 
-	public LayoutTumlodrDialogBinding mViewBinding;
+	public LayoutTumlodrDialogBinding viewBinding;
 	private Spring spring;
 
 	@Override
@@ -40,7 +40,7 @@ public abstract class TumloadrDialogFragment extends DialogFragment {
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.layout_tumlodr_dialog, container, false);
-		mViewBinding = LayoutTumlodrDialogBinding.bind(view);
+		viewBinding = LayoutTumlodrDialogBinding.bind(view);
 		return view;
 	}
 
@@ -48,36 +48,14 @@ public abstract class TumloadrDialogFragment extends DialogFragment {
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		setContentView(getContentView());
-		mViewBinding.btnCancle.setOnClickListener(new View.OnClickListener() {
+		viewBinding.btnCancle.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				if (spring != null) {
-					spring.destroy();
-				}
-
-				mViewBinding.cvRoot.setPivotX(mViewBinding.cvRoot.getMeasuredWidth());
-				mViewBinding.cvRoot.setPivotY(0);
-				spring = SpringSystem.create().createSpring();
-				final double endValue = ScreenTools.getScreenHeight(getContext()) / 2 + mViewBinding.cvRoot.getMeasuredHeight();
-				spring.addListener(new SimpleSpringListener() {
-					@Override
-					public void onSpringUpdate(Spring spring) {
-						super.onSpringUpdate(spring);
-						mViewBinding.cvRoot.setTranslationY((float) spring.getCurrentValue());
-						if (mViewBinding.cvRoot.getTranslationY() > endValue) {
-							spring.destroy();
-							dismiss();
-						}
-					}
-				});
-				spring.setCurrentValue(0);
-				spring.setEndValue(endValue);
-
-				onCancel();
+				cancle();
 			}
 		});
 
-		mViewBinding.btnDelete.setOnClickListener(new View.OnClickListener() {
+		viewBinding.btnDelete.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
 				if (spring != null) {
@@ -88,15 +66,15 @@ public abstract class TumloadrDialogFragment extends DialogFragment {
 					return;
 				}
 
-				mViewBinding.cvRoot.setPivotX(0);
-				mViewBinding.cvRoot.setPivotY(0);
+				viewBinding.cvRoot.setPivotX(0);
+				viewBinding.cvRoot.setPivotY(0);
 				spring = SpringSystem.create().createSpring();
-				final double endValue = ScreenTools.getScreenHeight(getContext()) / 2 + mViewBinding.cvRoot.getMeasuredHeight();
+				final double endValue = ScreenTools.getScreenHeight(getContext()) / 2 + viewBinding.cvRoot.getMeasuredHeight();
 				spring.addListener(new SimpleSpringListener() {
 					@Override
 					public void onSpringUpdate(Spring spring) {
-						mViewBinding.cvRoot.setTranslationY((float) spring.getCurrentValue());
-						if (mViewBinding.cvRoot.getTranslationY() > endValue) {
+						viewBinding.cvRoot.setTranslationY((float) spring.getCurrentValue());
+						if (viewBinding.cvRoot.getTranslationY() > endValue) {
 							spring.destroy();
 							dismiss();
 						}
@@ -108,30 +86,56 @@ public abstract class TumloadrDialogFragment extends DialogFragment {
 		});
 	}
 
+	public void cancle() {
+		if (spring != null) {
+			spring.destroy();
+		}
+
+		viewBinding.cvRoot.setPivotX(viewBinding.cvRoot.getMeasuredWidth());
+		viewBinding.cvRoot.setPivotY(0);
+		spring = SpringSystem.create().createSpring();
+		final double endValue = ScreenTools.getScreenHeight(getContext()) / 2 + viewBinding.cvRoot.getMeasuredHeight();
+		spring.addListener(new SimpleSpringListener() {
+			@Override
+			public void onSpringUpdate(Spring spring) {
+				super.onSpringUpdate(spring);
+				viewBinding.cvRoot.setTranslationY((float) spring.getCurrentValue());
+				if (viewBinding.cvRoot.getTranslationY() > endValue) {
+					spring.destroy();
+					dismiss();
+				}
+			}
+		});
+		spring.setCurrentValue(0);
+		spring.setEndValue(endValue);
+
+		onCancel();
+	}
+
 	public abstract View getContentView();
 
 	public void setContentView(View view) {
 		if (view == null) {
 			return;
 		}
-		mViewBinding.flContentContainer.addView(view, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+		viewBinding.flContentContainer.addView(view, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
 				ViewGroup.LayoutParams.MATCH_PARENT));
 	}
 
 	public void setConfirmString(int resourceId) {
-		mViewBinding.btnDelete.setText(resourceId);
+		viewBinding.btnDelete.setText(resourceId);
 	}
 
-	public void setCancleString(int resourceId) {
-		mViewBinding.btnCancle.setText(resourceId);
+	public void setCancelString(int resourceId) {
+		viewBinding.btnCancle.setText(resourceId);
 	}
 
 	public void setTitleString(int resourceId) {
-		mViewBinding.tvTitle.setText(resourceId);
+		viewBinding.tvTitle.setText(resourceId);
 	}
 
 	public View findViewById(int id) {
-		return mViewBinding.getRoot().findViewById(id);
+		return viewBinding.getRoot().findViewById(id);
 	}
 
 	@SuppressWarnings("ConstantConditions")
@@ -149,13 +153,13 @@ public abstract class TumloadrDialogFragment extends DialogFragment {
 		params.height = ViewGroup.LayoutParams.MATCH_PARENT;
 		getDialog().getWindow().setAttributes(params);
 
-		mViewBinding.cvRoot.setPivotX(0);
-		mViewBinding.cvRoot.setPivotY(0);
+		viewBinding.cvRoot.setPivotX(0);
+		viewBinding.cvRoot.setPivotY(0);
 		spring = SpringSystem.create().createSpring();
 		spring.addListener(new SimpleSpringListener() {
 			@Override
 			public void onSpringUpdate(Spring spring) {
-				mViewBinding.cvRoot.setTranslationY((float) spring.getCurrentValue());
+				viewBinding.cvRoot.setTranslationY((float) spring.getCurrentValue());
 			}
 		});
 		spring.setCurrentValue(ScreenTools.getScreenHeight(getContext()) / 2 * -1.0);
@@ -163,7 +167,7 @@ public abstract class TumloadrDialogFragment extends DialogFragment {
 	}
 
 	public View getRootView() {
-		return mViewBinding.getRoot();
+		return viewBinding.getRoot();
 	}
 
 	public abstract boolean onConfirmed();

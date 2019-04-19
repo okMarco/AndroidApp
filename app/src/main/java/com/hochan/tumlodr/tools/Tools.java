@@ -14,7 +14,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.hochan.tumlodr.R;
 import com.hochan.tumlodr.TumlodrApp;
 import com.hochan.tumlodr.module.glide.TumlodrGlide;
-import com.hochan.tumlodr.module.glide.TumlodrGlideUtil;
+import com.hochan.tumlodr.module.glide.OkHoGlideUtil;
 
 import java.io.File;
 import java.lang.reflect.Array;
@@ -135,7 +135,7 @@ public class Tools {
 	@SuppressWarnings("SameParameterValue")
     private static void loadAvatar(final ImageView imageView, String blogName, int size) {
 		String avatarUrl = Tools.getAvatarUrlByBlogName(blogName, size);
-		if (TumlodrGlideUtil.isContextValid(imageView)) {
+		if (OkHoGlideUtil.isContextValid(imageView)) {
 			TumlodrGlide.with(imageView)
 					.asBitmap()
 					.load(avatarUrl)

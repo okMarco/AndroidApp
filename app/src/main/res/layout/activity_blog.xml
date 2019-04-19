@@ -14,7 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            tools:context=".ui.activity.baseactivity.BaseActivity">
+            tools:context="com.okmarco.teehub.OkHoBase.BaseActivity">
 
             <android.support.design.widget.AppBarLayout
                 android:id="@+id/abl_blog"
@@ -59,95 +59,73 @@
                             tools:background="@color/colorBlack"
                             android:layout_marginRight="15dp"/>
 
+                        <ImageView
+                            android:id="@+id/riv_blog_avatar"
+                            android:layout_width="90dp"
+                            android:layout_height= "90dp"
+                            android:layout_gravity="center"
+                            tools:ignore="ContentDescription,RtlHardcoded"/>
+                        <TextView
+                            android:id="@+id/tv_blog_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:paddingBottom="5dp"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="25sp"
+                            android:textStyle="bold"
+                            android:layout_marginTop="10dp"
+                            tools:ignore="RtlHardcoded,RtlSymmetry"
+                            tools:text="BLOG_TITLE"/>
+
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
                             android:orientation="horizontal"
-                            android:layout_marginLeft="15dp"
-                            android:layout_marginTop="15dp"
-                            tools:ignore="DisableBaselineAlignment,RtlHardcoded">
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:layout_marginTop="10dp"
+                            tools:ignore="TooDeepLayout">
 
-                            <ImageView
-                                android:id="@+id/riv_blog_avatar"
-                                android:layout_width="90dp"
-                                android:layout_height= "90dp"
-                                android:layout_marginRight="10dp"
-                                tools:ignore="ContentDescription,RtlHardcoded"/>
-
-                            <LinearLayout
-                                android:id="@+id/ll_blog_info"
-                                android:layout_width="0dp"
+                            <TextView
+                                android:id="@+id/btn_follow"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:orientation="vertical"
+                                android:background="@drawable/bg_following"
+                                android:text="@string/blog_follow"
+                                android:textColor="@color/colorWhite"
+                                android:textSize="14sp"
+                                android:textStyle="bold"
+                                tools:background="@drawable/bg_following"
+                                android:paddingLeft="15dp"
                                 android:paddingRight="15dp"
-                                tools:ignore="NestedWeights,RtlHardcoded,RtlSymmetry">
+                                android:paddingTop="7dp"
+                                android:paddingBottom="7dp"
+                                />
 
-                                <TextView
-                                    android:id="@+id/tv_blog_title"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="left"
-                                    android:gravity="left"
-                                    android:paddingBottom="5dp"
-                                    android:textColor="@color/colorWhite"
-                                    android:textSize="25sp"
-                                    android:textStyle="bold"
-                                    tools:ignore="RtlHardcoded,RtlSymmetry"
-                                    tools:text="BLOG_TITLE"/>
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:orientation="horizontal"
-                                    tools:ignore="TooDeepLayout">
-
-                                    <TextView
-                                        android:id="@+id/btn_follow"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginTop="5dp"
-                                        android:background="@drawable/bg_following"
-                                        android:text="@string/blog_follow"
-                                        android:textColor="@color/colorWhite"
-                                        android:textSize="14sp"
-                                        android:textStyle="bold"
-                                        tools:background="@drawable/bg_following"
-                                        android:paddingLeft="15dp"
-                                        android:paddingRight="15dp"
-                                        android:paddingTop="7dp"
-                                        android:paddingBottom="7dp"
-                                        />
-
-                                    <TextView
-                                        android:id="@+id/btn_save_all"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginTop="5dp"
-                                        android:background="@drawable/bg_following"
-                                        android:text="@string/save_all"
-                                        android:textColor="@color/colorWhite"
-                                        android:textSize="14sp"
-                                        android:layout_marginLeft="10dp"
-                                        android:textStyle="bold"
-                                        android:paddingLeft="15dp"
-                                        android:paddingRight="15dp"
-                                        android:paddingTop="7dp"
-                                        android:paddingBottom="7dp"
-                                        />
-
-                                </LinearLayout>
-
-                            </LinearLayout>
+                            <TextView
+                                android:id="@+id/btn_save_all"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/bg_following"
+                                android:text="@string/save_all"
+                                android:textColor="@color/colorWhite"
+                                android:textSize="14sp"
+                                android:layout_marginLeft="10dp"
+                                android:textStyle="bold"
+                                android:paddingLeft="15dp"
+                                android:paddingRight="15dp"
+                                android:paddingTop="7dp"
+                                android:paddingBottom="7dp"
+                                tools:ignore="RtlHardcoded" />
 
                         </LinearLayout>
-
                         <TextView
                             android:id="@+id/tv_blog_description"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="left"
+                            android:gravity="center"
                             android:layout_marginTop="10dp"
                             android:maxLines="5"
                             android:paddingLeft="15dp"

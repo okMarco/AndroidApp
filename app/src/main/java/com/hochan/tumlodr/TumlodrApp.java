@@ -92,11 +92,11 @@ public class TumlodrApp extends MultiDexApplication {
 		mContext = getApplicationContext();
 
 		AppConfig.initAppConfig(this);
+		MobileAds.initialize(this, TumlodrBottomAdsLayout.MOBILE_ADS_KEY);
 
 		// just for open the log in this demo project.
 		FileDownloadLog.NEED_LOG = BuildConfig.DEBUG;
 
-		MobileAds.initialize(this, TumlodrBottomAdsLayout.MOBILE_ADS_KEY);
 
 		FileDownloader.setupOnApplicationOnCreate(this)
 				.connectionCreator(new FileDownloadUrlConnection

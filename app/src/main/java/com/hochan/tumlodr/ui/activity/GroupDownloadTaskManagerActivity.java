@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.view.Menu;
 
 import com.hochan.tumlodr.R;
-import com.hochan.tumlodr.ui.activity.baseactivity.BaseSingleFragmentActivity;
 import com.hochan.tumlodr.ui.fragment.DownloadTaskFragment;
 
 public class GroupDownloadTaskManagerActivity extends DownloadTasksManagerActivity {

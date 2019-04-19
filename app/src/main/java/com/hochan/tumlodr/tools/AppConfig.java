@@ -48,6 +48,7 @@ public class AppConfig {
 	public static final String SHARE_THEME_ID = "theme_id";
 	public static final String SHARE_POST_LIST_COLUMN_COUNT = "post_list_column_count";
 	public static final String SHARE_POST_LIST_LAYOUT_STYLE = "post_list_layout_style";
+	public static final String KEY_HAS_SHOW_TEEHUB = "has_show_tee_hub";
 
 	public static final String SHARE_RESOLUTION = "resolution";
 	public static final String SHARE_PLAY_VIDEO_AUTO = "paly_gif";

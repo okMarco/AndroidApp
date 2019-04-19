@@ -2,7 +2,9 @@ package com.hochan.tumlodr.ui.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.Toolbar;
@@ -17,10 +19,12 @@ import android.widget.LinearLayout;
 import com.hochan.tumlodr.R;
 import com.hochan.tumlodr.jumblr.types.VideoPost;
 import com.hochan.tumlodr.model.sharedpreferences.UserInfo;
+import com.hochan.tumlodr.tools.AppConfig;
 import com.hochan.tumlodr.tools.AppUiConfig;
 import com.hochan.tumlodr.tools.ScreenTools;
 import com.hochan.tumlodr.ui.fragment.DashBoardThumbnailFragment;
 import com.hochan.tumlodr.ui.fragment.PostThumbnailFragment;
+import com.hochan.tumlodr.ui.fragment.TeeHubDialogFragment;
 import com.hochan.tumlodr.util.ActivityLifecycleProvider;
 import com.hochan.tumlodr.util.Events;
 import com.hochan.tumlodr.util.RxBus;
@@ -52,6 +56,17 @@ public class MainActivity extends PostListActivity {
 						}
 					}
 				}).create();
+
+		SharedPreferences sharedPreferences = getSharedPreferences(AppConfig.SHARE_THEME, MODE_PRIVATE);
+		if (!sharedPreferences.getBoolean(AppConfig.KEY_HAS_SHOW_TEEHUB, false)) {
+			sharedPreferences.edit().putBoolean(AppConfig.KEY_HAS_SHOW_TEEHUB, true).apply();
+			new Handler().postDelayed(new Runnable() {
+				@Override
+				public void run() {
+					new TeeHubDialogFragment().show(getSupportFragmentManager(), TeeHubDialogFragment.TAG);
+				}
+			}, 5);
+		}
 	}
 
 	@Override

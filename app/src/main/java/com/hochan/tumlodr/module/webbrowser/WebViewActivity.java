@@ -52,7 +52,7 @@ public class WebViewActivity extends BaseViewBindingActivity<ActivityWebViewBind
 		mToolbar = findViewById(R.id.toolbar);
 
 		mWebView = new WebView(this);
-		mViewBinding.flWebviewContainer.addView(mWebView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+		viewBinding.flWebviewContainer.addView(mWebView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
 				ViewGroup.LayoutParams.MATCH_PARENT));
 		mWebView.getSettings().setJavaScriptEnabled(true);
 		mWebView.addJavascriptInterface(new AndroidJS(), "AndroidJS");
@@ -89,10 +89,10 @@ public class WebViewActivity extends BaseViewBindingActivity<ActivityWebViewBind
 			@Override
 			public void onProgressChanged(WebView view, int newProgress) {
 				if (newProgress == 100) {
-					mViewBinding.loadingProgress.setVisibility(View.INVISIBLE);
+					viewBinding.loadingProgress.setVisibility(View.INVISIBLE);
 				} else {
-					mViewBinding.loadingProgress.setProgress(newProgress);
-					mViewBinding.loadingProgress.setVisibility(View.VISIBLE);
+					viewBinding.loadingProgress.setProgress(newProgress);
+					viewBinding.loadingProgress.setVisibility(View.VISIBLE);
 				}
 			}
 		});
@@ -138,7 +138,7 @@ public class WebViewActivity extends BaseViewBindingActivity<ActivityWebViewBind
 	protected void onDestroy() {
 		super.onDestroy();
 		mWebView.destroy();
-		mViewBinding.flWebviewContainer.removeView(mWebView);
+		viewBinding.flWebviewContainer.removeView(mWebView);
 		mWebView = null;
 	}
 

@@ -29,7 +29,7 @@ public abstract class BaseDrawerActivity extends BaseViewBindingActivity<Activit
 			@SuppressLint("RtlHardcoded")
 			@Override
 			public void onClick(View v) {
-				mViewBinding.drawerlayout.openDrawer(Gravity.LEFT);
+				viewBinding.drawerlayout.openDrawer(Gravity.LEFT);
 			}
 		});
 		toolbar.setOverflowIcon(AppUiConfig.sIsLightTheme ? ContextCompat.getDrawable(this, R.drawable.ic_menu_over_flow) :
@@ -65,7 +65,7 @@ public abstract class BaseDrawerActivity extends BaseViewBindingActivity<Activit
 	@SuppressLint("RtlHardcoded")
 	@Override
 	public void onBackPressed() {
-		if (mViewBinding.drawerlayout.isDrawerOpen(Gravity.LEFT)) {
+		if (viewBinding.drawerlayout.isDrawerOpen(Gravity.LEFT)) {
 			closeDrawer();
 		} else {
 			super.onBackPressed();
@@ -74,7 +74,7 @@ public abstract class BaseDrawerActivity extends BaseViewBindingActivity<Activit
 
 	@SuppressLint("RtlHardcoded")
 	public void closeDrawer() {
-		mViewBinding.drawerlayout.closeDrawer(Gravity.LEFT);
+		viewBinding.drawerlayout.closeDrawer(Gravity.LEFT);
 	}
 
 	@Override

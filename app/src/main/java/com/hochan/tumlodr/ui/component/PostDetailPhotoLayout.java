@@ -16,7 +16,7 @@ import com.google.android.flexbox.FlexboxLayout;
 import com.hochan.tumlodr.jumblr.types.Photo;
 import com.hochan.tumlodr.module.glide.GlideRequest;
 import com.hochan.tumlodr.module.glide.TumlodrGlide;
-import com.hochan.tumlodr.module.glide.TumlodrGlideUtil;
+import com.hochan.tumlodr.module.glide.OkHoGlideUtil;
 import com.hochan.tumlodr.module.glide.TunlodrGlideModelLoder;
 import com.hochan.tumlodr.tools.AppUiConfig;
 import com.hochan.tumlodr.tools.Tools;
@@ -341,14 +341,14 @@ public class PostDetailPhotoLayout extends FlexboxLayout implements IPhotoLayout
 		if (photo == null) {
 			return;
 		}
-		String normalUrl = TumlodrGlideUtil.PHOTO_NORMAL_URL_CACHE.get(photo);
+		String normalUrl = OkHoGlideUtil.PHOTO_NORMAL_URL_CACHE.get(photo);
 		if (normalUrl == null) {
 			normalUrl = TunlodrGlideModelLoder.getResolutionPhotoSize(imageViewWidth, photo).getUrl();
 			if (normalUrl == null) {
 				normalUrl = photo.getOriginalSize().getUrl();
 			}
 			if (normalUrl != null) {
-				TumlodrGlideUtil.PHOTO_NORMAL_URL_CACHE.put(photo, normalUrl);
+				OkHoGlideUtil.PHOTO_NORMAL_URL_CACHE.put(photo, normalUrl);
 			}
 		}
 		mPhotoNormalUrls.add(normalUrl);

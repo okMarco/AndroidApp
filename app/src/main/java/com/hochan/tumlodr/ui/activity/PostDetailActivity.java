@@ -70,7 +70,7 @@ public class PostDetailActivity extends BaseViewBindingActivity<ActivityPostDeta
 													mIPhotoLayoutWeakReference != null
 													&& mIPhotoLayoutWeakReference.get() != null) {
 												sharedElements.clear();
-												sharedElements.put(Router.SHAREELEMENT_NAME,
+												sharedElements.put(Router.SHARE_ELEMENT_NAME,
 														mIPhotoLayoutWeakReference.get().getImageViewInPosition(mShareExitIndex));
 												mIPhotoLayoutWeakReference.get().getImageViewInPosition(mShareEnterIndex).setTransitionName(null);
 											}
@@ -99,10 +99,10 @@ public class PostDetailActivity extends BaseViewBindingActivity<ActivityPostDeta
 
 	@Override
 	public void initWidget() {
-		mViewBinding.rvPostInfo.setLayoutManager(new WrapLinearLayoutManager(this));
-		PostDetailInfoAdapter adapter = new PostDetailInfoAdapter(mViewBinding.rvPostInfo,
+		viewBinding.rvPostInfo.setLayoutManager(new WrapLinearLayoutManager(this));
+		PostDetailInfoAdapter adapter = new PostDetailInfoAdapter(viewBinding.rvPostInfo,
 				java.util.Collections.singletonList(sDetailPost), this);
-		mViewBinding.rvPostInfo.setAdapter(adapter);
+		viewBinding.rvPostInfo.setAdapter(adapter);
 	}
 
 	@Override

@@ -33,10 +33,9 @@ import com.hochan.tumlodr.jumblr.types.TextPost;
 import com.hochan.tumlodr.jumblr.types.VideoPost;
 import com.hochan.tumlodr.model.TumlodrService;
 import com.hochan.tumlodr.model.data.CommentBody;
-import com.hochan.tumlodr.model.data.TextPostBody;
 import com.hochan.tumlodr.model.sharedpreferences.UserInfo;
 import com.hochan.tumlodr.module.glide.TumlodrGlide;
-import com.hochan.tumlodr.module.glide.TumlodrGlideUtil;
+import com.hochan.tumlodr.module.glide.OkHoGlideUtil;
 import com.hochan.tumlodr.module.video.videolayout.VideoPlayLayout;
 import com.hochan.tumlodr.tools.AppUiConfig;
 import com.hochan.tumlodr.tools.HtmlTool;
@@ -49,7 +48,6 @@ import com.hochan.tumlodr.ui.fragment.NotesFragment;
 import com.hochan.tumlodr.util.BlurTransformation;
 import com.hochan.tumlodr.util.ColorFilterTransformation;
 import com.hochan.tumlodr.util.FileDownloadUtil;
-import com.hochan.tumlodr.util.TextPostBodyUtils;
 import com.hochan.tumlodr.util.ViewUtils;
 
 import java.util.List;
@@ -153,7 +151,7 @@ public class PostDetailAdapter extends PostAdapter {
 		CharSequence lastPostDate = "";
 		lastPostDate = Tools.getRelativeTime(post.getDateGMT(), lastPostDate);
 		holder.tvPostTime.setText(lastPostDate);
-		if (TumlodrGlideUtil.isContextValid(holder.ivAvatar)) {
+		if (OkHoGlideUtil.isContextValid(holder.ivAvatar)) {
 			TumlodrGlide.with(holder.ivAvatar)
 					.load(Tools.getAvatarUrlByBlogName(post.getBlogName()))
 					.transform(new MultiTransformation<>(new CenterCrop(),
@@ -244,7 +242,7 @@ public class PostDetailAdapter extends PostAdapter {
 		holder.mAudioPostDetailBinding.tvTitle.setText(audioPost.getTrackName());
 		holder.mAudioPostDetailBinding.tvArtist.setText(audioPost.getArtistName());
 		holder.mAudioPostDetailBinding.tvArtist.setTextColor(AppUiConfig.sTextColor);
-		if (TumlodrGlideUtil.isContextValid(holder.itemView)) {
+		if (OkHoGlideUtil.isContextValid(holder.itemView)) {
 			TumlodrGlide.with(holder.itemView)
 					.load(audioPost.getAlbumArtUrl())
 					.placeholder(AppUiConfig.sPicHolderResource)
@@ -273,14 +271,13 @@ public class PostDetailAdapter extends PostAdapter {
 		holder.mViewBinding.ivVideoPlay.setVisibility(View.GONE);
 		if (textPost.getBody() != null && !TextUtils.isEmpty(textPost.getBody())) {
 			holder.mViewBinding.tvPostBody.setVisibility(View.VISIBLE);
-			TextPostBody textPostBody = TextPostBodyUtils.textPostBody(textPost.getBody());
-			if (textPostBody.getPhotos() != null && !textPostBody.getPhotos().isEmpty()) {
+			if (textPost.getTextPostBody().getPhotos().isEmpty()) {
 				holder.mViewBinding.llPhotos.setVisibility(View.VISIBLE);
-				holder.mViewBinding.llPhotos.setPhotos(textPostBody.getPhotos());
+				holder.mViewBinding.llPhotos.setPhotos(textPost.getTextPostBody().getPhotos());
 			} else {
 				holder.mViewBinding.llPhotos.setVisibility(View.GONE);
 			}
-			holder.mViewBinding.tvPostBody.setText(HtmlTool.fromHtml(textPostBody.getContent(), holder.mViewBinding.tvPostBody));
+			holder.mViewBinding.tvPostBody.setText(HtmlTool.fromHtml(textPost.getTextPostBody().getContent(), holder.mViewBinding.tvPostBody));
 		} else {
 			holder.mViewBinding.tvPostBody.setVisibility(View.GONE);
 		}

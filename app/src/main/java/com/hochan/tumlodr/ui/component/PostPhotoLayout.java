@@ -1,4 +1,4 @@
-package com.hochan.tumlodr.ui.component;
+ package com.hochan.tumlodr.ui.component;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -17,7 +17,7 @@ import android.widget.LinearLayout;
 import com.hochan.tumlodr.jumblr.types.Photo;
 import com.hochan.tumlodr.module.glide.GlideRequest;
 import com.hochan.tumlodr.module.glide.TumlodrGlide;
-import com.hochan.tumlodr.module.glide.TumlodrGlideUtil;
+import com.hochan.tumlodr.module.glide.OkHoGlideUtil;
 import com.hochan.tumlodr.module.glide.TunlodrGlideModelLoder;
 import com.hochan.tumlodr.tools.AppUiConfig;
 import com.hochan.tumlodr.tools.Tools;
@@ -116,13 +116,13 @@ public class PostPhotoLayout extends FrameLayout implements View.OnClickListener
 				imageView.setLayoutParams(layoutParams);
 				imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
-				String normalUrl = TumlodrGlideUtil.PHOTO_NORMAL_URL_CACHE.get(photo);
+				String normalUrl = OkHoGlideUtil.PHOTO_NORMAL_URL_CACHE.get(photo);
 				if (normalUrl == null) {
 					normalUrl = TunlodrGlideModelLoder.getResolutionPhotoSize(mImageViewWidth, photo).getUrl();
 					if (normalUrl == null) {
 						normalUrl = photo.getOriginalSize().getUrl();
 					}
-					TumlodrGlideUtil.PHOTO_NORMAL_URL_CACHE.put(photo, normalUrl);
+					OkHoGlideUtil.PHOTO_NORMAL_URL_CACHE.put(photo, normalUrl);
 				}
 				mPhotoNormalUrls.add(normalUrl);
 

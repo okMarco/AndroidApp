@@ -36,12 +36,13 @@ import com.hochan.tumlodr.model.sharedpreferences.UserInfo;
 import com.hochan.tumlodr.module.glide.GlideRequest;
 import com.hochan.tumlodr.module.glide.ProgressTarget;
 import com.hochan.tumlodr.module.glide.TumlodrGlide;
-import com.hochan.tumlodr.module.glide.TumlodrGlideUtil;
+import com.hochan.tumlodr.module.glide.OkHoGlideUtil;
 import com.hochan.tumlodr.tools.AppUiConfig;
 import com.hochan.tumlodr.tools.Tools;
 import com.hochan.tumlodr.ui.activity.baseactivity.BaseViewBindingActivity;
 import com.hochan.tumlodr.ui.component.DragToFinishPhotoView;
 import com.hochan.tumlodr.ui.component.FullPhotoViewProgressTarget;
+import com.hochan.tumlodr.ui.component.SingleMediaScanner;
 import com.hochan.tumlodr.ui.component.listener.SimpleTransitionListener;
 import com.hochan.tumlodr.util.Events;
 import com.hochan.tumlodr.util.FileDownloadUtil;
@@ -106,7 +107,6 @@ public class FullScreenPhotoViewActivity extends BaseViewBindingActivity<Activit
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 			getWindow().getSharedElementEnterTransition().setDuration(150);
 			getWindow().getEnterTransition().addListener(new SimpleTransitionListener() {
-
 				// 最后调用
 				@Override
 				public void onTransitionEnd(@NonNull Transition transition) {
@@ -116,7 +116,7 @@ public class FullScreenPhotoViewActivity extends BaseViewBindingActivity<Activit
 					if (isFinishing()) {
 						return;
 					}
-					if (TumlodrGlideUtil.isContextValid(FullScreenPhotoViewActivity.this)) {
+					if (OkHoGlideUtil.isContextValid(FullScreenPhotoViewActivity.this)) {
 						TumlodrGlide.with(FullScreenPhotoViewActivity.this)
 								.resumeRequests();
 					}
@@ -145,12 +145,12 @@ public class FullScreenPhotoViewActivity extends BaseViewBindingActivity<Activit
 						getWindow().getSharedElementEnterTransition().removeListener(this);
 					}
 					setUpBlogInfo();
-					mViewBinding.tvPicIndex.animate().alpha(1);
+					viewBinding.tvPicIndex.animate().alpha(1);
 				}
 
 				@Override
 				public void onTransitionCancel(@NonNull Transition transition) {
-					if (TumlodrGlideUtil.isContextValid(FullScreenPhotoViewActivity.this)) {
+					if (OkHoGlideUtil.isContextValid(FullScreenPhotoViewActivity.this)) {
 						TumlodrGlide.with(FullScreenPhotoViewActivity.this).resumeRequests();
 					}
 					mFullRequest.into(mDefaultTarget);
@@ -164,7 +164,7 @@ public class FullScreenPhotoViewActivity extends BaseViewBindingActivity<Activit
 				// 最先调用
 				@Override
 				public void onTransitionStart(@NonNull Transition transition) {
-					if (TumlodrGlideUtil.isContextValid(FullScreenPhotoViewActivity.this)) {
+					if (OkHoGlideUtil.isContextValid(FullScreenPhotoViewActivity.this)) {
 						TumlodrGlide.with(FullScreenPhotoViewActivity.this).pauseRequests();
 					}
 				}
@@ -201,29 +201,26 @@ public class FullScreenPhotoViewActivity extends BaseViewBindingActivity<Activit
 		super.initWidget();
 		supportPostponeEnterTransition();
 
-		mViewBinding.viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+		viewBinding.viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 			@Override
-			public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-			}
+			public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
 
 			@Override
 			public void onPageSelected(int position) {
-				mViewBinding.tvPicIndex.setText(String.format(Locale.US, "%d/%d", position + 1,
-						mViewBinding.viewPager.getAdapter() != null ? mViewBinding.viewPager.getAdapter().getCount() : 0));
+				viewBinding.tvPicIndex.setText(String.format(Locale.US, "%d/%d", position + 1,
+						viewBinding.viewPager.getAdapter() != null ? viewBinding.viewPager.getAdapter().getCount() : 0));
 			}
 
 			@Override
-			public void onPageScrollStateChanged(int state) {
-
-			}
+			public void onPageScrollStateChanged(int state) {}
 		});
 
-		mViewBinding.btnSave.setOnClickListener(new View.OnClickListener() {
+		viewBinding.btnSave.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
 				if (mPhotoUrls != null) {
-					if (mViewBinding.viewPager.getCurrentItem() < 0
-							|| mViewBinding.viewPager.getCurrentItem() >= mPhotoUrls.size()) {
+					if (viewBinding.viewPager.getCurrentItem() < 0
+							|| viewBinding.viewPager.getCurrentItem() >= mPhotoUrls.size()) {
 						return;
 					}
 					savePicture();
@@ -232,7 +229,7 @@ public class FullScreenPhotoViewActivity extends BaseViewBindingActivity<Activit
 		});
 
 		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-			mViewBinding.tvPicIndex.animate().alpha(1);
+			viewBinding.tvPicIndex.animate().alpha(1);
 			setUpBlogInfo();
 		}
 	}
@@ -241,24 +238,24 @@ public class FullScreenPhotoViewActivity extends BaseViewBindingActivity<Activit
 		if (sPost == null) {
 			return;
 		}
-		mViewBinding.llBlogInfo.setVisibility(View.VISIBLE);
-		mViewBinding.llBlogInfo.animate().alpha(1);
-		mViewBinding.tvBlogName.setText(sPost.getBlogName());
+		viewBinding.llBlogInfo.setVisibility(View.VISIBLE);
+		viewBinding.llBlogInfo.animate().alpha(1);
+		viewBinding.tvBlogName.setText(sPost.getBlogName());
 		TumlodrGlide.with(this)
 				.load(Tools.getAvatarUrlByBlogName(sPost.getBlogName()))
 				.transform(new RoundedCorners(5))
 				.placeholder(AppUiConfig.sPicHolderResource)
 				.skipMemoryCache(true)
-				.into(mViewBinding.ivAvatar);
+				.into(viewBinding.ivAvatar);
 		if (sPost.isLiked() != null && sPost.isLiked()) {
-			mViewBinding.btnLike.setImageResource(R.drawable.ic_popup_liked);
+			viewBinding.btnLike.setImageResource(R.drawable.ic_popup_liked);
 		} else {
-			mViewBinding.btnLike.setImageResource(R.drawable.ic_popup_like);
+			viewBinding.btnLike.setImageResource(R.drawable.ic_popup_like);
 		}
-		mViewBinding.btnLike.setOnClickListener(new View.OnClickListener() {
+		viewBinding.btnLike.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				mViewBinding.btnLike.setImageResource(R.drawable.ic_popup_liked);
+				viewBinding.btnLike.setImageResource(R.drawable.ic_popup_liked);
 				if (sPost == null) {
 					return;
 				}
@@ -266,13 +263,13 @@ public class FullScreenPhotoViewActivity extends BaseViewBindingActivity<Activit
 				ViewUtils.likeAnimation(view);
 			}
 		});
-		mViewBinding.btnPost.setOnClickListener(new View.OnClickListener() {
+		viewBinding.btnPost.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
 				PostDetailActivity.showPostDetail(FullScreenPhotoViewActivity.this, sPost);
 			}
 		});
-		mViewBinding.btnReblog.setOnClickListener(new View.OnClickListener() {
+		viewBinding.btnReblog.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
 				if (sPost == null) {
@@ -281,7 +278,7 @@ public class FullScreenPhotoViewActivity extends BaseViewBindingActivity<Activit
 				TumlodrService.reblog(UserInfo.sUserName, sPost.getId(), sPost.getReblogKey());
 			}
 		});
-		mViewBinding.tvBlogName.setOnClickListener(new View.OnClickListener() {
+		viewBinding.tvBlogName.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
 				if (sPost == null) {
@@ -304,21 +301,21 @@ public class FullScreenPhotoViewActivity extends BaseViewBindingActivity<Activit
 
 		@Override
 		public void onDragOffset(float offset, float maxOffset) {
-			mViewBinding.vBackgroundMask.setAlpha(1 - offset / maxOffset);
-			mViewBinding.flTitleLayout.setAlpha(1 - offset / maxOffset);
+			viewBinding.vBackgroundMask.setAlpha(1 - offset / maxOffset);
+			viewBinding.flTitleLayout.setAlpha(1 - offset / maxOffset);
 		}
 	};
 
 	@Override
 	public void initData() {
-		mDefaultIndex = getIntent().getIntExtra(Router.EXTRA_DEFAULT_INDEX, 0);
+		mDefaultIndex = getIntent().getIntExtra(Router.EXTRA_DEFAULT_IMAGE_INDEX, 0);
 		mPhotoUrls = getIntent().getStringArrayListExtra(Router.EXTRA_IMAGE_URL_LIST);
 		mPhotoNormalUrls = getIntent().getStringArrayListExtra(Router.EXTRA_NORMAL_IMAGE_URL_LIST);
 
 		if (mPhotoUrls != null) {
-			mViewBinding.tvPicIndex.setText(String.format(Locale.US, "%d/%d", mDefaultIndex + 1, mPhotoUrls.size()));
-			mViewBinding.viewPager.setAdapter(getAdapter());
-			mViewBinding.viewPager.setCurrentItem(mDefaultIndex, false);
+			viewBinding.tvPicIndex.setText(String.format(Locale.US, "%d/%d", mDefaultIndex + 1, mPhotoUrls.size()));
+			viewBinding.viewPager.setAdapter(getAdapter());
+			viewBinding.viewPager.setCurrentItem(mDefaultIndex, false);
 		} else {
 			mPhotoUrls = new ArrayList<>();
 			mPhotoNormalUrls = new ArrayList<>();
@@ -347,7 +344,7 @@ public class FullScreenPhotoViewActivity extends BaseViewBindingActivity<Activit
 				container.addView(fullPhotoViewBinding.getRoot());
 				if (position == mDefaultIndex) {
 					if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-						fullPhotoViewBinding.photoView.setTransitionName(Router.SHAREELEMENT_NAME);
+						fullPhotoViewBinding.photoView.setTransitionName(Router.SHARE_ELEMENT_NAME);
 					}
 				}
 				final String url = mPhotoUrls.get(position);
@@ -420,18 +417,18 @@ public class FullScreenPhotoViewActivity extends BaseViewBindingActivity<Activit
 	@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 	@Override
 	public void finishAfterTransition() {
-		RxBus.getInstance().send(new Events<>(Events.EVENT_SHAREELEMENT_EXIT_INDEX_CHANGE, mViewBinding.viewPager.getCurrentItem()));
+		RxBus.getInstance().send(new Events<>(Events.EVENT_SHAREELEMENT_EXIT_INDEX_CHANGE, viewBinding.viewPager.getCurrentItem()));
 		setEnterSharedElementCallback(new SharedElementCallback() {
 			@Override
 			public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
 				names.clear();
 				sharedElements.clear();
-				names.add(Router.SHAREELEMENT_NAME);
-				if (mBindingSparseArray.get(mViewBinding.viewPager.getCurrentItem()) instanceof LayoutFullPhotoViewBinding) {
-					sharedElements.put(Router.SHAREELEMENT_NAME, ((LayoutFullPhotoViewBinding) mBindingSparseArray.get(mViewBinding.viewPager.getCurrentItem())).photoView);
-				} else if (mBindingSparseArray.get(mViewBinding.viewPager.getCurrentItem()) instanceof View) {
-					if (((View) mBindingSparseArray.get(mViewBinding.viewPager.getCurrentItem())).findViewById(R.id.iv_video_cover) != null) {
-						sharedElements.put(Router.SHAREELEMENT_NAME, ((View) mBindingSparseArray.get(mViewBinding.viewPager.getCurrentItem())).findViewById(R.id.iv_video_cover));
+				names.add(Router.SHARE_ELEMENT_NAME);
+				if (mBindingSparseArray.get(viewBinding.viewPager.getCurrentItem()) instanceof LayoutFullPhotoViewBinding) {
+					sharedElements.put(Router.SHARE_ELEMENT_NAME, ((LayoutFullPhotoViewBinding) mBindingSparseArray.get(viewBinding.viewPager.getCurrentItem())).photoView);
+				} else if (mBindingSparseArray.get(viewBinding.viewPager.getCurrentItem()) instanceof View) {
+					if (((View) mBindingSparseArray.get(viewBinding.viewPager.getCurrentItem())).findViewById(R.id.iv_video_cover) != null) {
+						sharedElements.put(Router.SHARE_ELEMENT_NAME, ((View) mBindingSparseArray.get(viewBinding.viewPager.getCurrentItem())).findViewById(R.id.iv_video_cover));
 					}
 				}
 				super.onMapSharedElements(names, sharedElements);
@@ -453,7 +450,7 @@ public class FullScreenPhotoViewActivity extends BaseViewBindingActivity<Activit
 	}
 
 	private void savePicture() {
-		final String url = mPhotoUrls.get(mViewBinding.viewPager.getCurrentItem());
+		final String url = mPhotoUrls.get(viewBinding.viewPager.getCurrentItem());
 		final String imageName = getPicNameByUrl(url);
 		final String path = Tools.getStoragePathByFileName(imageName);
 		final File file = new File(path);
@@ -479,12 +476,13 @@ public class FullScreenPhotoViewActivity extends BaseViewBindingActivity<Activit
 						DownloadRecordDatabase.insertNewTumblrNormalDownload(url,
 								path, null, TasksManagerModel.TYPE_IMAGE);
 						showImageDownloadSuccessSnackBar(path);
+						SingleMediaScanner.scanFile(path);
 					}
 
 					@Override
 					public void onError(Throwable e) {
 						showFileAddedToDownloadSnackBar();
-						FileDownloadUtil.downloadPicture(mPhotoUrls.get(mViewBinding.viewPager.getCurrentItem()),
+						FileDownloadUtil.downloadPicture(mPhotoUrls.get(viewBinding.viewPager.getCurrentItem()),
 								file, null);
 					}
 				});

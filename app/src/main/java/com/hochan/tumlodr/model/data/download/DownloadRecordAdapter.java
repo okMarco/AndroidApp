@@ -3,7 +3,7 @@ package com.hochan.tumlodr.model.data.download;
 import android.arch.paging.PagedListAdapter;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.recyclerview.extensions.DiffCallback;
+import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.SparseBooleanArray;
@@ -19,7 +19,7 @@ import com.hochan.tumlodr.databinding.ItemDownloadRecordBinding;
 import com.hochan.tumlodr.model.data.TasksManagerModel;
 import com.hochan.tumlodr.module.download.TasksManager;
 import com.hochan.tumlodr.module.glide.TumlodrGlide;
-import com.hochan.tumlodr.module.glide.TumlodrGlideUtil;
+import com.hochan.tumlodr.module.glide.OkHoGlideUtil;
 import com.hochan.tumlodr.tools.AppConfig;
 import com.hochan.tumlodr.tools.ScreenTools;
 import com.hochan.tumlodr.util.Events;
@@ -87,18 +87,18 @@ public class DownloadRecordAdapter extends PagedListAdapter<DownloadRecord, Down
 		}
 	}
 
-	private static final DiffCallback<DownloadRecord> DIFF_CALLBACK = new DiffCallback<DownloadRecord>() {
-		@Override
-		public boolean areItemsTheSame(@NonNull DownloadRecord oldRecord, @NonNull DownloadRecord newRecord) {
-			return oldRecord.getId() == newRecord.getId();
-		}
+	private static final DiffUtil.ItemCallback<DownloadRecord> DIFF_CALLBACK = new DiffUtil.ItemCallback<DownloadRecord>() {
+        @Override
+        public boolean areItemsTheSame(@NonNull DownloadRecord oldRecord, @NonNull DownloadRecord newRecord) {
+            return oldRecord.getId() == newRecord.getId();
+        }
 
-		@Override
-		public boolean areContentsTheSame(@NonNull DownloadRecord oldRecord, @NonNull DownloadRecord newRecord) {
-			return TextUtils.equals(oldRecord.getUrl(), newRecord.getUrl()) &&
-					TextUtils.equals(oldRecord.getPath(), newRecord.getPath());
-		}
-	};
+        @Override
+        public boolean areContentsTheSame(@NonNull DownloadRecord oldRecord, @NonNull DownloadRecord newRecord) {
+            return TextUtils.equals(oldRecord.getUrl(), newRecord.getUrl()) &&
+                    TextUtils.equals(oldRecord.getPath(), newRecord.getPath());
+        }
+    };
 
 	public class DownloadRecordViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
@@ -194,7 +194,7 @@ public class DownloadRecordAdapter extends PagedListAdapter<DownloadRecord, Down
 							RxBus.getInstance().send(new Events<>(Events.EVENT_CODE_DOWNLOAD_FINISH, task));
 							DownloadRecordDatabase.updateDownloadFinish(task.getId());
 						}
-						if (TumlodrGlideUtil.isContextValid(viewHolder.mViewBinding.ivThumbnail)) {
+						if (OkHoGlideUtil.isContextValid(viewHolder.mViewBinding.ivThumbnail)) {
 							TumlodrGlide.with(viewHolder.mViewBinding.ivThumbnail)
 									.load(downloadRecord.getPath())
 									.skipMemoryCache(true)

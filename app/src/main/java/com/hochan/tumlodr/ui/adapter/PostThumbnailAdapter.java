@@ -21,7 +21,6 @@ import com.hochan.tumlodr.jumblr.types.Post;
 import com.hochan.tumlodr.jumblr.types.TextPost;
 import com.hochan.tumlodr.jumblr.types.VideoPost;
 import com.hochan.tumlodr.model.TumlodrService;
-import com.hochan.tumlodr.model.data.TextPostBody;
 import com.hochan.tumlodr.model.sharedpreferences.UserInfo;
 import com.hochan.tumlodr.module.webbrowser.WebViewActivity;
 import com.hochan.tumlodr.tools.HtmlTool;
@@ -31,7 +30,6 @@ import com.hochan.tumlodr.ui.component.IPhotoLayout;
 import com.hochan.tumlodr.ui.component.PostPhotoLayout;
 import com.hochan.tumlodr.ui.component.TumlodrPopupWindow;
 import com.hochan.tumlodr.util.FileDownloadUtil;
-import com.hochan.tumlodr.util.TextPostBodyUtils;
 import com.hochan.tumlodr.util.ViewUtils;
 
 import java.io.File;
@@ -95,10 +93,9 @@ public class PostThumbnailAdapter extends PostAdapter implements ListPreloader.P
 			TextPost textPost = (TextPost) mDataList.get(position);
 			postThumbnailViewHolder.mItemViewBinding.ivVideoPlay.setVisibility(View.INVISIBLE);
 			postThumbnailViewHolder.mItemViewBinding.tvTextTitleSimple.setVisibility(View.VISIBLE);
-			TextPostBody textPostBody = TextPostBodyUtils.textPostBody(textPost.getBody());
-			if (textPostBody != null && textPostBody.getPhotos() != null && textPostBody.getPhotos().size() > 0) {
+			if (!textPost.getTextPostBody().getPhotos().isEmpty()) {
 				postThumbnailViewHolder.mItemViewBinding.plPostPhotos.setVisibility(View.VISIBLE);
-				postThumbnailViewHolder.mItemViewBinding.plPostPhotos.setThumbnailPhotos(textPostBody.getPhotos());
+				postThumbnailViewHolder.mItemViewBinding.plPostPhotos.setThumbnailPhotos(textPost.getTextPostBody().getPhotos());
 				postThumbnailViewHolder.mItemViewBinding.tvTextTitleSimple.setVisibility(View.GONE);
 			} else {
 				postThumbnailViewHolder.mItemViewBinding.ivVideoPlay.setVisibility(View.GONE);
@@ -226,8 +223,7 @@ public class PostThumbnailAdapter extends PostAdapter implements ListPreloader.P
 				} else {
                     if (mDataList.get(getAdapterPosition()).getType() == Post.PostType.TEXT) {
                         TextPost textPost = (TextPost) mDataList.get(getAdapterPosition());
-                        TextPostBody textPostBody = TextPostBodyUtils.textPostBody(textPost.getBody());
-                        if (textPostBody != null && textPostBody.getPhotos() != null && textPostBody.getPhotos().size() > 0) {
+                        if (!textPost.getTextPostBody().getPhotos().isEmpty()) {
                             mPopupWindow.showPhotoPopup(mRecyclerView.getContext(), point,
                                     mDataList.get(getAdapterPosition()).isLiked() != null && mDataList.get(getAdapterPosition()).isLiked(),
                                     mDataList.get(getAdapterPosition()).getBlogName());

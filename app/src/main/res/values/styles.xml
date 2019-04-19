@@ -70,9 +70,9 @@
         <item name="android:actionOverflowButtonStyle">@style/MenuOverflowButtonStyle</item>
     </style>
 
-    <style name="AppTheme.NoActionBar.AppBarOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+    <style name="AppTheme.NoActionBar.AppBarOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-    <style name="AppTheme.NoActionBar.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+    <style name="AppTheme.NoActionBar.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="LeftDrawerButtonStyle">
         <item name="android:layout_height">55dp</item>
@@ -137,10 +137,9 @@
         <item name="android:thumb">@drawable/ic_fiber_manual_record</item>
     </style>
 
-    <style name="AppTheme.NoActionBar.White.AppBarOverlay"
-           parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+    <style name="AppTheme.NoActionBar.White.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <style name="AppTheme.NoActionBar.White.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+    <style name="AppTheme.NoActionBar.White.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="PicDownloadUtilsActivityButton">
         <item name="android:layout_width">match_parent</item>

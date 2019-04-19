@@ -14,7 +14,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:fitsSystemWindows="true"
-        tools:context=".ui.activity.baseactivity.BaseActivity">
+        tools:context="com.okmarco.teehub.OkHoBase.BaseActivity">
 
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"

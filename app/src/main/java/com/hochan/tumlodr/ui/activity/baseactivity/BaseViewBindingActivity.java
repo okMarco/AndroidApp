@@ -11,24 +11,20 @@ import android.os.Bundle;
 
 public abstract class BaseViewBindingActivity<VB extends ViewDataBinding> extends BaseAppUiActivity {
 
-	protected VB mViewBinding;
+	protected VB viewBinding;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		mViewBinding = DataBindingUtil.inflate(getLayoutInflater(), getLayoutResourceId(), null, false);
-		setContentView(mViewBinding.getRoot());
+		viewBinding = DataBindingUtil.inflate(getLayoutInflater(), getLayoutResourceId(), null, false);
+		setContentView(viewBinding.getRoot());
 		initData();
 		initWidget();
 	}
 
 	public abstract int getLayoutResourceId();
 
-	public void initData() {
+	public void initData() {}
 
-	}
-
-	public void initWidget() {
-
-	}
+	public void initWidget() {}
 }

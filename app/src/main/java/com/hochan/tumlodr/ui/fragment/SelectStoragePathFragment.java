@@ -15,7 +15,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
-import com.hochan.arrowlib.Tool;
 import com.hochan.tumlodr.R;
 import com.hochan.tumlodr.TumlodrApp;
 import com.hochan.tumlodr.databinding.LayoutSelectStoragePathBinding;
@@ -32,7 +31,7 @@ import static com.hochan.tumlodr.tools.AppConfig.SHARE_PIC_STORAGE;
  * Created by hochan on 2018/1/23.
  */
 
-public class SelectStoragePathFragment extends TumloadrDialogFragment {
+public class SelectStoragePathFragment extends ColdSoupDialogFragment {
 
 	public static final String TAG = "SelectStoragePathFragment";
 

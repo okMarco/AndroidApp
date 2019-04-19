@@ -20,6 +20,7 @@ import com.hochan.tumlodr.model.data.download.DownloadRecordDatabase;
 import com.hochan.tumlodr.module.video.videolayout.VideoPlayLayout;
 import com.hochan.tumlodr.tools.AppConfig;
 import com.hochan.tumlodr.tools.Tools;
+import com.hochan.tumlodr.ui.component.SingleMediaScanner;
 import com.liulishuo.filedownloader.FileDownloader;
 
 import org.jsoup.Jsoup;
@@ -80,9 +81,8 @@ public class FileDownloadUtil {
 		} else if (post.getType() == Post.PostType.VIDEO || post instanceof VideoPost) {
 			return downloadTumblrVideo((VideoPost) post);
 		} else if (post.getType() == Post.PostType.TEXT || post instanceof TextPost) {
-			TextPostBody textPostBody = TextPostBodyUtils.textPostBody(((TextPost)post).getBody());
-			if (textPostBody != null && textPostBody.getPhotos() != null && textPostBody.getPhotos().size() > 0) {
-				return downloadTumblrPics(textPostBody.getPhotos());
+			if (((TextPost)post).getTextPostBody().getPhotos().size() > 0) {
+				return downloadTumblrPics(((TextPost)post).getTextPostBody().getPhotos());
 			}
 		}
 		return false;
@@ -137,6 +137,7 @@ public class FileDownloadUtil {
 									tumblrVideoDownloadInfo.getVideoPath(),
 									tumblrVideoDownloadInfo.getVideoThumbnail(), TYPE_VIDEO);
 							RxBus.getInstance().send(new Events<>(Events.EVENT_CODE_DOWNLOAD_FINISH, videoPath));
+							SingleMediaScanner.scanFile(videoPath);
 						}
 
 						@Override
@@ -174,6 +175,7 @@ public class FileDownloadUtil {
 			String path = Tools.getStoragePathByFileName(imageName);
 			File file = new File(path);
 			if (file.exists()) {
+                SingleMediaScanner.scanFile(file.getAbsolutePath());
 				continue;
 			}
 			isAllExist = false;

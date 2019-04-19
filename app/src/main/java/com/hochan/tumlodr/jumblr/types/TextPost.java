@@ -1,5 +1,8 @@
 package com.hochan.tumlodr.jumblr.types;
 
+import com.hochan.tumlodr.model.data.TextPostBody;
+import com.hochan.tumlodr.util.TextPostBodyUtils;
+
 import java.util.Map;
 
 /**
@@ -10,6 +13,7 @@ public class TextPost extends SafePost {
 
     private String title;
     private String body;
+    private TextPostBody textPostBody;
 
     /**
      * Get the title of this post
@@ -60,4 +64,10 @@ public class TextPost extends SafePost {
         return map;
     }
 
+    public TextPostBody getTextPostBody() {
+        if (textPostBody == null) {
+            textPostBody = TextPostBodyUtils.textPostBody(body);
+        }
+        return textPostBody;
+    }
 }

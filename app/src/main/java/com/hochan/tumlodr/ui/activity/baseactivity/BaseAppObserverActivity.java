@@ -1,23 +1,18 @@
 package com.hochan.tumlodr.ui.activity.baseactivity;
 
 import android.annotation.TargetApi;
-import android.media.MediaScannerConnection;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
-import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowInsets;
 
 import com.crashlytics.android.Crashlytics;
 import com.hochan.tumlodr.R;
 import com.hochan.tumlodr.tools.AppConfig;
-import com.hochan.tumlodr.ui.activity.InstagramParseActivity;
-import com.hochan.tumlodr.ui.component.SingleMediaScanner;
+import com.hochan.tumlodr.ui.activity.baseactivity.BaseActivity;
 import com.hochan.tumlodr.util.ActivityLifecycleProvider;
 import com.hochan.tumlodr.util.Events;
 import com.hochan.tumlodr.util.RxBus;

@@ -54,8 +54,8 @@ public class InstagramParseResultFragment extends InstagramSaverDialogFragment {
 				.setColorFilter(AppUiConfig.sTextColor, PorterDuff.Mode.SRC_IN);
 		mLayoutSaverForInsBinding.loadingProgressBar.setVisibility(View.VISIBLE);
 		setConfirmString(R.string.save);
-		setCancleString(R.string.delete_download_task_grament_cancel);
-		mViewBinding.btnDelete.setEnabled(false);
+		setCancelString(R.string.delete_download_task_grament_cancel);
+		viewBinding.btnDelete.setEnabled(false);
 		io.reactivex.Observable.create(new ObservableOnSubscribe<String>() {
 			@Override
 			public void subscribe(ObservableEmitter<String> e) throws Exception {
@@ -70,7 +70,7 @@ public class InstagramParseResultFragment extends InstagramSaverDialogFragment {
 				.subscribe(new Consumer<String>() {
 					@Override
 					public void accept(String url) throws Exception {
-						mViewBinding.btnDelete.setEnabled(true);
+						viewBinding.btnDelete.setEnabled(true);
 						mLayoutSaverForInsBinding.loadingProgressBar.setVisibility(View.GONE);
 						TumlodrGlide.with(getActivity()).load(url)
 								.fitCenter()

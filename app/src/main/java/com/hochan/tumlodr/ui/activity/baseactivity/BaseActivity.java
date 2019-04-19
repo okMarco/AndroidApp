@@ -4,7 +4,7 @@ import android.os.Handler;
 import android.text.TextUtils;
 
 import com.hochan.tumlodr.module.glide.TumlodrGlide;
-import com.hochan.tumlodr.module.glide.TumlodrGlideUtil;
+import com.hochan.tumlodr.module.glide.OkHoGlideUtil;
 import com.hochan.tumlodr.tools.InstagramParse;
 import com.hochan.tumlodr.ui.fragment.InstagramParseResultFragment;
 import com.hochan.tumlodr.util.IMMLeaks;
@@ -51,7 +51,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
 		IMMLeaks.fixFocusedViewLeak(getApplication());
 		SystemUtils.fixInputMethodManagerLeak(this);
 		SystemUtils.fixInputMethod(this);
-		if (TumlodrGlideUtil.isContextValid(this)) {
+		if (OkHoGlideUtil.isContextValid(this)) {
 			TumlodrGlide.with(this).onDestroy();
 		}
 	}

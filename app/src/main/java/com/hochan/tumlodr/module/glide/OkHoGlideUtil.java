@@ -14,7 +14,7 @@ import com.hochan.tumlodr.jumblr.types.Photo;
  * Created by hochan on 2018/6/9.
  */
 
-public class TumlodrGlideUtil {
+public class OkHoGlideUtil {
 
 	public static final LruCache<Photo, String> PHOTO_NORMAL_URL_CACHE = new LruCache<>(100);
 

@@ -6,20 +6,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
-import android.text.Spannable;
-import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
-import android.text.style.BackgroundColorSpan;
-import android.transition.TransitionManager;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 
 import com.bumptech.glide.load.MultiTransformation;
@@ -45,7 +39,6 @@ import com.hochan.tumlodr.ui.fragment.BlogLikePostListThumbnailFragment;
 import com.hochan.tumlodr.ui.fragment.BlogPostsThumbnailFragment;
 import com.hochan.tumlodr.ui.fragment.PostThumbnailFragment;
 import com.hochan.tumlodr.util.BlurTransformation;
-import com.hochan.tumlodr.util.ColorFilterTransformation;
 import com.hochan.tumlodr.util.Events;
 import com.hochan.tumlodr.util.RxBus;
 import com.hochan.tumlodr.util.ViewUtils;
@@ -82,25 +75,30 @@ public class BlogPostListActivity extends BaseViewBindingActivity<ActivityBlogBi
 
 	@Override
 	public void initStatusBar() {
-		// StatusBarCompat.setStatusBarHalfTranslucent(getWindow());
 		StatusBarCompat.setStatusBarTranslucent(getWindow());
 	}
 
 	@Override
 	public void initWidget() {
-		mViewBinding.tlBlogItem.setSelectedTabIndicatorColor(Color.WHITE);
-		mViewBinding.tlBlogItem.setTabTextColors(ContextCompat.getColor(this, R.color.colorSubTextLight),
+		viewBinding.tlBlogItem.setSelectedTabIndicatorColor(Color.WHITE);
+		viewBinding.tlBlogItem.setTabTextColors(ContextCompat.getColor(this, R.color.colorSubTextLight),
 				Color.WHITE);
-		mViewBinding.tvBlogTitle.setTextColor(Color.WHITE);
-		mViewBinding.tvBlogDescription.setTextColor(Color.WHITE);
-		mViewBinding.ablBlog.setBackgroundColor(AppUiConfig.sThemeColor);
+		viewBinding.tvBlogTitle.setTextColor(Color.WHITE);
+		viewBinding.tvBlogDescription.setTextColor(Color.WHITE);
+		viewBinding.ablBlog.setBackgroundColor(AppUiConfig.sThemeColor);
+		viewBinding.btnSaveAll.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				startActivity(new Intent(BlogPostListActivity.this, TumblrSaveAllActivity.class));
+			}
+		});
 
 		final String blogName = getIntent().getStringExtra(BLOG_NAME);
 		if (TextUtils.isEmpty(blogName)) {
 			return;
 		}
 
-		mViewBinding.tvBlogTitle.setText(blogName);
+		viewBinding.tvBlogTitle.setText(blogName);
 
 		FollowingBlogDatabase.updateFollowingBlog(blogName);
 
@@ -108,7 +106,7 @@ public class BlogPostListActivity extends BaseViewBindingActivity<ActivityBlogBi
 				.load(Tools.getAvatarUrlByBlogName(blogName, 128))
 				.transform(new RoundedCorners(15))
 				.skipMemoryCache(true)
-				.into(mViewBinding.rivBlogAvatar);
+				.into(viewBinding.rivBlogAvatar);
 
 		TumlodrGlide.with(BlogPostListActivity.this)
 				.asBitmap()
@@ -118,12 +116,12 @@ public class BlogPostListActivity extends BaseViewBindingActivity<ActivityBlogBi
 				.skipMemoryCache(true)
 				.transform(new MultiTransformation<>(new CenterCrop(),
 						new BlurTransformation(this, 25)))
-				.into(mViewBinding.ivBigAvatar);
+				.into(viewBinding.ivBigAvatar);
 
-		mViewBinding.rivBlogAvatar.setOnClickListener(new View.OnClickListener() {
+		viewBinding.rivBlogAvatar.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Router.showImage(BlogPostListActivity.this, blogName, mViewBinding.rivBlogAvatar);
+				Router.showImage(BlogPostListActivity.this, blogName, viewBinding.rivBlogAvatar);
 			}
 		});
 
@@ -131,18 +129,14 @@ public class BlogPostListActivity extends BaseViewBindingActivity<ActivityBlogBi
 			@SuppressLint("ApplySharedPref")
 			@Override
 			public void onNext(Blog blog) {
-				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-					TransitionManager.beginDelayedTransition((ViewGroup) mViewBinding.llBlogInfo.getParent());
-				}
-				mViewBinding.llBlogInfo.setVisibility(View.VISIBLE);
 				mIsFollowing = blog.followed;
 				setUpFollowBtn();
 				if (blog.getDescription().length() > 0) {
-					mViewBinding.tvBlogDescription.setVisibility(View.VISIBLE);
-					SpannableStringBuilder spannableStringBuilder = HtmlTool.fromHtml(blog.getDescription(), mViewBinding.tvBlogDescription);
-					mViewBinding.tvBlogDescription.setText(spannableStringBuilder);
+					viewBinding.tvBlogDescription.setVisibility(View.VISIBLE);
+					SpannableStringBuilder spannableStringBuilder = HtmlTool.fromHtml(blog.getDescription(), viewBinding.tvBlogDescription);
+					viewBinding.tvBlogDescription.setText(spannableStringBuilder);
 				}else {
-					mViewBinding.tvBlogDescription.setVisibility(View.GONE);
+					viewBinding.tvBlogDescription.setVisibility(View.GONE);
 				}
 
 
@@ -179,16 +173,16 @@ public class BlogPostListActivity extends BaseViewBindingActivity<ActivityBlogBi
 			}
 		});
 
-		mViewBinding.tlBlogItem.setupWithViewPager(viewPager);
+		viewBinding.tlBlogItem.setupWithViewPager(viewPager);
 
-		mViewBinding.btnArrowBack.setOnClickListener(new View.OnClickListener() {
+		viewBinding.btnArrowBack.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				onBackPressed();
 			}
 		});
 
-		mViewBinding.btnFollow.setOnClickListener(new View.OnClickListener() {
+		viewBinding.btnFollow.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				if (mIsFollowing) {
@@ -216,12 +210,12 @@ public class BlogPostListActivity extends BaseViewBindingActivity<ActivityBlogBi
 			}
 		});
 
-		mViewBinding.tlBlogItem.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+		viewBinding.tlBlogItem.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
 			@Override
 			public boolean onPreDraw() {
-				mViewBinding.tlBlogItem.getViewTreeObserver().removeOnPreDrawListener(this);
-				mViewBinding.flTopContainer.setMinimumHeight(mViewBinding.tlBlogItem.getMeasuredHeight());
-				mViewBinding.flTopContainer.requestLayout();
+				viewBinding.tlBlogItem.getViewTreeObserver().removeOnPreDrawListener(this);
+				viewBinding.flTopContainer.setMinimumHeight(viewBinding.tlBlogItem.getMeasuredHeight());
+				viewBinding.flTopContainer.requestLayout();
 				return false;
 			}
 		});
@@ -253,11 +247,11 @@ public class BlogPostListActivity extends BaseViewBindingActivity<ActivityBlogBi
 
 	private void setUpFollowBtn() {
 		if (mIsFollowing) {
-			mViewBinding.btnFollow.setText(R.string.blog_unfollow);
-			mViewBinding.btnFollow.setBackgroundResource(R.drawable.bg_following);
+			viewBinding.btnFollow.setText(R.string.blog_unfollow);
+			viewBinding.btnFollow.setBackgroundResource(R.drawable.bg_following);
 		} else {
-			mViewBinding.btnFollow.setText(R.string.blog_follow);
-			mViewBinding.btnFollow.setBackgroundResource(R.drawable.bg_unfollow);
+			viewBinding.btnFollow.setText(R.string.blog_follow);
+			viewBinding.btnFollow.setBackgroundResource(R.drawable.bg_unfollow);
 		}
 	}
 

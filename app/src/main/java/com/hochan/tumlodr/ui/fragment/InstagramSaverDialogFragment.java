@@ -9,7 +9,7 @@ import android.view.View;
 import com.hochan.tumlodr.R;
 import com.hochan.tumlodr.databinding.LayoutSaverForInsBinding;
 import com.hochan.tumlodr.module.glide.TumlodrGlide;
-import com.hochan.tumlodr.module.glide.TumlodrGlideUtil;
+import com.hochan.tumlodr.module.glide.OkHoGlideUtil;
 import com.hochan.tumlodr.tools.AppUiConfig;
 
 /**
@@ -17,7 +17,7 @@ import com.hochan.tumlodr.tools.AppUiConfig;
  * Created by hochan on 2018/2/7.
  */
 
-public class InstagramSaverDialogFragment extends TumloadrDialogFragment {
+public class InstagramSaverDialogFragment extends ColdSoupDialogFragment {
 
 	public static final String TAG = "InstagramSaverDialogFragment";
 	public LayoutSaverForInsBinding mLayoutSaverForInsBinding;
@@ -25,12 +25,12 @@ public class InstagramSaverDialogFragment extends TumloadrDialogFragment {
 	@Override
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		setTitleString(R.string.saver_tools_for_ins);
-		setCancleString(R.string.saver_tools_ok);
+		setCancelString(R.string.saver_tools_ok);
 		setConfirmString(R.string.saver_tools_have_a_try);
-		mViewBinding.llRootContainer.setBackgroundColor(AppUiConfig.sThemeColor);
-		mViewBinding.tvTitle.setTextColor(AppUiConfig.sTextColor);
-		mViewBinding.btnDelete.setTextColor(AppUiConfig.sTextColor);
-		mViewBinding.btnCancle.setTextColor(AppUiConfig.sTextColor);
+		viewBinding.llRootContainer.setBackgroundColor(AppUiConfig.sThemeColor);
+		viewBinding.tvTitle.setTextColor(AppUiConfig.sTextColor);
+		viewBinding.btnDelete.setTextColor(AppUiConfig.sTextColor);
+		viewBinding.btnCancle.setTextColor(AppUiConfig.sTextColor);
 		super.onViewCreated(view, savedInstanceState);
 	}
 
@@ -40,7 +40,7 @@ public class InstagramSaverDialogFragment extends TumloadrDialogFragment {
 		mLayoutSaverForInsBinding.tvStepSecond.setTextColor(AppUiConfig.sTextColor);
 		mLayoutSaverForInsBinding.tvStepFirst.setTextColor(AppUiConfig.sTextColor);
 
-		if (TumlodrGlideUtil.isContextValid(this)) {
+		if (OkHoGlideUtil.isContextValid(this)) {
 			TumlodrGlide.with(getActivity())
 					.load(R.drawable.tip_saver_for_ins)
 					.fitCenter()

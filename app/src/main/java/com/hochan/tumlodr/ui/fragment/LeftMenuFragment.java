@@ -27,7 +27,7 @@ import com.hochan.tumlodr.databinding.FragmentLeftMenuBinding;
 import com.hochan.tumlodr.model.LeftMenuItem;
 import com.hochan.tumlodr.model.sharedpreferences.UserInfo;
 import com.hochan.tumlodr.module.glide.TumlodrGlide;
-import com.hochan.tumlodr.module.glide.TumlodrGlideUtil;
+import com.hochan.tumlodr.module.glide.OkHoGlideUtil;
 import com.hochan.tumlodr.tools.AppConfig;
 import com.hochan.tumlodr.tools.AppUiConfig;
 import com.hochan.tumlodr.tools.Tools;
@@ -73,7 +73,7 @@ public class LeftMenuFragment extends BaseFragment {
 			layoutParams.rightMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5,
 					getResources().getDisplayMetrics());
 			imageView.setLayoutParams(layoutParams);
-			if (TumlodrGlideUtil.isContextValid(getActivity())) {
+			if (OkHoGlideUtil.isContextValid(getActivity())) {
 				TumlodrGlide.with(getActivity())
 						.load(Tools.getAvatarUrlByBlogName(mLastVisitedBlogNameList.get(position)))
 						.placeholder(AppUiConfig.sPicHolderResource)

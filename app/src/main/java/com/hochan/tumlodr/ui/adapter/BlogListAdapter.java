@@ -3,7 +3,7 @@ package com.hochan.tumlodr.ui.adapter;
 import android.arch.paging.PagedListAdapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.v7.recyclerview.extensions.DiffCallback;
+import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -25,7 +25,7 @@ import com.hochan.tumlodr.tools.Tools;
 public class BlogListAdapter extends PagedListAdapter<FollowingBlog, BlogListAdapter.BlogViewHolder> {
 
 	public BlogListAdapter() {
-		super(new DiffCallback<FollowingBlog>() {
+		super(new DiffUtil.ItemCallback<FollowingBlog>() {
 			@Override
 			public boolean areItemsTheSame(@NonNull FollowingBlog oldItem, @NonNull FollowingBlog newItem) {
 				return TextUtils.equals(oldItem.getName(), newItem.getName());

@@ -1,5 +1,7 @@
 package com.hochan.tumlodr.util;
 
+import android.annotation.SuppressLint;
+
 import com.trello.rxlifecycle2.android.ActivityEvent;
 import com.trello.rxlifecycle2.android.FragmentEvent;
 
@@ -16,6 +18,7 @@ import io.reactivex.subjects.Subject;
  * Created by hochan on 2017/10/26.
  */
 
+@SuppressWarnings("WeakerAccess")
 public class RxBus {
 
 	private static RxBus mRxBus;
@@ -51,6 +54,7 @@ public class RxBus {
 		return new SubscriberBuilder(provider);
 	}
 
+	@SuppressWarnings("unused")
 	public static class SubscriberBuilder {
 		private ActivityLifecycleProvider mActivityLifecycleProvider;
 		private FragmentLifecycleProvider mFragmentLifecycleProvider;
@@ -108,6 +112,8 @@ public class RxBus {
 			return this;
 		}
 
+		@SuppressWarnings("ResultOfMethodCallIgnored")
+		@SuppressLint("CheckResult")
 		public void create() {
 			if (mFragmentLifecycleProvider != null) {
 				RxBus.getInstance().toObservable()

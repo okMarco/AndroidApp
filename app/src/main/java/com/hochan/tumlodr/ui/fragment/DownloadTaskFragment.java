@@ -14,7 +14,6 @@ import android.support.v4.app.SharedElementCallback;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SimpleItemAnimator;
 import android.util.SparseBooleanArray;
 import android.view.View;
 
@@ -32,7 +31,6 @@ import com.hochan.tumlodr.module.glide.TumlodrGlide;
 import com.hochan.tumlodr.prensenter.BaseMvpPresenter;
 import com.hochan.tumlodr.tools.ScreenTools;
 import com.hochan.tumlodr.ui.activity.GroupDownloadTaskManagerActivity;
-import com.hochan.tumlodr.ui.activity.InstagramParseActivity;
 import com.hochan.tumlodr.ui.activity.Router;
 import com.hochan.tumlodr.ui.adapter.BaseLoadingAdapter;
 import com.hochan.tumlodr.ui.component.SingleMediaScanner;
@@ -46,7 +44,6 @@ import com.trello.rxlifecycle2.android.FragmentEvent;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
-import java.security.acl.Group;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -200,7 +197,7 @@ public class DownloadTaskFragment extends BaseMvpListFragment implements Downloa
 													.findViewHolderForLayoutPosition(mShareExitIndex));
 									if (taskItemViewHolder != null) {
 										sharedElements.clear();
-										sharedElements.put(Router.SHAREELEMENT_NAME, taskItemViewHolder.mViewBinding.ivThumbnail);
+										sharedElements.put(Router.SHARE_ELEMENT_NAME, taskItemViewHolder.mViewBinding.ivThumbnail);
 									}
 								}
 
@@ -244,7 +241,7 @@ public class DownloadTaskFragment extends BaseMvpListFragment implements Downloa
 			mDownloadRecordList.observe(getActivity(), new Observer<PagedList<DownloadRecord>>() {
 				@Override
 				public void onChanged(@Nullable PagedList<DownloadRecord> downloadRecords) {
-					mDownloadRecordAdapter.setList(downloadRecords);
+					mDownloadRecordAdapter.submitList(downloadRecords);
 				}
 			});
 		}

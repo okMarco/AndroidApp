@@ -2,6 +2,7 @@ package com.hochan.tumlodr.model.data;
 
 import com.hochan.tumlodr.jumblr.types.Photo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,6 +14,11 @@ public class TextPostBody {
 
 	private List<Photo> mPhotos;
 	private String mContent;
+
+	public TextPostBody() {
+		mPhotos = new ArrayList<>();
+		mContent = "";
+	}
 
 	public List<Photo> getPhotos() {
 		return mPhotos;

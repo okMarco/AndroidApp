@@ -12,7 +12,7 @@
             android:id="@+id/drawerlayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".ui.activity.baseactivity.BaseDrawerActivity">
+            tools:context="com.okmarco.teehub.OkHoBase.BaseDrawerActivity">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -68,7 +68,9 @@
                 android:id="@+id/rl_left_drawer_container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_gravity="left"/>
+                android:layout_gravity="left"
+                android:background="@color/colorBackground"
+                tools:ignore="RtlHardcoded" />
         </com.hochan.tumlodr.ui.component.DisallowInterceptTouchEventDrawerLayout>
 
     </com.hochan.tumlodr.ui.component.FitsSystemWindowFrameLayout>

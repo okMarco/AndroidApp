@@ -15,7 +15,7 @@ import static com.hochan.tumlodr.model.TumlodrService.loadBlogPosts;
 
 public class BlogPostListPresenter extends PostListPresenter {
 
-	protected String mBlogName;
+	String mBlogName;
 
 	public BlogPostListPresenter(IPostListView view, String blogName) {
 		super(view);

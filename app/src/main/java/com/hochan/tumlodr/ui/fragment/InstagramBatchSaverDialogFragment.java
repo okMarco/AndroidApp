@@ -4,7 +4,7 @@ import android.view.View;
 
 import com.hochan.tumlodr.R;
 import com.hochan.tumlodr.module.glide.TumlodrGlide;
-import com.hochan.tumlodr.module.glide.TumlodrGlideUtil;
+import com.hochan.tumlodr.module.glide.OkHoGlideUtil;
 
 /**
  * .
@@ -19,7 +19,7 @@ public class InstagramBatchSaverDialogFragment extends InstagramSaverDialogFragm
 	public View getContentView() {
 		View view = super.getContentView();
 		mLayoutSaverForInsBinding.ivTip.setImageResource(R.drawable.tip_saver_batch_for_ins);
-		if (TumlodrGlideUtil.isContextValid(this)) {
+		if (OkHoGlideUtil.isContextValid(this)) {
 			TumlodrGlide.with(getActivity())
 					.load(R.drawable.tip_saver_batch_for_ins)
 					.fitCenter()

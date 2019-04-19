@@ -1,8 +1,5 @@
 package com.hochan.tumlodr.tools;
 
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.LevelListDrawable;
 import android.support.annotation.NonNull;
 import android.text.Html;
 import android.text.SpannableStringBuilder;
@@ -13,12 +10,7 @@ import android.text.style.QuoteSpan;
 import android.text.style.URLSpan;
 import android.widget.TextView;
 
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.transition.Transition;
-import com.hochan.tumlodr.TumlodrApp;
 import com.hochan.tumlodr.module.glide.TumlodrGlide;
-import com.hochan.tumlodr.module.glide.TumlodrGlideUtil;
-import com.hochan.tumlodr.ui.component.TumlodrDrawable;
 import com.hochan.tumlodr.util.TumlodrQuoteSpan;
 import com.hochan.tumlodr.util.TumlodrUrlSpan;
 

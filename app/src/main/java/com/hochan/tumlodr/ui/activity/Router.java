@@ -1,16 +1,28 @@
 package com.hochan.tumlodr.ui.activity;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 
+import com.hochan.tumlodr.jumblr.types.Photo;
+import com.hochan.tumlodr.jumblr.types.PhotoPost;
 import com.hochan.tumlodr.jumblr.types.Post;
+import com.hochan.tumlodr.jumblr.types.TextPost;
 import com.hochan.tumlodr.tools.Tools;
+import com.hochan.tumlodr.ui.activity.baseactivity.BaseActivity;
 import com.hochan.tumlodr.ui.component.IPhotoLayout;
+import com.hochan.tumlodr.ui.fragment.PhotoPostFullScreenFragment;
 import com.hochan.tumlodr.util.Events;
 import com.hochan.tumlodr.util.RxBus;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,17 +33,18 @@ import static android.support.v4.app.ActivityOptionsCompat.makeSceneTransitionAn
  * Created by hochan on 2017/9/27.
  */
 
-@SuppressWarnings("WeakerAccess")
+@SuppressWarnings({"WeakerAccess", "unused"})
 public class Router {
 
 	static final String EXTRA_VIDEO_EMBED_CODE = "embed_code";
 	public static final String EXTRA_VIDEO_STORAGE_PATH = "video_path";
 	public static final String EXTRA_BLOG_NAME = "blog_name";
 	static final String EXTRA_POST_ID = "post_id";
-	static final String EXTRA_RELOAG_KEY = "reblog_key";
+	static final String EXTRA_REBLOG_KEY = "reblog_key";
 	public static final String EXTRA_IS_LIKED = "like";
 	public static final String EXTRA_IMAGE_FILE_PATH_LIST = "image_file_path_list";
-	public static final String EXTRA_DEFAULT_INDEX = "default_index";
+	public static final String EXTRA_DEFAULT_IMAGE_INDEX = "default_image_index";
+    public static final String EXTRA_DEFAULT_POST_INDEX = "default_post_index";
 
 	public static final String STORAGE_PATH = "storage_path";
 
@@ -39,13 +52,11 @@ public class Router {
 	public static final String EXTRA_THUMBNAIL_IMAGE_URL_LIST = "thumbnail_image_url_list";
 	public static final String EXTRA_NORMAL_IMAGE_URL_LIST = "normal_image_url_list";
 
-	public static final String SHAREELEMENT_NAME = "image";
+	public static final String SHARE_ELEMENT_NAME = "share_element_image";
 
 	public static final String REFRESH_ON_CREATE = "refresh_on_create";
 
 	public static final String GROUP_NAME = "group_name";
-
-	//public static Drawable sShareImageViewDrawable;
 
 	public static void showDashboard(Activity activity) {
 		Intent intent = new Intent(activity, SplashActivity.class);
@@ -54,7 +65,7 @@ public class Router {
 
 	public static void showImage(Activity activity, IPhotoLayout postPhotoLayout, int imageIndex, Post post) {
 		Intent intent = new Intent(activity, FullScreenPhotoViewActivity.class);
-		intent.putExtra(EXTRA_DEFAULT_INDEX, imageIndex);
+		intent.putExtra(EXTRA_DEFAULT_IMAGE_INDEX, imageIndex);
 		intent.putStringArrayListExtra(EXTRA_IMAGE_URL_LIST,
 				postPhotoLayout.getPhotoUrls());
 		intent.putStringArrayListExtra(EXTRA_NORMAL_IMAGE_URL_LIST,
@@ -63,9 +74,9 @@ public class Router {
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
 			View shareView = postPhotoLayout.getImageViewInPosition(imageIndex);
 			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-				shareView.setTransitionName(SHAREELEMENT_NAME);
+				shareView.setTransitionName(SHARE_ELEMENT_NAME);
 			}
-			activity.startActivity(intent, makeSceneTransitionAnimation(activity, shareView, SHAREELEMENT_NAME).toBundle());
+			activity.startActivity(intent, makeSceneTransitionAnimation(activity, shareView, SHARE_ELEMENT_NAME).toBundle());
 		} else {
 			activity.startActivity(intent);
 		}
@@ -75,7 +86,7 @@ public class Router {
 
 	public static void showImage(Activity activity, String blogName, View shareView) {
 		Intent intent = new Intent(activity, FullScreenPhotoViewActivity.class);
-		intent.putExtra(EXTRA_DEFAULT_INDEX, 0);
+		intent.putExtra(EXTRA_DEFAULT_IMAGE_INDEX, 0);
 		List<String> imageUrl = new ArrayList<>();
 		imageUrl.add(Tools.getAvatarUrlByBlogName(blogName, 512));
 		intent.putStringArrayListExtra(EXTRA_IMAGE_URL_LIST, (ArrayList<String>) imageUrl);
@@ -84,9 +95,9 @@ public class Router {
 		intent.putStringArrayListExtra(EXTRA_NORMAL_IMAGE_URL_LIST, (ArrayList<String>) normalUrl);
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
 			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-				shareView.setTransitionName(SHAREELEMENT_NAME);
+				shareView.setTransitionName(SHARE_ELEMENT_NAME);
 			}
-			activity.startActivity(intent, makeSceneTransitionAnimation(activity, shareView, SHAREELEMENT_NAME).toBundle());
+			activity.startActivity(intent, makeSceneTransitionAnimation(activity, shareView, SHARE_ELEMENT_NAME).toBundle());
 		} else {
 			activity.startActivity(intent);
 		}
@@ -95,14 +106,14 @@ public class Router {
 	public static void showDownloadFile(Activity activity, List<String> filePaths, List<String> thumbnails, int defaultIndex, View shareView) {
 		RxBus.getInstance().send(new Events<>(Events.EVENT_SHAREELEMENT_ENTER_INDEX_CHANGE, defaultIndex));
 		Intent intent = new Intent(activity, DownloadFileFullScreenActivity.class);
-		intent.putExtra(EXTRA_DEFAULT_INDEX, defaultIndex);
+		intent.putExtra(EXTRA_DEFAULT_IMAGE_INDEX, defaultIndex);
 		intent.putStringArrayListExtra(EXTRA_IMAGE_URL_LIST, (ArrayList<String>) filePaths);
 		intent.putStringArrayListExtra(EXTRA_NORMAL_IMAGE_URL_LIST, (ArrayList<String>) thumbnails);
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
 			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-				shareView.setTransitionName(SHAREELEMENT_NAME);
+				shareView.setTransitionName(SHARE_ELEMENT_NAME);
 			}
-			activity.startActivity(intent, makeSceneTransitionAnimation(activity, shareView, SHAREELEMENT_NAME).toBundle());
+			activity.startActivity(intent, makeSceneTransitionAnimation(activity, shareView, SHARE_ELEMENT_NAME).toBundle());
 		} else {
 			activity.startActivity(intent);
 		}
@@ -111,12 +122,12 @@ public class Router {
 	public static void showDownloadFile(Activity activity, int defaultIndex, View shareView) {
 		RxBus.getInstance().send(new Events<>(Events.EVENT_SHAREELEMENT_ENTER_INDEX_CHANGE, defaultIndex));
 		Intent intent = new Intent(activity, DownloadFileFullScreenActivity.class);
-		intent.putExtra(EXTRA_DEFAULT_INDEX, defaultIndex);
+		intent.putExtra(EXTRA_DEFAULT_IMAGE_INDEX, defaultIndex);
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
 			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-				shareView.setTransitionName(SHAREELEMENT_NAME);
+				shareView.setTransitionName(SHARE_ELEMENT_NAME);
 			}
-			activity.startActivity(intent, makeSceneTransitionAnimation(activity, shareView, SHAREELEMENT_NAME).toBundle());
+			activity.startActivity(intent, makeSceneTransitionAnimation(activity, shareView, SHARE_ELEMENT_NAME).toBundle());
 		} else {
 			activity.startActivity(intent);
 		}

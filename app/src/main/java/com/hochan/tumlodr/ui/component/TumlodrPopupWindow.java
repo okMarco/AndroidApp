@@ -19,7 +19,7 @@ import com.facebook.rebound.SpringUtil;
 import com.hochan.tumlodr.R;
 import com.hochan.tumlodr.databinding.LayoutPopupWindowBinding;
 import com.hochan.tumlodr.module.glide.TumlodrGlide;
-import com.hochan.tumlodr.module.glide.TumlodrGlideUtil;
+import com.hochan.tumlodr.module.glide.OkHoGlideUtil;
 import com.hochan.tumlodr.tools.AppUiConfig;
 import com.hochan.tumlodr.tools.ScreenTools;
 import com.hochan.tumlodr.TumlodrApp;
@@ -127,7 +127,7 @@ public class TumlodrPopupWindow extends PopupWindow {
 
 	public void showOtherPopup(Context context, Point touchPoint, boolean liked, String blogName) {
 		mViewBinding.llPopupDownload.setAlpha(0.5f);
-		if (TumlodrGlideUtil.isContextValid(context)) {
+		if (OkHoGlideUtil.isContextValid(context)) {
 			TumlodrGlide.with(context)
 					.load(Tools.getAvatarUrlByBlogName(blogName))
 					.placeholder(R.drawable.bg_avatar_holder_light)
@@ -143,7 +143,7 @@ public class TumlodrPopupWindow extends PopupWindow {
 	public void showVideoPopup(Context context, Point touchPoint, boolean liked, String blogName) {
 		mViewBinding.llPopupDownload.setAlpha(1);
 		mViewBinding.tvPopupDownload.setText(R.string.popup_window_download_video);
-		if (TumlodrGlideUtil.isContextValid(context)) {
+		if (OkHoGlideUtil.isContextValid(context)) {
 			TumlodrGlide.with(context)
 					.load(Tools.getAvatarUrlByBlogName(blogName))
 					.placeholder(R.drawable.bg_avatar_holder_light)
@@ -158,7 +158,7 @@ public class TumlodrPopupWindow extends PopupWindow {
 	public void showPhotoPopup(Context context, Point touchPoint, boolean liked, String blogName) {
 		mViewBinding.llPopupDownload.setAlpha(1);
 		mViewBinding.tvPopupDownload.setText(R.string.popup_window_download_picture);
-		if (TumlodrGlideUtil.isContextValid(context)) {
+		if (OkHoGlideUtil.isContextValid(context)) {
 			TumlodrGlide.with(context)
 					.load(Tools.getAvatarUrlByBlogName(blogName))
 					.placeholder(R.drawable.bg_avatar_holder_light)
